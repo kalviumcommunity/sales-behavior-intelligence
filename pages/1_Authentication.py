@@ -416,42 +416,9 @@ with st.sidebar:
     st.info("No backend or API calls")
 
 
-left_col, right_col = st.columns([1.15, 0.95], gap="large")
+center_col_left, center_col, center_col_right = st.columns([1, 0.9, 1])
 
-with left_col:
-    st.markdown(
-        """
-        <div class="auth-shell">
-            <div class="eyebrow">Secure access for modern sales teams</div>
-            <h1 class="auth-title">Enter the workspace with the same premium feel as the product.</h1>
-            <p class="auth-copy">
-                This authentication page keeps the same dark glass aesthetic as the landing experience while
-                giving managers and reps a focused, responsive sign-in surface built entirely from mock data.
-            </p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-    st.markdown("<div class='auth-panel'>", unsafe_allow_html=True)
-    render_bullet_list(AUTH_TRUST_POINTS)
-    st.markdown("</div>", unsafe_allow_html=True)
-
-    st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="auth-panel">
-            <h4>Why teams land here</h4>
-            <p>
-                Login, onboarding, and workspace creation all stay aligned with the same palette, type scale,
-                rounded surfaces, and hover treatment used throughout the rest of the app.
-            </p>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-with right_col:
+with center_col:
     st.markdown(
         """
         <div class="auth-card">
@@ -497,8 +464,8 @@ with right_col:
         with st.form("create_account_form", border=False):
             full_name = st.text_input("Full name", placeholder="Alex Rivera")
             work_email = st.text_input("Work email", placeholder="alex@company.com", key="create_email")
-            team_size = st.selectbox("Team size", ["1-5 reps", "6-20 reps", "21-50 reps", "50+ reps"])
-            use_case = st.selectbox("Primary use case", ["Pipeline coaching", "Deal inspection", "Rep benchmarking", "Executive reporting"])
+            team_size = st.selectbox("Team size", ["1-5 reps", "6-20 reps", "21-50 reps", "50+ reps"]) 
+            use_case = st.selectbox("Primary use case", ["Pipeline coaching", "Deal inspection", "Rep benchmarking", "Executive reporting"]) 
             password_create = st.text_input("Create password", type="password", placeholder="Choose a secure password")
 
             submit_create = st.form_submit_button("Create account", use_container_width=True)
@@ -512,52 +479,4 @@ with right_col:
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-    st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
-    st.markdown(
-        """
-        <div class="auth-card">
-            <div class="eyebrow">What this unlocks</div>
-            <div class="auth-feature-grid">
-                <div class="auth-features">
-                    <h4>Behavioral coaching</h4>
-                    <p>Surface specific seller actions that correlate with deal momentum.</p>
-                </div>
-                <div class="auth-features">
-                    <h4>Pipeline visibility</h4>
-                    <p>Review deal risk, stage health, and follow-up quality in one place.</p>
-                </div>
-                <div class="auth-features">
-                    <h4>Rep performance</h4>
-                    <p>Compare habits across sellers and tailor 1:1 coaching with evidence.</p>
-                </div>
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-
-st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
-
-col1, col2, col3 = st.columns(3)
-with col1:
-    render_stat_chip("Access Mode", "Mock frontend only")
-with col2:
-    render_stat_chip("Responsive Layout", "Desktop to mobile")
-with col3:
-    render_stat_chip("Design System", "Matches landing page")
-
-
-st.markdown(
-    """
-    <div class="auth-footer">
-        <div class="eyebrow">Consistent app experience</div>
-        <h3 style="margin:0; font-size:1.4rem;">A focused entry point that looks and feels like the rest of Sales Behavior Intelligence.</h3>
-        <p>
-            The page uses the same cyan-and-violet glassmorphism language, rounded surfaces, and compact spacing
-            from the landing screen so the auth experience remains part of one premium SaaS product.
-        </p>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
+    st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
