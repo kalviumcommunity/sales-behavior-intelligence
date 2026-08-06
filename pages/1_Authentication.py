@@ -446,8 +446,11 @@ with center_col:
 
             if submit:
                 if email and password:
+                    st.session_state.authenticated = True
+                    st.session_state.current_user_email = email
                     st.success("Mock sign-in complete. No backend request was made.")
                     st.caption(f"Remember me: {'Yes' if remember_me else 'No'}")
+                    st.switch_page("pages/dashboard.py")
                 else:
                     st.error("Enter both email and password to continue.")
 
@@ -472,8 +475,11 @@ with center_col:
 
             if submit_create:
                 if full_name and work_email and password_create:
+                    st.session_state.authenticated = True
+                    st.session_state.current_user_email = work_email
                     st.success("Mock account creation complete. Your workspace is ready for preview.")
                     st.caption(f"Team size: {team_size} · Use case: {use_case}")
+                    st.switch_page("pages/dashboard.py")
                 else:
                     st.error("Fill in your name, email, and password to continue.")
 
