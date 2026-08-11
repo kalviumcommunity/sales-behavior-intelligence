@@ -113,22 +113,31 @@ st.markdown(
         align-items: center;
     }
 
-    .sidebar-avatar,
-    .profile-chip__avatar,
-    .rep-card__avatar,
-    .sidebar-collapsed-card {
+    .rep-card__rank {
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 0.72rem;
+        font-weight: 700;
+    }
+
+    .rep-card__avatar {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
         display: grid;
         place-items: center;
-        border-radius: 18px;
+        border-radius: 12px;
         background: linear-gradient(135deg, rgba(79, 215, 255, 0.18), rgba(159, 134, 255, 0.18));
         border: 1px solid rgba(79, 215, 255, 0.18);
         color: var(--text);
         font-weight: 800;
+        font-size: 0.88rem;
     }
 
-    .sidebar-avatar {
-        width: 48px;
-        height: 48px;
+    .rep-card__name {
+        font-weight: 800;
+        font-size: 0.98rem;
     }
 
     .sidebar-brand__eyebrow,
@@ -309,7 +318,13 @@ st.markdown(
     .risk-card__grid,
     .rep-card__grid {
         display: grid;
+        grid-template-columns: repeat(3, 1fr);
         gap: 8px;
+    }
+
+    .rep-card__grid div {
+        display: grid;
+        gap: 4px;
     }
 
     .coaching-card__field strong,
@@ -320,23 +335,28 @@ st.markdown(
         color: var(--text);
         display: block;
     }
+    
+    .rep-card__grid span,
+    .coaching-card__field span,
+    .coaching-card__footer span,
+    .risk-card__grid span,
+    .risk-card__action span {
+        color: var(--muted);
+    }
 
     .coaching-card__rep {
         font-size: 1.05rem;
     }
 
-    .risk-card__header,
-    .rep-card__header {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        align-items: flex-start;
+    .risk-card__grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
     }
 
-    .risk-card__value {
-        font-size: 1.25rem;
-        font-weight: 800;
-        margin-top: 4px;
+    .risk-card__grid div {
+        display: grid;
+        gap: 4px;
     }
 
     .meeting-table {
@@ -362,10 +382,68 @@ st.markdown(
         min-height: 136px;
     }
 
+    .risk-card__header {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: flex-start;
+        margin-bottom: 8px;
+    }
+
+    .risk-card__company {
+        font-weight: 800;
+        font-size: 1rem;
+    }
+
+    .risk-card__value {
+        font-size: 1.05rem;
+        font-weight: 800;
+        margin-top: 4px;
+    }
+
+    .risk-card__score {
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 6px 10px;
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    .risk-card__action {
+        display: grid;
+        gap: 6px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
     .section-header h3 {
         margin: 0;
         font-size: 1.2rem;
         letter-spacing: -0.02em;
+    }
+
+    .coaching-card__header {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .coaching-card__eyebrow {
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        font-size: 0.72rem;
+    }
+
+    .coaching-card__rep {
+        font-weight: 800;
+        font-size: 1rem;
+        margin-top: 4px;
     }
 
     @media (max-width: 1100px) {

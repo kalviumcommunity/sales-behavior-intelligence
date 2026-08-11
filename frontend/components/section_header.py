@@ -8,9 +8,8 @@ def render_section_header(title, subtitle="", action_label=""):
             f"""
             <div class="section-header">
                 <div>
-                    <div class="section-header__eyebrow">Manager dashboard</div>
                     <h3>{title}</h3>
-                    <p>{subtitle}</p>
+                    {f'<p>{subtitle}</p>' if subtitle else ''}
                 </div>
             </div>
             """,

@@ -3,6 +3,12 @@ import streamlit as st
 from frontend.dashboard_data import DASHBOARD_NAV_ITEMS, CURRENT_USER
 
 
+PAGE_ROUTES = {
+    "Dashboard": "pages/dashboard.py",
+    "Deals": "pages/2_Deals.py",
+}
+
+
 def render_sidebar(collapsed=False, active_item="Dashboard"):
     if "dashboard_sidebar_collapsed" not in st.session_state:
         st.session_state.dashboard_sidebar_collapsed = collapsed
@@ -41,6 +47,9 @@ def render_sidebar(collapsed=False, active_item="Dashboard"):
                     st.session_state.pop("authenticated", None)
                     st.session_state.pop("dashboard_active_item", None)
                     st.switch_page("pages/1_Authentication.py")
+                elif item["label"] in PAGE_ROUTES:
+                    st.session_state.dashboard_active_item = item["label"]
+                    st.switch_page(PAGE_ROUTES[item["label"]])
                 else:
                     st.session_state.dashboard_active_item = item["label"]
                     st.toast(f"{item['label']} selected", icon=item["icon"])
