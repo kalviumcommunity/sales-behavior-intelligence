@@ -15,6 +15,14 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# Initialize Authentication State
+if 'logged_in' not in st.session_state:
+    st.session_state.logged_in = False
+if 'role' not in st.session_state:
+    st.session_state.role = None
+if 'username' not in st.session_state:
+    st.session_state.username = None
+
 # Custom CSS for rich aesthetics and clean UI styling
 st.markdown(
     """
