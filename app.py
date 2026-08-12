@@ -1,8 +1,12 @@
-import streamlit as st
+from frontend.landing_page import render_landing_page
 
-# Imports from modular frontend package
-from frontend.mock_data import MOCK_REPS, MOCK_DEALS, MOCK_TIMELINES, MOCK_COACHING_CARDS
-from frontend.views.admin_dashboard import render_admin_dashboard
+
+try:
+    from frontend.views.auth import render_auth_page
+    from frontend.views.consumer_dashboard import render_consumer_dashboard
+    from frontend.views.admin_dashboard import render_admin_dashboard
+except ImportError:
+    pass # Handled below if PRs are not merged sequentially
 
 # Page Configuration
 st.set_page_config(
@@ -54,8 +58,29 @@ st.caption("Evidence-based coaching insights extracted from CRM events, email ti
 
 st.markdown("---")
 
-# Render the Admin Dashboard (Temporary until role routing is in place)
-render_admin_dashboard(MOCK_REPS, MOCK_DEALS, MOCK_TIMELINES, MOCK_COACHING_CARDS)
+# Routing Logic
+if not st.session_state.get('logged_in', False):
+    if 'render_auth_page' in globals():
+        render_auth_page()
+    else:
+        st.warning("Authentication module pending merge.")
+else:
+    if st.session_state.get('role') == 'admin':
+        if 'render_admin_dashboard' in globals():
+            render_admin_dashboard(MOCK_REPS, MOCK_DEALS, MOCK_TIMELINES, MOCK_COACHING_CARDS)
+        else:
+            # Inline fallback for admin dashboard if PR 4 is not merged yet
+            render_kpi_metrics(MOCK_DEALS)
+            st.markdown("<br>", unsafe_allow_html=True)
+            tab1, tab2, tab3 = st.tabs(["📊 Pipeline Risk Matrix", "🔍 Deal Deep Dive & Timeline", "👤 Rep Coaching & Analytics"])
+            with tab1: render_pipeline_overview(MOCK_DEALS)
+            with tab2: render_deal_deep_dive(MOCK_DEALS, MOCK_TIMELINES, MOCK_COACHING_CARDS)
+            with tab3: render_rep_coaching(MOCK_REPS, MOCK_DEALS)
+    else:
+        if 'render_consumer_dashboard' in globals():
+            render_consumer_dashboard()
+        else:
+            st.warning("Consumer Dashboard module pending merge.")
 
 # Sidebar Information
 with st.sidebar:
@@ -63,9 +88,22 @@ with st.sidebar:
     st.markdown("### **Sales Behavior Intelligence**")
     st.caption("Sprint 1 Frontend Skeleton")
     st.markdown("---")
-    st.markdown("##### 👥 Active Persona View")
-    st.radio("Switch Role Perspective", ["David (Sales Manager)", "Maya (Sales Rep)", "Priya (RevOps Lead)"])
-    st.markdown("---")
+    
+    if st.session_state.get('logged_in', False):
+        st.markdown(f"**👤 User:** {st.session_state.get('username')}")
+        st.markdown(f"**🛡️ Role:** {str(st.session_state.get('role')).capitalize()}")
+        if st.button("Log Out", use_container_width=True):
+            st.session_state.logged_in = False
+            st.session_state.role = None
+            st.session_state.username = None
+            st.rerun()
+        st.markdown("---")
+    else:
+        st.markdown("##### 👥 Active Persona View")
+        st.radio("Switch Role Perspective", ["David (Sales Manager)", "Maya (Sales Rep)", "Priya (RevOps Lead)"])
+        st.markdown("---")
+
     st.markdown("##### 🛠️ System Status")
     st.success("Frontend UI: Active (Mock Mode)")
     st.info("Backend API: Connecting in Sprint 2")
+render_landing_page()

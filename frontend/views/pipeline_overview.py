@@ -9,6 +9,24 @@ def render_pipeline_overview(deals):
     st.markdown("### 📊 Active Pipeline Risk Matrix")
     st.caption("Identify deals requiring immediate behavioral coaching intervention.")
 
+    st.markdown("""
+        <style>
+        .deal-card {
+            background-color: #ffffff; 
+            border: 1px solid #e5e7eb; 
+            padding: 14px 18px; 
+            border-radius: 10px; 
+            margin-bottom: 12px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .deal-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
     # Filter Bar
     col1, col2, col3 = st.columns([3, 3, 3])
     with col1:
@@ -36,7 +54,7 @@ def render_pipeline_overview(deals):
         with st.container():
             st.markdown(
                 f"""
-                <div style="background-color: #ffffff; border: 1px solid #e5e7eb; padding: 14px 18px; border-radius: 10px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+                <div class="deal-card">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span style="font-size: 1.1rem; font-weight: 700; color: #111827;">{deal['name']}</span>
                         <span style="font-weight: 600; font-size: 0.9rem;">{risk_badge} (Score: {deal['risk_score']}/100)</span>
