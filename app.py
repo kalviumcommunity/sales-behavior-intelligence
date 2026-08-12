@@ -1,11 +1,5 @@
-import streamlit as st
+from frontend.landing_page import render_landing_page
 
-# Imports from modular frontend package
-from frontend.mock_data import MOCK_REPS, MOCK_DEALS, MOCK_TIMELINES, MOCK_COACHING_CARDS
-from frontend.components.metrics import render_kpi_metrics
-from frontend.views.pipeline_overview import render_pipeline_overview
-from frontend.views.deal_deep_dive import render_deal_deep_dive
-from frontend.views.rep_coaching import render_rep_coaching
 
 # Page Configuration
 st.set_page_config(

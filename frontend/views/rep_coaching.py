@@ -20,6 +20,7 @@ def render_rep_coaching(reps, deals):
         st.metric("Assigned Active Deals", len(rep_deals))
     with col2:
         st.metric("Quota Attainment", f"{selected_rep['quota_attainment']}%")
+        st.progress(min(selected_rep['quota_attainment'] / 100.0, 1.0))
     with col3:
         st.metric("High Risk Deals", len(high_risk_rep_deals), delta="Needs Coaching" if high_risk_rep_deals else "On Track", delta_color="inverse")
 

@@ -7,7 +7,8 @@ import streamlit as st
 def render_deal_timeline(timeline_events):
     """Renders visual timeline list of deal activities."""
     if not timeline_events:
-        st.info("No timeline events logged for this deal yet.")
+        st.warning("No Activity Found", icon="📭")
+        st.caption("There are no logged calls, emails, or meetings for this deal. This is a significant behavioral risk flag.")
         return
 
     st.subheader("🗓️ Chronological Activity & Behavior Timeline")
