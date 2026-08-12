@@ -2,10 +2,7 @@ import streamlit as st
 
 # Imports from modular frontend package
 from frontend.mock_data import MOCK_REPS, MOCK_DEALS, MOCK_TIMELINES, MOCK_COACHING_CARDS
-from frontend.components.metrics import render_kpi_metrics
-from frontend.views.pipeline_overview import render_pipeline_overview
-from frontend.views.deal_deep_dive import render_deal_deep_dive
-from frontend.views.rep_coaching import render_rep_coaching
+from frontend.views.admin_dashboard import render_admin_dashboard
 
 # Page Configuration
 st.set_page_config(
@@ -57,26 +54,8 @@ st.caption("Evidence-based coaching insights extracted from CRM events, email ti
 
 st.markdown("---")
 
-# Global Top KPI Bar
-render_kpi_metrics(MOCK_DEALS)
-
-st.markdown("<br>", unsafe_allow_html=True)
-
-# Main Dashboard Navigation Tabs
-tab1, tab2, tab3 = st.tabs([
-    "📊 Pipeline Risk Matrix",
-    "🔍 Deal Deep Dive & Timeline",
-    "👤 Rep Coaching & Analytics",
-])
-
-with tab1:
-    render_pipeline_overview(MOCK_DEALS)
-
-with tab2:
-    render_deal_deep_dive(MOCK_DEALS, MOCK_TIMELINES, MOCK_COACHING_CARDS)
-
-with tab3:
-    render_rep_coaching(MOCK_REPS, MOCK_DEALS)
+# Render the Admin Dashboard (Temporary until role routing is in place)
+render_admin_dashboard(MOCK_REPS, MOCK_DEALS, MOCK_TIMELINES, MOCK_COACHING_CARDS)
 
 # Sidebar Information
 with st.sidebar:
