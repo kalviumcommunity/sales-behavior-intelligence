@@ -84,9 +84,21 @@ with st.sidebar:
     st.markdown("### **Sales Behavior Intelligence**")
     st.caption("Sprint 1 Frontend Skeleton")
     st.markdown("---")
-    st.markdown("##### 👥 Active Persona View")
-    st.radio("Switch Role Perspective", ["David (Sales Manager)", "Maya (Sales Rep)", "Priya (RevOps Lead)"])
-    st.markdown("---")
+    
+    if st.session_state.get('logged_in', False):
+        st.markdown(f"**👤 User:** {st.session_state.get('username')}")
+        st.markdown(f"**🛡️ Role:** {str(st.session_state.get('role')).capitalize()}")
+        if st.button("Log Out", use_container_width=True):
+            st.session_state.logged_in = False
+            st.session_state.role = None
+            st.session_state.username = None
+            st.rerun()
+        st.markdown("---")
+    else:
+        st.markdown("##### 👥 Active Persona View")
+        st.radio("Switch Role Perspective", ["David (Sales Manager)", "Maya (Sales Rep)", "Priya (RevOps Lead)"])
+        st.markdown("---")
+
     st.markdown("##### 🛠️ System Status")
     st.success("Frontend UI: Active (Mock Mode)")
     st.info("Backend API: Connecting in Sprint 2")
