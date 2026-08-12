@@ -88,5 +88,8 @@ with st.sidebar:
     st.radio("Switch Role Perspective", ["David (Sales Manager)", "Maya (Sales Rep)", "Priya (RevOps Lead)"])
     st.markdown("---")
     st.markdown("##### 🛠️ System Status")
-    st.success("Frontend UI: Active (Mock Mode)")
-    st.info("Backend API: Connecting in Sprint 2")
+    status_col1, status_col2 = st.columns(2)
+    with status_col1:
+        st.success("UI: Mock", icon="✅")
+    with status_col2:
+        st.info("API: Spr2", icon="⏳")
