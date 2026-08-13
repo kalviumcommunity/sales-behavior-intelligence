@@ -200,70 +200,96 @@ def render_landing_page():
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 18px;
-            border-radius: 999px;
+            padding: 10px 20px;
+            border-radius: 8px;
             text-decoration: none;
-            color: #071019;
-            background: linear-gradient(135deg, var(--cyan), var(--violet));
-            font-weight: 800;
+            color: #F5F7FB;
+            background: rgba(94, 231, 255, 0.15);
+            border: 1.5px solid rgba(94, 231, 255, 0.3);
+            font-weight: 700;
+            font-size: 14px;
             white-space: nowrap;
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-cta:hover {
+            background: rgba(94, 231, 255, 0.25);
+            border-color: rgba(94, 231, 255, 0.5);
+            color: #5EE7FF;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(94, 231, 255, 0.15);
+        }
+
+        .nav-cta:active {
+            transform: translateY(0);
         }
 
         .hero-shell {
             position: relative;
-            overflow: visible;
-            border: none;
-            background: transparent;
-            border-radius: 0;
-            box-shadow: none;
-            padding: 60px 0;
+            overflow: hidden;
+            border: 1px solid rgba(94, 231, 255, 0.1);
+            background: linear-gradient(135deg, rgba(11, 18, 32, 0.8), rgba(11, 18, 32, 0.6));
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(94, 231, 255, 0.08);
+            padding: 60px;
         }
 
         .hero-shell:before {
-            display: none;
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 50%, rgba(94, 231, 255, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(139, 124, 255, 0.06), transparent 28%);
+            pointer-events: none;
         }
 
         .eyebrow {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            font-size: 0.74rem;
-            letter-spacing: 0.18em;
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: var(--muted);
+            color: #A7B0C0;
+            font-weight: 700;
         }
 
         .eyebrow:before {
             content: "";
-            width: 9px;
-            height: 9px;
-            border-radius: 999px;
-            background: linear-gradient(135deg, var(--cyan), var(--violet));
-            box-shadow: 0 0 18px rgba(87, 216, 255, 0.48);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #5EE7FF;
+            box-shadow: 0 0 12px rgba(94, 231, 255, 0.4);
         }
 
         .hero-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 60px;
             align-items: center;
+            position: relative;
+            z-index: 1;
         }
 
         .hero-title {
             margin: 16px 0 24px;
-            font-size: clamp(48px, 6vw, 72px);
+            font-size: clamp(42px, 5vw, 64px);
             line-height: 1.1;
-            letter-spacing: -0.03em;
-            max-width: 650px;
-            color: var(--text) !important;
-            font-weight: 700;
+            letter-spacing: -0.04em;
+            max-width: 14ch;
+            color: #F5F7FB;
+            font-weight: 800;
         }
 
         .hero-copy {
             max-width: 580px;
-            color: var(--muted) !important;
-            font-size: 18px;
-            line-height: 1.6;
+            color: #A7B0C0;
+            font-size: 16px;
+            line-height: 1.7;
             margin-bottom: 32px;
         }
 
@@ -297,34 +323,47 @@ def render_landing_page():
             align-items: center;
             justify-content: center;
             padding: 12px 28px;
-            border-radius: 8px;
+            border-radius: 10px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 15px;
+            font-weight: 700;
+            font-size: 14px;
             height: 48px;
-            transition: all 0.2s ease;
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.02em;
+            cursor: pointer;
         }
 
         .cta-button {
-            color: #fff;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            color: #070A12;
+            background: linear-gradient(135deg, #5EE7FF, #8B7CFF);
             border: 1px solid transparent;
+            box-shadow: 0 8px 24px rgba(94, 231, 255, 0.2);
         }
 
         .cta-button:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 36px rgba(94, 231, 255, 0.3);
+        }
+
+        .cta-button:active {
+            transform: translateY(-1px);
         }
 
         .cta-button-secondary {
-            color: var(--text);
-            border: 1px solid rgba(148, 163, 184, 0.3);
-            background: transparent;
+            color: #F5F7FB;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.04);
         }
 
         .cta-button-secondary:hover {
-            border-color: rgba(148, 163, 184, 0.6);
-            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(94, 231, 255, 0.4);
+            background: rgba(94, 231, 255, 0.08);
+            color: #5EE7FF;
+            transform: translateY(-3px);
+        }
+
+        .cta-button-secondary:active {
+            transform: translateY(-1px);
         }
 
         @media (max-width: 640px) {
@@ -341,30 +380,39 @@ def render_landing_page():
         .metric-row {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 16px;
-            max-width: 500px;
+            gap: 14px;
+            max-width: 560px;
         }
 
         .metric-chip {
-            padding: 16px 20px;
+            padding: 18px 20px;
             border-radius: 12px;
-            border: 1px solid rgba(148, 163, 184, 0.15);
-            background: rgba(11, 18, 32, 0.5);
+            border: 1px solid rgba(94, 231, 255, 0.12);
+            background: linear-gradient(135deg, rgba(94, 231, 255, 0.04), rgba(139, 124, 255, 0.02));
+            transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .metric-chip:hover {
+            border-color: rgba(94, 231, 255, 0.25);
+            background: linear-gradient(135deg, rgba(94, 231, 255, 0.08), rgba(139, 124, 255, 0.05));
         }
 
         .metric-chip strong {
             display: block;
-            font-size: 24px;
-            margin-bottom: 6px;
-            font-weight: 700;
+            font-size: 26px;
+            margin-bottom: 8px;
+            font-weight: 800;
+            color: #F5F7FB;
+            line-height: 1.1;
         }
 
         .metric-chip span {
-            color: var(--muted);
-            font-size: 12px;
+            color: #697386;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.1em;
             line-height: 1.4;
+            font-weight: 600;
         }
 
         @media (max-width: 640px) {
@@ -375,11 +423,11 @@ def render_landing_page():
 
         .mockup {
             position: relative;
-            padding: 24px;
-            border-radius: 16px;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.6));
-            border: 1px solid rgba(148, 163, 184, 0.12);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 28px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(10, 16, 31, 0.95), rgba(8, 13, 25, 0.85));
+            border: 1px solid rgba(94, 231, 255, 0.15);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 60px rgba(94, 231, 255, 0.08);
         }
 
         .mockup-top {
@@ -387,7 +435,7 @@ def render_landing_page():
             align-items: center;
             justify-content: space-between;
             gap: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .mockup-dots {
@@ -396,10 +444,23 @@ def render_landing_page():
         }
 
         .mockup-dots span {
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.12);
+            transition: all 200ms;
+        }
+
+        .mockup-dots span:first-child {
+            background: #FB7185;
+        }
+
+        .mockup-dots span:nth-child(2) {
+            background: #FBBF24;
+        }
+
+        .mockup-dots span:nth-child(3) {
+            background: #4ADE80;
         }
 
         .mockup-panel {
@@ -416,55 +477,59 @@ def render_landing_page():
         .mockup-stage,
         .mockup-chart,
         .mockup-insight {
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            padding: 18px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(94, 231, 255, 0.1);
+            padding: 20px;
         }
 
         .mockup-stage {
             display: grid;
-            gap: 10px;
+            gap: 12px;
         }
 
         .mockup-stage__title {
-            font-size: 0.82rem;
-            letter-spacing: 0.14em;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: var(--muted);
+            color: #697386;
+            font-weight: 700;
         }
 
         .mockup-stage__value {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
+            color: #F5F7FB;
+            line-height: 1.2;
         }
 
         .mockup-bars {
             display: grid;
-            gap: 10px;
+            gap: 12px;
         }
 
         .mockup-bar {
             display: grid;
-            gap: 6px;
+            gap: 8px;
         }
 
         .mockup-bar span {
-            color: var(--muted);
+            color: #A7B0C0;
             font-size: 0.82rem;
+            font-weight: 500;
         }
 
         .mockup-track {
-            height: 10px;
+            height: 8px;
             border-radius: 999px;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.08);
             overflow: hidden;
         }
 
         .mockup-fill {
             height: 100%;
             border-radius: inherit;
-            background: linear-gradient(135deg, var(--cyan), var(--violet));
+            background: linear-gradient(90deg, #5EE7FF, #8B7CFF);
         }
 
         .section-heading {
