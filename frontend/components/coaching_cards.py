@@ -45,8 +45,8 @@ def render_coaching_cards(coaching_cards):
 
             col1, col2, col3 = st.columns([2, 2, 4])
             with col1:
-                if st.button(f"Mark Coached", key=f"btn_coached_{card['id']}"):
+                if st.button(f"Mark Coached", key=f"btn_coached_{card['id']}", type="primary", use_container_width=True):
                     st.toast(f"Marked '{card['flag_title']}' as coached with rep!", icon="✅")
             with col2:
-                if st.button(f"Send to Slack/Email", key=f"btn_share_{card['id']}"):
+                if st.button(f"Send to Slack/Email", key=f"btn_share_{card['id']}", use_container_width=True):
                     st.toast("Coaching recommendation shared with rep.", icon="📩")

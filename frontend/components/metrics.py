@@ -17,6 +17,7 @@ def render_kpi_metrics(deals):
             label="Total Active Pipeline",
             value=f"${total_pipeline:,.0f}",
             delta=f"{len(deals)} Active Deals",
+            help="Total monetary value of all currently active deals in the pipeline.",
         )
 
     with col2:
@@ -25,6 +26,7 @@ def render_kpi_metrics(deals):
             value=f"${at_risk_amount:,.0f}",
             delta=f"{len(high_risk_deals)} Deals Flagged",
             delta_color="inverse",
+            help="Total value of deals that have behavioral risk flags indicating a high likelihood of loss.",
         )
 
     with col3:
@@ -33,6 +35,7 @@ def render_kpi_metrics(deals):
             value=f"{avg_risk_score} / 100",
             delta="-12 vs last month" if avg_risk_score < 60 else "+8 vs last month",
             delta_color="inverse" if avg_risk_score > 50 else "normal",
+            help="The average risk score across all active deals. A higher score means greater risk.",
         )
 
     with col4:
@@ -40,4 +43,5 @@ def render_kpi_metrics(deals):
             label="Coaching Action Rate",
             value="68%",
             delta="+14% adoption",
+            help="Percentage of AI-recommended coaching actions that managers have marked as completed.",
         )
