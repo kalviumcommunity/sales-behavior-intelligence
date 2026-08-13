@@ -5,12 +5,10 @@ def render_chart_card(title, subtitle, chart):
     st.markdown(
         f"""
         <div class="chart-card">
-            <div class="section-header">
-                <div>
-                    <div class="section-header__eyebrow">Insight</div>
-                    <h3>{title}</h3>
-                    <p>{subtitle}</p>
-                </div>
+            <div class="chart-card__header">
+                <div class="section-header__eyebrow">Insight</div>
+                <h3 style="margin: 6px 0 4px; font-size: 1.05rem; letter-spacing: -0.02em;">{title}</h3>
+                <p style="margin: 0; color: var(--muted); font-size: 0.88rem; line-height: 1.5;">{subtitle}</p>
             </div>
         </div>
         """,
