@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session
 from backend.schemas.user import UserCreate, UserUpdate
 from backend.repositories.user import UserRepository
 from backend.models.user import User
+from backend.auth.security import get_password_hash
 
 
 class UserService:
@@ -22,8 +23,8 @@ class UserService:
         if self.repository.username_exists(user_in.username):
             raise ValueError("Username already taken")
         
-        # Hash password will be handled in auth service
         user_data = user_in.model_dump(exclude={"password"})
+        user_data["hashed_password"] = get_password_hash(user_in.password)
         return self.repository.create(user_data)
     
     def get_user(self, user_id: str) -> Optional[User]:
