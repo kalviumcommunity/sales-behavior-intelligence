@@ -5,6 +5,7 @@ from .deal import DealCreate, DealUpdate, DealResponse, DealListResponse
 from .activity import ActivityCreate, ActivityUpdate, ActivityResponse
 from .timeline import TimelineEventCreate, TimelineEventUpdate, TimelineEventResponse, TimelineListResponse
 from .coaching import CoachingCardCreate, CoachingCardUpdate, CoachingCardResponse, CoachingListResponse
+from .analytics import ManagerSummaryResponse, RepPerformanceItem, RiskBreakdown, StageBreakdownItem
 
 __all__ = [
     "UserCreate",
@@ -31,4 +32,8 @@ __all__ = [
     "CoachingCardUpdate",
     "CoachingCardResponse",
     "CoachingListResponse",
+    "ManagerSummaryResponse",
+    "RepPerformanceItem",
+    "RiskBreakdown",
+    "StageBreakdownItem",
 ]
