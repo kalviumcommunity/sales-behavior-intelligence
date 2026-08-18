@@ -4,482 +4,331 @@ Unified shell for all authenticated pages including:
 - Left sidebar navigation (~240px)
 - Top navigation bar with breadcrumb
 - Main content area with consistent padding
-- Responsive mobile drawer
 """
 
 import streamlit as st
 
-
-def render_app_shell():
-    """Render the complete application shell."""
-    st.markdown(get_shell_css(), unsafe_allow_html=True)
-    
-    # Initialize session state for sidebar
-    if "sidebar_collapsed" not in st.session_state:
-        st.session_state.sidebar_collapsed = False
-
-
-def get_shell_css():
-    """Get the application shell CSS."""
+def get_sidebar_css():
+    """CSS specifically for the sidebar and topbar layout in authenticated pages."""
     return """
     <style>
+    /* HIDE NATIVE STREAMLIT MULTIPAGE NAV */
+    [data-testid="stSidebarNav"],
+    [data-testid="stSidebarNavSeparator"],
+    [data-testid="stSidebarNavItems"],
+    section[data-testid="stSidebar"] > div:first-child > div:first-child > div:first-child > nav,
+    section[data-testid="stSidebar"] ul.streamlit-menu { display: none !important; }
+
     /* SIDEBAR STYLES */
     section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, rgba(7, 10, 18, 0.98) 0%, rgba(11, 16, 26, 0.96) 100%) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+        background: var(--sbi-bg-secondary) !important;
+        border-right: 1px solid var(--sbi-border-subtle) !important;
         width: 240px !important;
-        padding: 24px 16px !important;
+        min-width: 240px !important;
+    }
+    section[data-testid="stSidebar"] > div:first-child {
+        padding: var(--sbi-sp-4) !important;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
     }
 
-    .sidebar-brand {
+    .sbi-sidebar-brand {
         display: flex;
         align-items: center;
         gap: 12px;
-        margin-bottom: 32px;
-        padding: 12px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.02);
+        margin-bottom: var(--sbi-sp-8);
+        padding: 4px;
     }
 
-    .sidebar-brand-icon {
-        width: 40px;
-        height: 40px;
-        border-radius: 8px;
-        background: linear-gradient(135deg, #5EE7FF 0%, #8B7CFF 100%);
+    .sbi-sidebar-brand-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--sbi-r-md);
+        background: linear-gradient(135deg, var(--sbi-cyan), var(--sbi-violet));
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #070A12;
+        color: var(--sbi-text-inverse);
         font-weight: 800;
-        font-size: 18px;
+        font-size: 16px;
         flex-shrink: 0;
     }
 
-    .sidebar-brand-text {
+    .sbi-sidebar-brand-text {
         flex: 1;
         min-width: 0;
     }
-
-    .sidebar-brand-title {
+    .sbi-sidebar-brand-title {
         font-size: 13px;
         font-weight: 700;
-        color: #F5F7FB;
+        color: var(--sbi-text-primary);
         margin: 0;
         line-height: 1.2;
         letter-spacing: -0.01em;
     }
 
-    .sidebar-brand-subtitle {
-        font-size: 11px;
-        color: #697386;
-        margin: 2px 0 0 0;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-    }
-
-    /* NAVIGATION SECTION */
-    .nav-section {
-        margin-bottom: 28px;
-    }
-
-    .nav-section-label {
+    .sbi-nav-section-label {
         font-size: 10px;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.12em;
-        color: #697386;
-        margin-bottom: 8px;
-        padding: 0 4px;
+        color: var(--sbi-text-muted);
+        margin: var(--sbi-sp-4) 0 var(--sbi-sp-2) 4px;
         display: block;
     }
 
-    .nav-items {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
+    .stButton > button.sbi-nav-item {
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        color: var(--sbi-text-secondary) !important;
+        justify-content: flex-start !important;
+        padding: 8px 12px !important;
+        font-weight: 500 !important;
+        font-size: 14px !important;
+        width: 100% !important;
     }
-
-    .nav-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        padding: 10px 12px;
-        border-radius: 10px;
-        background: transparent;
-        border: 1px solid transparent;
-        color: #A7B0C0;
-        font-size: 14px;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
-        text-decoration: none;
+    
+    .stButton > button.sbi-nav-item:hover {
+        background: rgba(255,255,255,0.03) !important;
+        color: var(--sbi-text-primary) !important;
     }
-
-    .nav-item:hover {
-        background: rgba(255, 255, 255, 0.04);
-        color: #F5F7FB;
-    }
-
-    .nav-item.active {
-        background: rgba(94, 231, 255, 0.08);
-        border-color: rgba(94, 231, 255, 0.2);
-        color: #5EE7FF;
-        font-weight: 600;
-        position: relative;
-    }
-
-    .nav-item.active::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        width: 3px;
-        background: #5EE7FF;
-        border-radius: 0 3px 3px 0;
-    }
-
-    .nav-icon {
-        width: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 16px;
-        flex-shrink: 0;
-    }
-
-    .nav-label {
-        flex: 1;
+    
+    .stButton > button.sbi-nav-item-active {
+        background: var(--sbi-cyan-dim) !important;
+        border: 1px solid rgba(94,231,255,0.2) !important;
+        color: var(--sbi-cyan) !important;
+        justify-content: flex-start !important;
+        padding: 8px 12px !important;
+        font-weight: 600 !important;
+        font-size: 14px !important;
+        width: 100% !important;
     }
 
     /* USER PROFILE SECTION */
-    .sidebar-user {
-        position: absolute;
-        bottom: 16px;
-        left: 16px;
-        right: 16px;
+    .sbi-sidebar-user {
+        margin-top: auto;
         display: flex;
         align-items: center;
         gap: 12px;
         padding: 12px;
         background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
+        border: 1px solid var(--sbi-border-subtle);
+        border-radius: var(--sbi-r-md);
     }
-
-    .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 8px;
-        background: linear-gradient(135deg, #8B7CFF 0%, #5EE7FF 100%);
+    .sbi-user-avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: var(--sbi-r-sm);
+        background: linear-gradient(135deg, var(--sbi-violet), var(--sbi-cyan));
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #070A12;
+        color: var(--sbi-text-inverse);
         font-weight: 700;
-        font-size: 14px;
-        flex-shrink: 0;
-    }
-
-    .user-info {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .user-name {
         font-size: 13px;
-        font-weight: 600;
-        color: #F5F7FB;
-        margin: 0;
-    }
-
-    .user-role {
-        font-size: 11px;
-        color: #697386;
-        margin: 2px 0 0 0;
-    }
-
-    .user-status {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #4ADE80;
         flex-shrink: 0;
     }
+    .sbi-user-info { flex: 1; min-width: 0; }
+    .sbi-user-name { font-size: 13px; font-weight: 600; color: var(--sbi-text-primary); margin: 0; }
+    .sbi-user-role { font-size: 11px; color: var(--sbi-text-muted); margin: 2px 0 0 0; }
 
     /* TOP BAR STYLES */
-    .topbar {
+    .sbi-topbar {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 16px 32px;
-        background: rgba(16, 23, 34, 0.4);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        margin-bottom: 32px;
+        padding: var(--sbi-sp-4) var(--sbi-sp-6);
+        background: var(--sbi-bg-secondary);
+        border-bottom: 1px solid var(--sbi-border-subtle);
+        margin: -var(--sbi-sp-6) -var(--sbi-sp-8) var(--sbi-sp-6) -var(--sbi-sp-8); /* Negative margin to hit edges */
     }
 
-    .topbar-breadcrumb {
+    .sbi-topbar-breadcrumb {
         display: flex;
         align-items: center;
         gap: 8px;
         font-size: 13px;
-        color: #697386;
+        color: var(--sbi-text-muted);
     }
+    .sbi-topbar-breadcrumb a { color: var(--sbi-text-primary); text-decoration: none; font-weight: 500; }
+    .sbi-topbar-breadcrumb .separator { color: var(--sbi-text-muted); }
 
-    .topbar-breadcrumb a {
-        color: #5EE7FF;
-        text-decoration: none;
-        transition: color 200ms;
-    }
-
-    .topbar-breadcrumb a:hover {
-        color: #F5F7FB;
-    }
-
-    .topbar-breadcrumb .separator {
-        color: #697386;
-    }
-
-    .topbar-actions {
+    .sbi-topbar-actions {
         display: flex;
         align-items: center;
-        gap: 16px;
+        gap: 12px;
     }
-
-    .topbar-icon-button {
-        width: 40px;
-        height: 40px;
+    
+    .sbi-topbar-icon {
+        width: 36px;
+        height: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        color: #A7B0C0;
+        border-radius: var(--sbi-r-sm);
+        background: var(--sbi-bg-surface);
+        border: 1px solid var(--sbi-border-subtle);
+        color: var(--sbi-text-secondary);
         cursor: pointer;
-        transition: all 200ms;
-        font-size: 18px;
+        transition: all var(--sbi-t-fast);
+        font-size: 16px;
     }
-
-    .topbar-icon-button:hover {
-        background: rgba(255, 255, 255, 0.08);
-        color: #F5F7FB;
+    .sbi-topbar-icon:hover {
+        background: var(--sbi-bg-hover);
+        color: var(--sbi-text-primary);
     }
-
+    
     /* PAGE HEADER */
-    .page-header {
-        margin-bottom: 32px;
+    .sbi-page-header {
+        margin-bottom: var(--sbi-sp-8);
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
     }
-
-    .page-title {
+    .sbi-page-title {
         font-size: 32px;
-        font-weight: 800;
-        color: #F5F7FB;
-        margin: 0 0 8px 0;
-        letter-spacing: -0.03em;
-        line-height: 1.2;
+        font-weight: 700;
+        color: var(--sbi-text-primary);
+        margin: 0 0 var(--sbi-sp-1) 0;
+        letter-spacing: -0.02em;
     }
-
-    .page-subtitle {
+    .sbi-page-subtitle {
         font-size: 15px;
-        color: #A7B0C0;
+        color: var(--sbi-text-secondary);
         margin: 0;
-        line-height: 1.5;
     }
-
-    /* RESPONSIVE */
+    
     @media (max-width: 1024px) {
-        section[data-testid="stSidebar"] {
-            width: 200px !important;
-            padding: 20px 12px !important;
-        }
-
-        .topbar {
-            padding: 12px 20px;
-            margin-bottom: 20px;
-        }
-
-        .page-title {
-            font-size: 28px;
-        }
+        .sbi-topbar { margin: -var(--sbi-sp-4) -var(--sbi-sp-5) var(--sbi-sp-5) -var(--sbi-sp-5); }
     }
-
     @media (max-width: 768px) {
-        section[data-testid="stSidebar"] {
-            width: 100% !important;
-            padding: 16px !important;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            height: 100vh;
-            overflow-y: auto;
-            transform: translateX(-100%);
-            transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        section[data-testid="stSidebar"].open {
-            transform: translateX(0);
-        }
-
-        .main .block-container {
-            margin-left: 0 !important;
-        }
-
-        .topbar {
-            padding: 12px 16px;
-            margin-bottom: 16px;
-        }
-
-        .page-title {
-            font-size: 24px;
-        }
-
-        .page-subtitle {
-            font-size: 13px;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .topbar-actions {
-            gap: 8px;
-        }
-
-        .topbar-icon-button {
-            width: 36px;
-            height: 36px;
-            font-size: 16px;
-        }
-
-        .page-title {
-            font-size: 20px;
-        }
+        .sbi-topbar { margin: -var(--sbi-sp-3) -var(--sbi-sp-4) var(--sbi-sp-4) -var(--sbi-sp-4); }
+        .sbi-page-title { font-size: 24px; }
     }
     </style>
     """
 
-
-def render_sidebar_navigation():
-    """Render the sidebar navigation."""
+def render_sidebar(active_item="Dashboard"):
+    """Render the unified sidebar navigation."""
+    st.markdown(get_sidebar_css(), unsafe_allow_html=True)
+    
     with st.sidebar:
         # Brand
         st.markdown(
             """
-            <div class='sidebar-brand'>
-                <div class='sidebar-brand-icon'>◆</div>
-                <div class='sidebar-brand-text'>
-                    <p class='sidebar-brand-title'>Sales Behavior</p>
-                    <p class='sidebar-brand-subtitle'>Intelligence</p>
+            <div class='sbi-sidebar-brand'>
+                <div class='sbi-sidebar-brand-icon'>SBI</div>
+                <div class='sbi-sidebar-brand-text'>
+                    <p class='sbi-sidebar-brand-title'>Sales Behavior<br>Intelligence</p>
                 </div>
             </div>
             """,
             unsafe_allow_html=True,
         )
 
-        st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
-
         # Overview Section
-        st.markdown("<div class='nav-section-label'>OVERVIEW</div>", unsafe_allow_html=True)
-        if st.button("📊 Dashboard", key="nav_dashboard", use_container_width=True):
-            st.session_state.current_page = "dashboard"
+        st.markdown("<div class='sbi-nav-section-label'>OVERVIEW</div>", unsafe_allow_html=True)
+        if st.button("📊 Dashboard", key="nav_dashboard", use_container_width=True, type="primary" if active_item == "Dashboard" else "secondary"):
             st.switch_page("pages/dashboard.py")
 
-        st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
-
         # Pipeline Section
-        st.markdown("<div class='nav-section-label'>PIPELINE</div>", unsafe_allow_html=True)
-        if st.button("◆ Deals", key="nav_deals", use_container_width=True):
-            st.session_state.current_page = "deals"
+        st.markdown("<div class='sbi-nav-section-label'>PIPELINE</div>", unsafe_allow_html=True)
+        if st.button("◆ Deals", key="nav_deals", use_container_width=True, type="primary" if active_item == "Deals" else "secondary"):
             st.switch_page("pages/2_Deals.py")
 
-        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
-
         # Insights Section
-        st.markdown("<div class='nav-section-label'>INSIGHTS</div>", unsafe_allow_html=True)
-        if st.button("👥 Sales Reps", key="nav_reps", use_container_width=True):
-            st.toast("Coming soon", icon="🚀")
-
-        st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
-        if st.button("✦ AI Coaching", key="nav_coaching", use_container_width=True):
-            st.toast("Coming soon", icon="🚀")
-
-        st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
-        if st.button("▣ Analytics", key="nav_analytics", use_container_width=True):
-            st.toast("Coming soon", icon="🚀")
-
-        st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div class='sbi-nav-section-label'>INSIGHTS</div>", unsafe_allow_html=True)
+        if st.button("👥 Sales Reps", key="nav_reps", use_container_width=True, type="primary" if active_item == "Sales Reps" else "secondary"):
+            st.switch_page("pages/4_Sales_Reps.py")
+        if st.button("✦ AI Coaching", key="nav_coaching", use_container_width=True, type="primary" if active_item == "AI Coaching" else "secondary"):
+            st.switch_page("pages/5_AI_Coaching.py")
+        if st.button("▣ Analytics", key="nav_analytics", use_container_width=True, type="primary" if active_item == "Analytics" else "secondary"):
+            st.switch_page("pages/6_Analytics.py")
 
         # System Section
-        st.markdown("<div class='nav-section-label'>SYSTEM</div>", unsafe_allow_html=True)
-        if st.button("⚙️ Settings", key="nav_settings", use_container_width=True):
-            st.toast("Coming soon", icon="🚀")
-
-        st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
-        if st.button("↪️  Logout", key="nav_logout", use_container_width=True):
+        st.markdown("<div class='sbi-nav-section-label'>SYSTEM</div>", unsafe_allow_html=True)
+        if st.button("⚙️ Settings", key="nav_settings", use_container_width=True, type="primary" if active_item == "Settings" else "secondary"):
+            st.switch_page("pages/7_Settings.py")
+            
+        if st.button("↪️  Logout", key="nav_logout", use_container_width=True, type="secondary"):
             st.session_state.authenticated = False
             st.switch_page("pages/1_Authentication.py")
 
-        st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
-
-        # User Profile
+        # Basic sidebar button styling (without :contains)
         st.markdown(
             """
-            <div class='sidebar-user'>
-                <div class='user-avatar'>SJ</div>
-                <div class='user-info'>
-                    <p class='user-name'>Sarah Johnson</p>
-                    <p class='user-role'>Sales Manager</p>
+            <style>
+            div[data-testid="stSidebar"] button[data-testid="baseButton-secondary"] {
+                justify-content: flex-start !important;
+                border: none !important;
+                background: transparent !important;
+                color: var(--sbi-text-secondary) !important;
+            }
+            div[data-testid="stSidebar"] button[data-testid="baseButton-secondary"]:hover {
+                background: rgba(255,255,255,0.03) !important;
+                color: var(--sbi-text-primary) !important;
+            }
+            div[data-testid="stSidebar"] button[data-testid="baseButton-primary"] {
+                justify-content: flex-start !important;
+                background: var(--sbi-cyan-dim) !important;
+                border: 1px solid rgba(94,231,255,0.2) !important;
+                color: var(--sbi-cyan) !important;
+                font-weight: 600 !important;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+
+        # User Profile at the bottom
+        st.markdown(
+            """
+            <div class='sbi-sidebar-user'>
+                <div class='sbi-user-avatar'>SJ</div>
+                <div class='sbi-user-info'>
+                    <p class='sbi-user-name'>Sarah Johnson</p>
+                    <p class='sbi-user-role'>Sales Manager</p>
                 </div>
-                <div class='user-status'></div>
             </div>
             """,
             unsafe_allow_html=True,
         )
 
-
-def render_topbar(breadcrumb="Dashboard"):
+def render_topbar(breadcrumb="Dashboard", actions_html=""):
     """Render the top navigation bar."""
     st.markdown(
         f"""
-        <div class='topbar'>
-            <div class='topbar-breadcrumb'>
-                <span>Workspace</span>
+        <div class='sbi-topbar'>
+            <div class='sbi-topbar-breadcrumb'>
+                <span>Sales Behavior Intelligence</span>
                 <span class='separator'>/</span>
-                <span>{breadcrumb}</span>
+                <a href="#">{breadcrumb}</a>
             </div>
-            <div class='topbar-actions'>
-                <div class='topbar-icon-button'>🔍</div>
-                <div class='topbar-icon-button'>🔔</div>
-                <div class='topbar-icon-button'>?</div>
-                <div class='topbar-icon-button'>👤</div>
+            <div class='sbi-topbar-actions'>
+                <div class='sbi-topbar-icon'>🔍</div>
+                <div class='sbi-topbar-icon'>🔔</div>
+                {actions_html}
             </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-
-def render_page_header(title, subtitle="", show_actions=False):
-    """Render a page header."""
+def render_page_header(title, subtitle="", header_actions=None):
+    """Render a page header with optional subtitle and actions."""
     actions_html = ""
-    if show_actions:
-        actions_html = """
-        <div style='display: flex; gap: 12px;'>
-            <button style='padding: 8px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); color: #F5F7FB; cursor: pointer;'>+ Add</button>
-            <button style='padding: 8px 16px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04); color: #F5F7FB; cursor: pointer;'>Export</button>
-        </div>
-        """
-
+    if header_actions:
+        actions_html = f"<div style='display: flex; gap: 8px;'>{header_actions}</div>"
+        
     st.markdown(
         f"""
-        <div class='page-header'>
-            <div style='display: flex; justify-content: space-between; align-items: flex-start;'>
-                <div>
-                    <h1 class='page-title'>{title}</h1>
-                    {'<p class="page-subtitle">' + subtitle + '</p>' if subtitle else ''}
-                </div>
-                {actions_html}
+        <div class='sbi-page-header'>
+            <div>
+                <h1 class='sbi-page-title'>{title}</h1>
+                {f"<p class='sbi-page-subtitle'>{subtitle}</p>" if subtitle else ""}
             </div>
+            {actions_html}
         </div>
         """,
         unsafe_allow_html=True,
