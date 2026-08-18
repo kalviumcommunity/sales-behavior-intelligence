@@ -1,38 +1,26 @@
-"""Deal Details Page - Shows everything a sales manager needs to understand one deal."""
 import streamlit as st
+from datetime import datetime
 
-from frontend.components.sidebar import render_sidebar
-from frontend.components.deal_header import render_deal_header
-from frontend.components.deal_health import render_deal_health
-from frontend.components.ai_summary import render_ai_summary
-from frontend.components.deal_metrics import render_deal_metrics
-from frontend.components.deal_timeline_visual import render_deal_timeline
-from frontend.components.behavioral_signals import render_behavioral_signals
-from frontend.components.stakeholders_view import render_stakeholders
-from frontend.components.activity_tabs import render_activity_tabs
-from frontend.components.risk_analysis import render_risk_analysis
-from frontend.components.coaching_recommendation import render_coaching_recommendation
-from frontend.components.next_best_action import render_next_best_action
-from frontend.components.deal_stage_progress import render_deal_stage_progress
-
+from frontend.design_system import inject_design_system
+from frontend.components.app_shell import render_sidebar, render_topbar, render_page_header
+from frontend.components.ui_components import render_kpi_strip, badge_html, section_header, render_ai_panel
 from frontend.deal_details_data import (
-    get_deal_details,
-    get_deal_health_metrics,
+    get_activity_sections,
     get_ai_summary,
     get_behavioral_signals,
-    get_stakeholders,
-    get_deal_timeline,
-    get_activity_sections,
-    get_risk_factors,
     get_coaching_recommendation,
-    get_next_best_action,
+    get_deal_details,
+    get_deal_health_metrics,
     get_deal_stages,
+    get_deal_timeline,
+    get_next_best_action,
+    get_risk_factors,
+    get_stakeholders,
 )
-
 
 st.set_page_config(
     page_title="Deal Details | Sales Behavior Intelligence",
-    page_icon="◪",
+    page_icon="◆",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -40,892 +28,269 @@ st.set_page_config(
 if not st.session_state.get("authenticated"):
     st.switch_page("pages/1_Authentication.py")
 
-# Get deal ID from session state or default
-deal_id = st.session_state.get("deals_selected_deal", {}).get("id", "deal_201")
+inject_design_system()
+render_sidebar(active_item="Deals")
 
-# Load all data
+# Get deal context
+deal_id = st.session_state.get("deals_selected_deal", {}).get("id", "deal_201")
 deal = get_deal_details(deal_id)
-health_metrics = get_deal_health_metrics(deal_id)
-ai_data = get_ai_summary(deal_id)
+health = get_deal_health_metrics(deal_id)
+ai_summary = get_ai_summary(deal_id)
 signals = get_behavioral_signals(deal_id)
 stakeholders = get_stakeholders(deal_id)
-timeline_events = get_deal_timeline(deal_id)
-activity_data = get_activity_sections(deal_id)
-risk_factors = get_risk_factors(deal_id)
-coaching_data = get_coaching_recommendation(deal_id)
-nba_data = get_next_best_action(deal_id)
+timeline = get_deal_timeline(deal_id)
+activities = get_activity_sections(deal_id)
+risks = get_risk_factors(deal_id)
+next_action = get_next_best_action(deal_id)
 stages = get_deal_stages()
 
-# Apply global styles
+render_topbar(breadcrumb=f"Deals / {deal['company']}")
+
+# --- Header ---
+header_actions = """
+<button class='sbi-btn-secondary' style='height: 36px; padding: 0 16px; font-size: 13px;'>Share</button>
+<button class='sbi-btn-primary' style='height: 36px; padding: 0 16px; font-size: 13px;'>Coach Rep</button>
+"""
+render_page_header(
+    f"← Back to Deals", 
+    "", 
+    header_actions=""
+)
+# We recreate the header layout per prompt instructions
 st.markdown(
-    """
-    <style>
-    :root {
-        --bg: #06101d;
-        --panel: rgba(11, 18, 32, 0.82);
-        --panel-strong: rgba(13, 21, 37, 0.92);
-        --panel-border: rgba(148, 163, 184, 0.15);
-        --text: #edf4ff;
-        --muted: #93a4bd;
-        --cyan: #57d8ff;
-        --violet: #9a86ff;
-        --blue: #7ab8ff;
-        --green: #59d19b;
-        --orange: #ffb76a;
-        --rose: #ff8ea7;
-    }
-
-    .stApp {
-        background:
-            radial-gradient(circle at 0% 0%, rgba(87, 216, 255, 0.14), transparent 28%),
-            radial-gradient(circle at 100% 0%, rgba(154, 134, 255, 0.16), transparent 24%),
-            linear-gradient(180deg, #040812 0%, #0a1220 48%, #05070d 100%);
-        color: var(--text);
-    }
-
-    .main .block-container {
-        padding-top: 1rem;
-        padding-bottom: 2.2rem;
-        max-width: 1520px;
-    }
-
-    section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, rgba(7, 11, 20, 0.98), rgba(11, 16, 30, 0.96));
-        border-right: 1px solid rgba(148, 163, 184, 0.1);
-    }
-
-    h1, h2, h3, h4, p, span, div, li, label {
-        color: var(--text);
-    }
-
-    /* Deal Header Styles */
-    .deal-header-info {
-        padding: 8px 0;
-    }
-
-    .deal-header__company {
-        font-size: 0.88rem;
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        margin-bottom: 6px;
-    }
-
-    .deal-header__name {
-        font-size: 1.85rem;
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        line-height: 1.1;
-    }
-
-    .deal-key-info {
-        padding: 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(148, 163, 184, 0.12);
-        border-radius: 12px;
-        text-align: center;
-    }
-
-    .deal-key-info__label {
-        font-size: 0.72rem;
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        margin-bottom: 4px;
-        display: block;
-    }
-
-    .deal-key-info__value {
-        font-size: 1rem;
-        font-weight: 700;
-        color: var(--text);
-    }
-
-    /* Deal Health Styles */
-    .deal-health-card {
-        padding: 16px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(148, 163, 184, 0.12);
-        border-radius: 14px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .deal-health__label {
-        font-size: 0.72rem;
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-    }
-
-    .deal-health__score,
-    .deal-health__value {
-        font-size: 1.35rem;
-        font-weight: 800;
-        letter-spacing: -0.02em;
-    }
-
-    .deal-health__bar {
-        height: 8px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 999px;
-        overflow: hidden;
-    }
-
-    .deal-health__progress {
-        height: 100%;
-        border-radius: inherit;
-        transition: width 0.3s ease;
-    }
-
-    .deal-health__meta,
-    .deal-health__trend {
-        font-size: 0.85rem;
-        line-height: 1.4;
-    }
-
-    /* AI Summary Styles */
-    .ai-summary-card {
-        padding: 20px;
-        background: linear-gradient(135deg, rgba(87, 216, 255, 0.08), rgba(154, 134, 255, 0.08));
-        border: 1px solid rgba(87, 216, 255, 0.18);
-        border-radius: 16px;
-        margin-bottom: 20px;
-    }
-
-    .ai-summary__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 12px;
-    }
-
-    .ai-summary__title {
-        font-size: 1.05rem;
-        font-weight: 700;
-    }
-
-    .ai-summary__confidence {
-        font-size: 0.85rem;
-        color: var(--muted);
-    }
-
-    .ai-summary__content {
-        margin-bottom: 14px;
-    }
-
-    .ai-summary__content p {
-        margin: 0;
-        line-height: 1.6;
-        color: var(--text);
-    }
-
-    .ai-summary__signals-label {
-        font-size: 0.75rem;
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        margin-bottom: 8px;
-        display: block;
-    }
-
-    .ai-summary__signals-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: grid;
-        gap: 8px;
-    }
-
-    .ai-summary__signals-list li {
-        padding: 8px 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border-left: 3px solid var(--cyan);
-        border-radius: 6px;
-        font-size: 0.92rem;
-    }
-
-    /* Section Heading */
-    .section-heading {
-        font-size: 1.15rem;
-        font-weight: 700;
-        margin: 28px 0 16px 0;
-        letter-spacing: -0.01em;
-    }
-
-    /* Deal Metrics */
-    .deal-metric-card {
-        padding: 14px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(148, 163, 184, 0.12);
-        border-radius: 12px;
-        text-align: center;
-    }
-
-    .deal-metric__label {
-        display: block;
-        font-size: 0.72rem;
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.14em;
-        margin-bottom: 6px;
-    }
-
-    .deal-metric__value {
-        display: block;
-        font-size: 1.1rem;
-        font-weight: 700;
-        color: var(--text);
-    }
-
-    /* Behavioral Signal Styles */
-    .behavioral-signal-card {
-        padding: 16px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(148, 163, 184, 0.12);
-        border-radius: 14px;
-        margin-bottom: 12px;
-    }
-
-    .behavioral-signal__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 12px;
-    }
-
-    .behavioral-signal__name {
-        font-size: 1rem;
-        font-weight: 700;
-    }
-
-    .behavioral-signal__score {
-        font-size: 1rem;
-        font-weight: 700;
-    }
-
-    .behavioral-signal__number {
-        font-weight: 800;
-    }
-
-    .behavioral-signal__bar {
-        height: 8px;
-        background: rgba(255, 255, 255, 0.05);
-        border-radius: 999px;
-        overflow: hidden;
-        margin-bottom: 10px;
-    }
-
-    .behavioral-signal__progress {
-        height: 100%;
-        border-radius: inherit;
-        transition: width 0.3s ease;
-    }
-
-    .behavioral-signal__insight {
-        font-size: 0.92rem;
-        line-height: 1.6;
-        color: var(--text);
-    }
-
-    /* Stakeholder Styles */
-    .warning-banner {
-        padding: 12px 14px;
-        background: rgba(255, 142, 167, 0.12);
-        border: 1px solid rgba(255, 142, 167, 0.24);
-        border-radius: 12px;
-        color: #ffadb9;
-        font-size: 0.92rem;
-        line-height: 1.5;
-        margin-bottom: 14px;
-    }
-
-    .stakeholder-card {
-        padding: 16px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(148, 163, 184, 0.12);
-        border-radius: 14px;
-        margin-bottom: 12px;
-    }
-
-    .stakeholder__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        margin-bottom: 12px;
-    }
-
-    .stakeholder__info {
-        flex: 1;
-    }
-
-    .stakeholder__name {
-        font-size: 1rem;
-        font-weight: 700;
-        margin-bottom: 4px;
-    }
-
-    .stakeholder__title {
-        font-size: 0.88rem;
-        color: var(--muted);
-    }
-
-    .thread-badge {
-        display: inline-block;
-        padding: 6px 10px;
-        border-radius: 6px;
-        font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-    }
-
-    .thread-badge--primary {
-        background: rgba(87, 216, 255, 0.18);
-        color: #57d8ff;
-    }
-
-    .thread-badge--secondary {
-        background: rgba(154, 134, 255, 0.18);
-        color: #9a86ff;
-    }
-
-    .thread-badge--not-engaged {
-        background: rgba(255, 142, 167, 0.18);
-        color: #ffadb9;
-    }
-
-    .stakeholder__grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-    }
-
-    .stakeholder__field {
-        padding: 10px 12px;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 10px;
-    }
-
-    .stakeholder__label {
-        display: block;
-        font-size: 0.72rem;
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        margin-bottom: 4px;
-    }
-
-    .stakeholder__value {
-        display: block;
-        font-size: 0.92rem;
-        font-weight: 600;
-    }
-
-    /* Timeline Styles */
-    .timeline-event {
-        display: flex;
-        gap: 14px;
-        padding: 14px 0;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.1);
-    }
-
-    .timeline-event:last-child {
-        border-bottom: none;
-    }
-
-    .timeline-event__icon {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 2px solid;
-        border-radius: 12px;
-        font-size: 1.1rem;
-    }
-
-    .timeline-event__content {
-        flex: 1;
-        padding-top: 2px;
-    }
-
-    .timeline-event__date-type {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 4px;
-    }
-
-    .timeline-event__date {
-        font-size: 0.85rem;
-        font-weight: 700;
-        color: var(--text);
-    }
-
-    .timeline-event__type {
-        font-size: 0.75rem;
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-    }
-
-    .timeline-event__title {
-        font-size: 1rem;
-        font-weight: 700;
-        margin-bottom: 4px;
-    }
-
-    .timeline-event__description {
-        font-size: 0.92rem;
-        color: var(--text);
-        line-height: 1.5;
-    }
-
-    .timeline-event__person {
-        font-size: 0.85rem;
-        color: var(--muted);
-        margin-top: 6px;
-    }
-
-    /* Activity Styles */
-    .activity-count {
-        font-size: 0.85rem;
-        color: var(--muted);
-        margin-bottom: 12px;
-    }
-
-    .activity-card {
-        padding: 14px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(148, 163, 184, 0.12);
-        border-radius: 12px;
-        margin-bottom: 10px;
-    }
-
-    .activity-card__header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 8px;
-    }
-
-    .activity-card__sender,
-    .activity-card__title,
-    .activity-card__author {
-        font-size: 0.95rem;
-        font-weight: 700;
-    }
-
-    .activity-card__status {
-        font-size: 0.78rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-    }
-
-    .activity-card__subject,
-    .activity-card__content {
-        font-size: 0.92rem;
-        color: var(--text);
-        margin-bottom: 8px;
-        line-height: 1.5;
-    }
-
-    .activity-card__participants,
-    .activity-card__summary,
-    .activity-card__outcome {
-        font-size: 0.88rem;
-        color: var(--text);
-        margin-bottom: 4px;
-        line-height: 1.5;
-    }
-
-    .activity-card__time,
-    .activity-card__date,
-    .activity-card__meta {
-        font-size: 0.78rem;
-        color: var(--muted);
-    }
-
-    /* Risk Analysis Styles */
-    .risk-card {
-        padding: 16px;
-        background: rgba(255, 255, 255, 0.02);
-        border: 1px solid rgba(148, 163, 184, 0.12);
-        border-radius: 14px;
-        margin-bottom: 12px;
-    }
-
-    .risk-card__header {
-        display: flex;
-        gap: 12px;
-        margin-bottom: 10px;
-    }
-
-    .risk-card__severity {
-        font-size: 0.75rem;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        white-space: nowrap;
-    }
-
-    .risk-card__title {
-        font-size: 1rem;
-        font-weight: 700;
-        flex: 1;
-    }
-
-    .risk-card__content {
-        margin-bottom: 10px;
-    }
-
-    .risk-card__description {
-        font-size: 0.92rem;
-        line-height: 1.6;
-        color: var(--text);
-    }
-
-    .risk-card__footer {
-        display: grid;
-        gap: 10px;
-    }
-
-    .risk-card__section {
-        padding: 10px 12px;
-        background: rgba(255, 255, 255, 0.02);
-        border-radius: 10px;
-    }
-
-    .risk-card__section-label {
-        font-size: 0.75rem;
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        margin-bottom: 4px;
-        display: block;
-    }
-
-    .risk-card__section-value {
-        font-size: 0.92rem;
-        line-height: 1.5;
-    }
-
-    /* Coaching Recommendation Styles */
-    .coaching-card {
-        padding: 20px;
-        background: linear-gradient(135deg, rgba(154, 134, 255, 0.08), rgba(87, 216, 255, 0.08));
-        border: 1px solid rgba(154, 134, 255, 0.18);
-        border-radius: 16px;
-        margin-bottom: 20px;
-    }
-
-    .coaching-card__header {
-        display: flex;
-        gap: 12px;
-        align-items: flex-start;
-        margin-bottom: 14px;
-    }
-
-    .coaching-card__icon {
-        font-size: 1.5rem;
-    }
-
-    .coaching-card__title {
-        font-size: 0.88rem;
-        font-weight: 700;
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-    }
-
-    .coaching-card__confidence {
-        font-size: 0.78rem;
-        color: var(--cyan);
-        font-weight: 700;
-    }
-
-    .coaching-card__main-title {
-        font-size: 1.2rem;
-        font-weight: 800;
-        margin-bottom: 16px;
-        letter-spacing: -0.01em;
-    }
-
-    .coaching-card__section {
-        margin-bottom: 14px;
-    }
-
-    .coaching-card__section-label {
-        display: block;
-        font-size: 0.75rem;
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        margin-bottom: 6px;
-        font-weight: 700;
-    }
-
-    .coaching-card__section-value {
-        font-size: 0.92rem;
-        line-height: 1.6;
-    }
-
-    /* Next Best Action Styles */
-    .nba-card {
-        padding: 20px;
-        background: linear-gradient(135deg, rgba(87, 216, 255, 0.12), rgba(89, 209, 155, 0.08));
-        border: 1px solid rgba(87, 216, 255, 0.24);
-        border-radius: 16px;
-        margin-bottom: 20px;
-    }
-
-    .nba-card__label {
-        font-size: 0.7rem;
-        color: var(--cyan);
-        text-transform: uppercase;
-        letter-spacing: 0.16em;
-        font-weight: 800;
-        margin-bottom: 6px;
-        display: block;
-    }
-
-    .nba-card__title {
-        font-size: 1.35rem;
-        font-weight: 800;
-        margin-bottom: 16px;
-        letter-spacing: -0.02em;
-    }
-
-    .nba-card__grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 12px;
-        margin-bottom: 16px;
-    }
-
-    .nba-card__field {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    .nba-card__field-label {
-        font-size: 0.72rem;
-        color: var(--muted);
-        text-transform: uppercase;
-        letter-spacing: 0.12em;
-        display: block;
-    }
-
-    .nba-card__field-value {
-        font-size: 1rem;
-        font-weight: 700;
-    }
-
-    .nba-card__details {
-        padding: 12px;
-        background: rgba(255, 255, 255, 0.04);
-        border-radius: 10px;
-        font-size: 0.92rem;
-        line-height: 1.6;
-    }
-
-    /* Stage Progression Styles */
-    .stage-progression {
-        display: flex;
-        flex-direction: column;
-        gap: 0;
-        align-items: center;
-    }
-
-    .stage-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 6px;
-        padding: 12px 20px;
-        min-width: 120px;
-        position: relative;
-    }
-
-    .stage-item__icon {
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        font-size: 1rem;
-        font-weight: 800;
-        border: 2px solid rgba(148, 163, 184, 0.2);
-        background: rgba(255, 255, 255, 0.02);
-    }
-
-    .stage-item--completed .stage-item__icon {
-        background: rgba(89, 209, 155, 0.12);
-        border-color: rgba(89, 209, 155, 0.3);
-        color: #59d19b;
-    }
-
-    .stage-item--current .stage-item__icon {
-        background: rgba(87, 216, 255, 0.12);
-        border-color: rgba(87, 216, 255, 0.3);
-        color: #57d8ff;
-    }
-
-    .stage-item__name {
-        font-size: 0.92rem;
-        font-weight: 700;
-        text-align: center;
-    }
-
-    .stage-item--completed .stage-item__name {
-        color: #59d19b;
-    }
-
-    .stage-item--current .stage-item__name {
-        color: #57d8ff;
-    }
-
-    .stage-item__arrow {
-        font-size: 1.2rem;
-        color: rgba(148, 163, 184, 0.3);
-        margin: 4px 0;
-    }
-
-    /* Responsive */
-    @media (max-width: 1200px) {
-        .stakeholder__grid,
-        .nba-card__grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .main .block-container {
-            padding-left: 16px;
-            padding-right: 16px;
-        }
-
-        .deal-header__name {
-            font-size: 1.45rem;
-        }
-
-        .stakeholder__grid {
-            grid-template-columns: 1fr;
-        }
-
-        .nba-card__grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    .stTabs [data-baseweb="tab-list"] {
-        background: none;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.1);
-    }
-
-    .stTabs [data-baseweb="tab"] {
-        background: none;
-        border: none;
-        color: var(--muted);
-    }
-
-    .stTabs [aria-selected="true"] {
-        color: var(--cyan) !important;
-        border-bottom: 2px solid var(--cyan) !important;
-    }
-
-    .stButton button {
-        background: transparent !important;
-        border: 1px solid rgba(148, 163, 184, 0.2) !important;
-        color: var(--text) !important;
-        border-radius: 10px !important;
-        font-weight: 700;
-        padding: 0.6rem 1rem !important;
-        transition: all 0.2s ease !important;
-    }
-
-    .stButton button:hover {
-        border-color: rgba(87, 216, 255, 0.4) !important;
-        background: rgba(87, 216, 255, 0.08) !important;
-    }
-
-    div[data-testid="stVerticalBlockBorderWrapper"] {
-        border: none !important;
-        background: none !important;
-        box-shadow: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
+    f"""
+    <div style="margin-top: -24px; margin-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-end;">
+        <div>
+            <div class="sbi-text-sm sbi-text-muted" style="margin-bottom: 4px;">Enterprise Platform Expansion</div>
+            <div class="sbi-page-title" style="margin: 0;">{deal['company']}</div>
+            <div class="sbi-text-secondary" style="margin-top: 4px;">Managed by <span class="sbi-text-primary sbi-font-semibold">{deal['assigned_rep']}</span></div>
+        </div>
+        <div style="display: flex; gap: 8px;">{header_actions}</div>
+    </div>
+    """, 
+    unsafe_allow_html=True
 )
 
-# Initialize session state
-st.session_state.setdefault("dashboard_sidebar_collapsed", False)
-st.session_state.setdefault("dashboard_active_item", "Deal Details")
 
-# Sidebar
-render_sidebar(collapsed=st.session_state.dashboard_sidebar_collapsed, active_item="Deals")
+# --- Stage Tracker ---
+stage_html = "<div style='display: flex; gap: 8px; margin-bottom: 32px;'>"
+for s in stages:
+    color = "var(--sbi-cyan)" if s.get('completed') or s.get('current') else "var(--sbi-border-subtle)"
+    bg = "var(--sbi-cyan-dim)" if s.get('completed') or s.get('current') else "var(--sbi-bg-hover)"
+    weight = "700" if s.get('current') else "500"
+    text_color = "var(--sbi-cyan)" if s.get('current') else ("var(--sbi-text-primary)" if s.get('completed') else "var(--sbi-text-muted)")
+    
+    stage_html += f"""
+    <div style='flex: 1; padding: 12px; background: {bg}; border-left: 3px solid {color}; border-radius: 0 6px 6px 0; font-size: 13px; font-weight: {weight}; color: {text_color};'>
+        {s['name']}
+    </div>
+    """
+stage_html += "</div>"
+st.markdown(stage_html, unsafe_allow_html=True)
 
-# Render page
-render_deal_header(deal)
+# --- Top Row: AI Summary & Health ---
+c_summary, c_health = st.columns([1.5, 1])
 
-st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+with c_summary:
+    key_sigs = ''.join([badge_html(s, "neutral") for s in ai_summary['key_signals']])
+    ai_html = f"""
+        <div style="display: flex; justify-content: flex-end; align-items: flex-start; margin-bottom: 16px;">
+            {badge_html(f"Confidence: {ai_summary['confidence']}%", "violet")}
+        </div>
+        <div style="font-size: 15px; line-height: 1.6; margin-bottom: 24px; color: var(--sbi-text-primary);">
+            {ai_summary['summary']}
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            {key_sigs}
+        </div>
+        <div style="margin-top: 16px;">
+            <button class="sbi-btn-secondary">View Evidence</button>
+        </div>
+    """
+    render_ai_panel("AI Deal Summary", ai_html, style="height: 100%;")
 
-# Deal Health Section
-render_deal_health(health_metrics)
+with c_health:
+    health_color = "var(--sbi-danger)" if health['risk_level'] == "High" else ("var(--sbi-warning)" if health['risk_level'] == "Medium" else "var(--sbi-success)")
+    
+    st.markdown(
+        f"""
+        <div class="sbi-card" style="height: 100%;">
+            <div class="sbi-section-subtitle" style="margin-bottom: 16px; font-weight: 600;">Deal Health</div>
+            <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px;">
+                <span style="font-size: 40px; font-weight: 800; color: {health_color}; line-height: 1;">{health['health_score']}</span>
+                <span class="sbi-text-muted">/ {health['health_max']}</span>
+            </div>
+            <div class="sbi-text-sm sbi-font-semibold" style="margin-bottom: 24px;">{health['risk_level']} Risk</div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div>
+                    <div class="sbi-text-xs sbi-text-muted" style="text-transform: uppercase;">Value</div>
+                    <div class="sbi-font-bold" style="font-size: 15px;">${deal['deal_value']:,.0f}</div>
+                </div>
+                <div>
+                    <div class="sbi-text-xs sbi-text-muted" style="text-transform: uppercase;">Expected Close</div>
+                    <div class="sbi-font-bold" style="font-size: 15px;">{deal['expected_close'].strftime('%b %d')}</div>
+                </div>
+                <div>
+                    <div class="sbi-text-xs sbi-text-muted" style="text-transform: uppercase;">Velocity</div>
+                    <div class="sbi-font-bold" style="font-size: 15px;">{health['deal_velocity']}</div>
+                </div>
+                <div>
+                    <div class="sbi-text-xs sbi-text-muted" style="text-transform: uppercase;">Engagement</div>
+                    <div class="sbi-font-bold" style="font-size: 15px;">{health['engagement']}</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True
+    )
 
-st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
 
-# AI Summary
-render_ai_summary(ai_data)
+# --- Middle Row: Signals, Stakeholders, Next Action ---
+c_signals, c_stakeholders = st.columns([1, 1.2])
 
-# Deal Metrics
-render_deal_metrics(deal)
+with c_signals:
+    section_header("Behavioral Signals")
+    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
+    for idx, sig in enumerate(signals):
+        sig_color = "var(--sbi-danger)" if sig['severity'] == "high" else ("var(--sbi-warning)" if sig['severity'] == "medium" else "var(--sbi-info)")
+        st.markdown(
+            f"""
+            <div style="padding: 16px 0; border-bottom: {'' if idx==len(signals)-1 else '1px solid var(--sbi-border-subtle)'};">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <div style="font-weight: 600; font-size: 14px;">{sig['signal_name']}</div>
+                    <div class="sbi-font-bold" style="color: {sig_color}; font-size: 13px;">{sig['score']}/100</div>
+                </div>
+                <div class="sbi-text-sm sbi-text-secondary">{sig['insight']}</div>
+            </div>
+            """, unsafe_allow_html=True
+        )
+    st.markdown("</div>", unsafe_allow_html=True)
+    
+    st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
+    
+    section_header("Next Best Action")
+    st.markdown(
+        f"""
+        <div class="sbi-card" style="border-left: 3px solid var(--sbi-cyan);">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
+                <div class="sbi-font-bold" style="font-size: 15px;">{next_action['action']}</div>
+                {badge_html(f"Priority: {next_action['priority']}", "cyan")}
+            </div>
+            <div class="sbi-text-sm sbi-text-secondary" style="margin-bottom: 16px;">{next_action['details']}</div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-size: 12px; color: var(--sbi-text-muted);">Assignee: <span style="color: var(--sbi-text-primary); font-weight: 600;">{next_action['suggested_owner']}</span></div>
+                <button class="sbi-btn-primary">Take Action</button>
+            </div>
+        </div>
+        """, unsafe_allow_html=True
+    )
 
-st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+with c_stakeholders:
+    section_header("Stakeholders")
+    table_html = """
+    <div class='sbi-card sbi-table-wrapper' style="padding: 0; overflow: hidden;">
+        <table class='sbi-table'>
+            <thead>
+                <tr>
+                    <th>Contact</th>
+                    <th>Role</th>
+                    <th>Engagement</th>
+                    <th>Last Interaction</th>
+                </tr>
+            </thead>
+            <tbody>
+    """
+    for sh in stakeholders:
+        eng_badge = "success" if sh['engagement_level'] == "High" else ("warning" if sh['engagement_level'] == "Medium" else "danger")
+        table_html += f"""
+                <tr>
+                    <td>
+                        <div class="sbi-font-semibold" style="font-size: 14px;">{sh['name']}</div>
+                        <div class="sbi-text-xs sbi-text-secondary">{sh['job_title']}</div>
+                    </td>
+                    <td>{sh['role']}</td>
+                    <td>{badge_html(sh['engagement_level'], eng_badge)}</td>
+                    <td class="sbi-text-sm sbi-text-secondary">{sh['last_interaction']}</td>
+                </tr>
+        """
+    table_html += "</tbody></table></div>"
+    st.markdown(table_html, unsafe_allow_html=True)
+    
+    st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
+    
+    section_header("Why this deal may slip")
+    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
+    for idx, r in enumerate(risks[:2]): # Show top 2 risks to save space
+        st.markdown(
+            f"""
+            <div style="padding: 12px 0; border-bottom: {'' if idx==1 else '1px solid var(--sbi-border-subtle)'};">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                    {badge_html(r['severity'], "danger" if r['severity'] == "HIGH" else "warning")}
+                    <span class="sbi-font-semibold" style="font-size: 14px;">{r['reason']}</span>
+                </div>
+                <div class="sbi-text-sm sbi-text-secondary" style="margin-left: 4px;">{r['description']}</div>
+            </div>
+            """, unsafe_allow_html=True
+        )
+    st.markdown("</div>", unsafe_allow_html=True)
 
-# Two column layout for timeline and behavioral signals
-col_left, col_right = st.columns([1.2, 1], gap="medium")
+st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
 
-with col_left:
-    render_deal_timeline(timeline_events)
+# --- Bottom Row: Activity Feed ---
+section_header("Activity Feed")
+tab1, tab2, tab3 = st.tabs(["Timeline", "Emails", "Meetings"])
 
-with col_right:
-    render_behavioral_signals(signals)
+with tab1:
+    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
+    for t in timeline[::-1]: # Reverse to show newest first
+        st.markdown(
+            f"""
+            <div style="display: flex; gap: 16px; margin-bottom: 24px; position: relative;">
+                <div style="width: 40px; flex-shrink: 0; text-align: right; padding-top: 4px;" class="sbi-text-xs sbi-text-muted">{t['date']}</div>
+                <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--sbi-bg-hover); border: 1px solid var(--sbi-border-subtle); display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 1;">{t['icon']}</div>
+                <div>
+                    <div class="sbi-font-bold" style="font-size: 14px; margin-bottom: 4px;">{t['title']}</div>
+                    <div class="sbi-text-sm sbi-text-secondary">{t['description']}</div>
+                    {f'<div class="sbi-text-xs" style="margin-top: 6px; color: var(--sbi-cyan);">👤 {t["related_person"]}</div>' if t["related_person"] else ''}
+                </div>
+            </div>
+            """, unsafe_allow_html=True
+        )
+    st.markdown("</div>", unsafe_allow_html=True)
 
-st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
+with tab2:
+    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
+    for e in activities['emails']:
+        st.markdown(
+            f"""
+            <div style="padding: 16px 0; border-bottom: 1px solid var(--sbi-border-subtle);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
+                    <div class="sbi-font-semibold" style="font-size: 14px;">{e['subject']}</div>
+                    <div class="sbi-text-xs sbi-text-muted">{e['time']}</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="sbi-text-sm sbi-text-secondary">From/To: {e['sender']}</div>
+                    {badge_html(e['response_status'], "neutral")}
+                </div>
+            </div>
+            """, unsafe_allow_html=True
+        )
+    st.markdown("</div>", unsafe_allow_html=True)
 
-# Stakeholders
-render_stakeholders(stakeholders)
-
-st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
-
-# Activity Tabs
-render_activity_tabs(activity_data)
-
-st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
-
-# Risk Analysis
-render_risk_analysis(risk_factors)
-
-st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
-
-# Coaching Recommendation
-render_coaching_recommendation(coaching_data)
-
-# Next Best Action (prominent positioning)
-render_next_best_action(nba_data)
-
-st.markdown("<div style='height: 1.5rem;'></div>", unsafe_allow_html=True)
-
-# Deal Stage Progression
-render_deal_stage_progress(stages)
-
-st.markdown("<div style='height: 2rem;'></div>", unsafe_allow_html=True)
+with tab3:
+    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
+    for m in activities['meetings']:
+        st.markdown(
+            f"""
+            <div style="padding: 16px 0; border-bottom: 1px solid var(--sbi-border-subtle);">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <div class="sbi-font-semibold" style="font-size: 14px;">{m['name']}</div>
+                    <div class="sbi-text-xs sbi-text-muted">{m['date']}</div>
+                </div>
+                <div class="sbi-text-sm" style="margin-bottom: 8px;">Outcome: <span class="sbi-text-secondary">{m['outcome']}</span></div>
+                <div class="sbi-text-xs sbi-text-muted">Participants: {', '.join(m['participants'])}</div>
+            </div>
+            """, unsafe_allow_html=True
+        )
+    st.markdown("</div>", unsafe_allow_html=True)

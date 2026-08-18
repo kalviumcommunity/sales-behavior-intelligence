@@ -9,551 +9,364 @@ DESIGN_SYSTEM_CSS = """
 /* ============================================================
    DESIGN TOKENS — SBI v2
    ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  /* Backgrounds */
-  --bg-primary:    #070A12;
-  --bg-secondary:  #0B101A;
-  --bg-surface:    #101722;
-  --bg-elevated:   #141C29;
-  --bg-hover:      #1A2233;
+  --sbi-bg-primary:    #060B14;
+  --sbi-bg-secondary:  #0B101A;
+  --sbi-bg-surface:    #101722;
+  --sbi-bg-elevated:   #141C29;
+  --sbi-bg-hover:      #1A2233;
 
-  /* Borders */
-  --border-subtle:  rgba(255,255,255,0.07);
-  --border-medium:  rgba(255,255,255,0.11);
-  --border-strong:  rgba(255,255,255,0.18);
+  --sbi-text-primary:   #F5F7FB;
+  --sbi-text-secondary: #A7B0C0;
+  --sbi-text-muted:     #697386;
+  --sbi-text-inverse:   #060B14;
 
-  /* Text */
-  --text-primary:   #F5F7FB;
-  --text-secondary: #A7B0C0;
-  --text-muted:     #697386;
-  --text-disabled:  #3E4558;
+  --sbi-cyan:       #5EE7FF;
+  --sbi-violet:     #8B7CFF;
+  --sbi-cyan-dim:   rgba(94,231,255,0.10);
+  --sbi-violet-dim: rgba(139,124,255,0.10);
 
-  /* Accents */
-  --accent-cyan:    #5EE7FF;
-  --accent-violet:  #8B7CFF;
-  --accent-cyan-dim: rgba(94,231,255,0.12);
-  --accent-violet-dim: rgba(139,124,255,0.12);
+  --sbi-success:     #4ADE80;
+  --sbi-success-dim: rgba(74,222,128,0.10);
+  --sbi-warning:     #FBBF24;
+  --sbi-warning-dim: rgba(251,191,36,0.10);
+  --sbi-danger:      #FB7185;
+  --sbi-danger-dim:  rgba(251,113,133,0.10);
+  --sbi-info:        #60A5FA;
+  --sbi-info-dim:    rgba(96,165,250,0.10);
 
-  /* Status */
-  --success:        #4ADE80;
-  --success-dim:    rgba(74,222,128,0.12);
-  --warning:        #FBBF24;
-  --warning-dim:    rgba(251,191,36,0.12);
-  --danger:         #FB7185;
-  --danger-dim:     rgba(251,113,133,0.12);
-  --info:           #60A5FA;
-  --info-dim:       rgba(96,165,250,0.12);
+  --sbi-border-subtle: rgba(255,255,255,0.06);
+  --sbi-border-medium: rgba(255,255,255,0.10);
 
-  /* Spacing scale */
-  --sp-1: 4px;
-  --sp-2: 8px;
-  --sp-3: 12px;
-  --sp-4: 16px;
-  --sp-5: 20px;
-  --sp-6: 24px;
-  --sp-8: 32px;
-  --sp-10: 40px;
-  --sp-12: 48px;
+  --sbi-sp-1:  4px;  --sbi-sp-2:  8px;  --sbi-sp-3:  12px;
+  --sbi-sp-4:  16px; --sbi-sp-5:  20px; --sbi-sp-6:  24px;
+  --sbi-sp-8:  32px; --sbi-sp-10: 40px; --sbi-sp-12: 48px;
+  --sbi-sp-16: 64px;
 
-  /* Radius */
-  --r-sm:  6px;
-  --r-md:  8px;
-  --r-lg:  10px;
-  --r-xl:  12px;
-  --r-2xl: 14px;
-  --r-3xl: 16px;
+  --sbi-r-sm:  4px; --sbi-r-md: 8px;
+  --sbi-r-lg: 10px; --sbi-r-xl: 12px;
 
-  /* Shadows */
-  --shadow-sm:  0 1px 3px rgba(0,0,0,0.3);
-  --shadow-md:  0 4px 12px rgba(0,0,0,0.35);
-  --shadow-lg:  0 8px 24px rgba(0,0,0,0.4);
-
-  /* Transitions */
-  --t-fast:   150ms ease;
-  --t-base:   200ms ease;
-  --t-slow:   300ms ease;
-
-  /* Font sizes */
-  --text-xs:   11px;
-  --text-sm:   12px;
-  --text-base: 14px;
-  --text-md:   15px;
-  --text-lg:   16px;
-  --text-xl:   20px;
-  --text-2xl:  24px;
-  --text-3xl:  32px;
-  --text-4xl:  40px;
-
-  /* Container */
-  --max-width: 1400px;
+  --sbi-shadow-sm: 0 1px 4px rgba(0,0,0,0.30);
+  --sbi-shadow-md: 0 4px 16px rgba(0,0,0,0.40);
+  --sbi-t-fast: 150ms ease; --sbi-t-base: 200ms ease;
+  --sbi-max-width: 1380px;
 }
 
 /* ============================================================
    GLOBAL RESET & BASE
    ============================================================ */
-*, *::before, *::after {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 .stApp {
-  background-color: var(--bg-primary);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: var(--text-primary);
-  font-size: var(--text-base);
+  background-color: var(--sbi-bg-primary);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--sbi-text-primary);
+  font-size: 14px;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--sbi-text-primary);
+  margin: 0;
+  line-height: 1.2;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+h1 { font-size: 38px; font-weight: 750; letter-spacing: -0.035em; }
+h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.015em; }
+h3 { font-size: 16px; font-weight: 650; }
+p  { margin: 0; color: var(--sbi-text-secondary); font-size: 14px; }
+a  { color: var(--sbi-cyan); text-decoration: none; }
+
+[data-testid="stAppViewContainer"] > section.main { padding-top: 0 !important; }
 
 .main .block-container {
-  max-width: var(--max-width);
-  padding-top: 0;
-  padding-bottom: var(--sp-12);
-  padding-left: var(--sp-8);
-  padding-right: var(--sp-8);
+  max-width: var(--sbi-max-width) !important;
+  padding: var(--sbi-sp-6) var(--sbi-sp-8) var(--sbi-sp-16) !important;
+  margin: 0 auto;
 }
 
 /* ============================================================
-   HIDE STREAMLIT DEFAULT ELEMENTS
+   HIDE STREAMLIT CHROME — COMPREHENSIVE
    ============================================================ */
-#MainMenu, footer, header { display: none !important; }
-.stDeployButton { display: none !important; }
+#MainMenu,
+footer,
+header[data-testid="stHeader"],
+[data-testid="stToolbar"],
+[data-testid="stStatusWidget"],
+.viewerBadge_container__r5tak,
+.styles_viewerBadge__CvC9N,
+#stDecoration { display: none !important; }
+
+/* Hide native multipage sidebar nav — CRITICAL */
+[data-testid="stSidebarNav"],
+[data-testid="stSidebarNavSeparator"],
+[data-testid="stSidebarNavItems"],
+section[data-testid="stSidebar"] nav,
+section[data-testid="stSidebar"] ul:first-of-type,
+ul[data-testid="stSidebarNavItems"] { display: none !important; visibility: hidden !important; height: 0 !important; }
+
 
 /* ============================================================
-   SIDEBAR — Premium SaaS nav
+   STREAMLIT LAYOUT NORMALIZATION
    ============================================================ */
-section[data-testid="stSidebar"] {
-  background: var(--bg-secondary) !important;
-  border-right: 1px solid var(--border-subtle) !important;
-  width: 240px !important;
-}
+[data-testid="stVerticalBlock"] > [data-testid="stVerticalBlockBorderWrapper"],
+[data-testid="stVerticalBlock"] > div { gap: 0 !important; }
 
-section[data-testid="stSidebar"] > div:first-child {
-  padding: var(--sp-5) var(--sp-4);
+[data-testid="stVerticalBlockBorderWrapper"] {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+[data-testid="stMarkdownContainer"] { margin-bottom: 0 !important; }
+[data-testid="stMarkdownContainer"] p { margin: 0 !important; }
+
+[data-testid="stHorizontalBlock"] {
+  gap: 16px !important;
+  align-items: stretch !important;
 }
 
 /* ============================================================
-   STREAMLIT INPUTS
+   STREAMLIT WIDGET OVERRIDES
    ============================================================ */
 .stTextInput input,
 .stSelectbox div[data-baseweb="select"] > div,
 .stDateInput input,
 .stNumberInput input,
 .stTextArea textarea {
-  background: var(--bg-surface) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-subtle) !important;
-  border-radius: var(--r-md) !important;
-  font-size: var(--text-base) !important;
+  background: var(--sbi-bg-surface) !important;
+  color: var(--sbi-text-primary) !important;
+  border: 1px solid var(--sbi-border-subtle) !important;
+  border-radius: var(--sbi-r-md) !important;
+  font-size: 14px !important;
   font-family: 'Inter', sans-serif !important;
-  transition: border-color var(--t-base) !important;
+  transition: border-color var(--sbi-t-base) !important;
+  padding: 8px 12px !important;
 }
-
-.stTextInput input:focus,
-.stSelectbox div[data-baseweb="select"] > div:focus-within {
-  border-color: var(--accent-cyan) !important;
-  box-shadow: 0 0 0 3px rgba(94,231,255,0.08) !important;
+.stTextInput input:focus, .stTextArea textarea:focus {
+  border-color: rgba(94,231,255,0.35) !important;
+  box-shadow: 0 0 0 2px rgba(94,231,255,0.07) !important;
   outline: none !important;
 }
 
-.stTextInput label,
-.stSelectbox label,
-.stTextArea label,
-.stCheckbox label {
-  color: var(--text-secondary) !important;
-  font-size: var(--text-sm) !important;
+.stTextInput label, .stSelectbox label, .stTextArea label,
+.stCheckbox label, .stRadio label, .stSlider label,
+.stNumberInput label, .stToggle label {
+  color: var(--sbi-text-secondary) !important;
+  font-size: 12px !important;
   font-weight: 500 !important;
+  font-family: 'Inter', sans-serif !important;
 }
 
-/* ============================================================
-   STREAMLIT BUTTONS
-   ============================================================ */
 .stButton button {
-  background: var(--bg-surface) !important;
-  color: var(--text-primary) !important;
-  border: 1px solid var(--border-subtle) !important;
-  border-radius: var(--r-md) !important;
+  background: var(--sbi-bg-elevated) !important;
+  color: var(--sbi-text-primary) !important;
+  border: 1px solid var(--sbi-border-subtle) !important;
+  border-radius: var(--sbi-r-md) !important;
   font-family: 'Inter', sans-serif !important;
-  font-size: var(--text-base) !important;
+  font-size: 13px !important;
   font-weight: 600 !important;
   padding: 8px 16px !important;
-  transition: all var(--t-fast) !important;
+  transition: all var(--sbi-t-fast) !important;
   line-height: 1.4 !important;
-  letter-spacing: -0.01em !important;
+  min-height: 36px !important;
 }
-
 .stButton button:hover {
-  background: var(--bg-hover) !important;
-  border-color: var(--border-medium) !important;
-  transform: none !important;
+  background: var(--sbi-bg-hover) !important;
+  border-color: var(--sbi-border-medium) !important;
+  color: var(--sbi-text-primary) !important;
 }
 
-/* Primary button variant */
-.btn-primary button {
-  background: var(--accent-cyan) !important;
-  color: #070A12 !important;
-  border-color: transparent !important;
-  font-weight: 700 !important;
-}
-
-.btn-primary button:hover {
-  opacity: 0.9 !important;
-}
-
-/* ============================================================
-   STREAMLIT TABS
-   ============================================================ */
 .stTabs [data-baseweb="tab-list"] {
   background: transparent !important;
-  border-bottom: 1px solid var(--border-subtle) !important;
-  gap: 0 !important;
-  padding: 0 !important;
+  border-bottom: 1px solid var(--sbi-border-subtle) !important;
+  gap: 0 !important; padding: 0 !important;
 }
-
 .stTabs [data-baseweb="tab"] {
   background: transparent !important;
   border: none !important;
   border-bottom: 2px solid transparent !important;
-  color: var(--text-muted) !important;
-  font-size: var(--text-base) !important;
-  font-weight: 500 !important;
+  color: var(--sbi-text-muted) !important;
+  font-size: 13px !important; font-weight: 500 !important;
   padding: 10px 16px !important;
   margin-bottom: -1px !important;
-  transition: all var(--t-fast) !important;
+  transition: all var(--sbi-t-fast) !important;
   border-radius: 0 !important;
+  font-family: 'Inter', sans-serif !important;
 }
-
-.stTabs [data-baseweb="tab"]:hover {
-  color: var(--text-secondary) !important;
-  background: transparent !important;
-}
-
+.stTabs [data-baseweb="tab"]:hover { color: var(--sbi-text-secondary) !important; }
 .stTabs [aria-selected="true"] {
-  color: var(--text-primary) !important;
-  border-bottom-color: var(--accent-cyan) !important;
-  background: transparent !important;
+  color: var(--sbi-text-primary) !important;
+  border-bottom-color: var(--sbi-cyan) !important;
+  font-weight: 600 !important;
+}
+.stTabs [data-baseweb="tab-panel"] { padding: 0 !important; background: transparent !important; }
+
+[data-testid="stMetricValue"] {
+  font-size: 24px !important; font-weight: 700 !important;
+  color: var(--sbi-text-primary) !important; font-family: 'Inter', sans-serif !important;
+}
+[data-testid="stMetricLabel"] {
+  color: var(--sbi-text-muted) !important; font-size: 11px !important;
+  font-weight: 600 !important; text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
 }
 
 /* ============================================================
-   STREAMLIT CONTAINERS — remove default borders
+   SHARED UTILITY CLASSES (SBI Design System)
    ============================================================ */
-div[data-testid="stVerticalBlockBorderWrapper"] {
-  border: 1px solid var(--border-subtle) !important;
-  border-radius: var(--r-2xl) !important;
-  background: var(--bg-surface) !important;
-  box-shadow: var(--shadow-sm) !important;
-  padding: var(--sp-4) !important;
-  margin-bottom: var(--sp-3) !important;
-}
-
-/* ============================================================
-   SHARED COMPONENT TOKENS
-   ============================================================ */
-
-/* Status badges */
 .sbi-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 3px 8px;
-  border-radius: var(--r-sm);
-  font-size: var(--text-xs);
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  line-height: 1.6;
-  border: 1px solid transparent;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 8px; border-radius: var(--sbi-r-sm);
+  font-size: 11px; font-weight: 650; letter-spacing: 0.02em;
+  border: 1px solid transparent; white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+}
+.sbi-badge--success { background: var(--sbi-success-dim); color: var(--sbi-success); border-color: rgba(74,222,128,0.18); }
+.sbi-badge--warning { background: var(--sbi-warning-dim); color: var(--sbi-warning); border-color: rgba(251,191,36,0.18); }
+.sbi-badge--danger  { background: var(--sbi-danger-dim);  color: var(--sbi-danger);  border-color: rgba(251,113,133,0.18); }
+.sbi-badge--info    { background: var(--sbi-info-dim);    color: var(--sbi-info);    border-color: rgba(96,165,250,0.18); }
+.sbi-badge--cyan    { background: var(--sbi-cyan-dim); color: var(--sbi-cyan); border-color: rgba(94,231,255,0.18); }
+.sbi-badge--violet  { background: var(--sbi-violet-dim); color: var(--sbi-violet); border-color: rgba(139,124,255,0.18); }
+.sbi-badge--neutral { background: rgba(105,115,134,0.10); color: var(--sbi-text-muted); border-color: var(--sbi-border-subtle); }
+
+.sbi-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border-radius: var(--sbi-r-md); font-weight: 600; font-size: 13px;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+  transition: all var(--sbi-t-fast); text-decoration: none;
+  border: 1px solid var(--sbi-border-subtle); padding: 0 14px; height: 36px; white-space: nowrap;
+}
+.sbi-btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  background: linear-gradient(135deg, rgba(94,231,255,0.15), rgba(139,124,255,0.15));
+  border: 1px solid rgba(94,231,255,0.22); color: var(--sbi-cyan);
+  border-radius: var(--sbi-r-md); font-weight: 600; font-size: 13px;
+  font-family: 'Inter', sans-serif; cursor: pointer;
+  transition: all var(--sbi-t-fast); text-decoration: none; padding: 0 16px; height: 36px;
+}
+.sbi-btn-primary:hover {
+  background: linear-gradient(135deg, rgba(94,231,255,0.22), rgba(139,124,255,0.22));
+  border-color: rgba(94,231,255,0.38); color: var(--sbi-cyan);
+}
+.sbi-btn-secondary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  background: var(--sbi-bg-elevated); border: 1px solid var(--sbi-border-subtle);
+  color: var(--sbi-text-secondary); border-radius: var(--sbi-r-md); font-weight: 600;
+  font-size: 13px; font-family: 'Inter', sans-serif; cursor: pointer;
+  transition: all var(--sbi-t-fast); text-decoration: none; padding: 0 16px; height: 36px;
+}
+.sbi-btn-secondary:hover {
+  background: var(--sbi-bg-hover); border-color: var(--sbi-border-medium); color: var(--sbi-text-primary);
 }
 
-.sbi-badge--success { background: var(--success-dim); color: var(--success); border-color: rgba(74,222,128,0.2); }
-.sbi-badge--warning { background: var(--warning-dim); color: var(--warning); border-color: rgba(251,191,36,0.2); }
-.sbi-badge--danger  { background: var(--danger-dim);  color: var(--danger);  border-color: rgba(251,113,133,0.2); }
-.sbi-badge--info    { background: var(--info-dim);    color: var(--info);    border-color: rgba(96,165,250,0.2); }
-.sbi-badge--cyan    { background: var(--accent-cyan-dim); color: var(--accent-cyan); border-color: rgba(94,231,255,0.2); }
-.sbi-badge--violet  { background: var(--accent-violet-dim); color: var(--accent-violet); border-color: rgba(139,124,255,0.2); }
-.sbi-badge--muted   { background: rgba(105,115,134,0.12); color: var(--text-muted); border-color: var(--border-subtle); }
-
-/* AI element indicator */
 .sbi-ai-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: var(--text-xs);
-  font-weight: 600;
-  color: var(--accent-violet);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 4px; font-size: 10px; font-weight: 700;
+  color: var(--sbi-violet); letter-spacing: 0.07em; text-transform: uppercase; font-family: 'Inter', sans-serif;
+}
+.sbi-ai-label::before { content: "✦"; font-size: 9px; }
+
+.sbi-ai-panel {
+  background: linear-gradient(135deg, rgba(139,124,255,0.05), rgba(94,231,255,0.05));
+  border: 1px solid rgba(139,124,255,0.12); border-radius: var(--sbi-r-xl); padding: var(--sbi-sp-5);
 }
 
-.sbi-ai-label::before {
-  content: "✦";
-  font-size: 9px;
-}
-
-/* Section titles */
-.sbi-section-title {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
-  margin: 0 0 var(--sp-4) 0;
-}
-
-.sbi-section-subtitle {
-  font-size: var(--text-base);
-  color: var(--text-secondary);
-  margin: var(--sp-1) 0 var(--sp-5) 0;
-}
-
-/* Card base */
 .sbi-card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--r-2xl);
-  padding: var(--sp-5);
-  transition: border-color var(--t-base);
+  background: var(--sbi-bg-surface);
+  border: 1px solid var(--sbi-border-subtle);
+  border-radius: var(--sbi-r-xl); padding: var(--sbi-sp-5);
 }
 
-.sbi-card:hover {
-  border-color: var(--border-medium);
+.sbi-section-title {
+  font-size: 17px; font-weight: 700; color: var(--sbi-text-primary);
+  margin: 0 0 4px 0; letter-spacing: -0.01em; font-family: 'Inter', sans-serif;
 }
-
-/* Metric display */
-.sbi-metric {
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  color: var(--text-primary);
-  line-height: 1.1;
+.sbi-section-subtitle {
+  font-size: 13px; color: var(--sbi-text-muted); margin: 0 0 20px 0; font-family: 'Inter', sans-serif;
 }
+.sbi-divider { height: 1px; background: var(--sbi-border-subtle); margin: var(--sbi-sp-6) 0; border: none; }
 
-.sbi-metric-label {
-  font-size: var(--text-sm);
-  color: var(--text-muted);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: var(--sp-2);
-}
+.sbi-text-muted     { color: var(--sbi-text-muted) !important; }
+.sbi-text-secondary { color: var(--sbi-text-secondary) !important; }
+.sbi-text-cyan      { color: var(--sbi-cyan) !important; }
+.sbi-text-violet    { color: var(--sbi-violet) !important; }
+.sbi-text-success   { color: var(--sbi-success) !important; }
+.sbi-text-warning   { color: var(--sbi-warning) !important; }
+.sbi-text-danger    { color: var(--sbi-danger) !important; }
+.sbi-text-sm   { font-size: 12px !important; }
+.sbi-text-xs   { font-size: 11px !important; }
+.sbi-text-base { font-size: 14px !important; }
+.sbi-font-bold     { font-weight: 700 !important; }
+.sbi-font-semibold { font-weight: 600 !important; }
+.sbi-font-medium   { font-weight: 500 !important; }
 
-.sbi-metric-trend {
-  font-size: var(--text-sm);
-  font-weight: 600;
-  margin-top: var(--sp-1);
-}
-
-.sbi-metric-trend--up   { color: var(--success); }
-.sbi-metric-trend--down { color: var(--danger); }
-.sbi-metric-trend--flat { color: var(--text-muted); }
-
-/* Progress bar */
-.sbi-progress-track {
-  height: 4px;
-  background: var(--border-subtle);
-  border-radius: 999px;
+/* Metric strip layout */
+.sbi-kpi-grid {
+  display: grid;
+  gap: 1px;
+  background: var(--sbi-border-subtle);
+  border: 1px solid var(--sbi-border-subtle);
+  border-radius: var(--sbi-r-xl);
   overflow: hidden;
-  margin-top: var(--sp-2);
+  margin-bottom: 32px;
 }
-
-.sbi-progress-fill {
-  height: 100%;
-  border-radius: inherit;
-  transition: width 0.4s ease;
+.sbi-kpi-cell {
+  background: var(--sbi-bg-surface);
+  padding: 16px 20px;
 }
-
-/* Avatar */
-.sbi-avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--r-lg);
-  font-size: var(--text-sm);
-  font-weight: 700;
-  color: var(--accent-cyan);
-  background: var(--accent-cyan-dim);
-  border: 1px solid rgba(94,231,255,0.15);
-  flex-shrink: 0;
+.sbi-kpi-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--sbi-text-muted); margin-bottom: 6px;
 }
-
-.sbi-avatar--sm { width: 28px; height: 28px; font-size: 10px; }
-.sbi-avatar--md { width: 32px; height: 32px; }
-.sbi-avatar--lg { width: 40px; height: 40px; font-size: var(--text-base); }
-
-/* Divider */
-.sbi-divider {
-  height: 1px;
-  background: var(--border-subtle);
-  margin: var(--sp-5) 0;
-  border: none;
+.sbi-kpi-value {
+  font-size: 22px; font-weight: 800; letter-spacing: -0.025em;
+  color: var(--sbi-text-primary); line-height: 1; margin-bottom: 3px;
 }
+.sbi-kpi-detail { font-size: 11px; color: var(--sbi-text-muted); }
+.sbi-kpi-trend-up   { color: var(--sbi-success); font-size: 11px; font-weight: 600; }
+.sbi-kpi-trend-down { color: var(--sbi-danger);  font-size: 11px; font-weight: 600; }
 
-/* Warning banner */
-.sbi-warning {
-  display: flex;
-  gap: var(--sp-3);
-  align-items: flex-start;
-  padding: var(--sp-3) var(--sp-4);
-  background: var(--warning-dim);
-  border: 1px solid rgba(251,191,36,0.2);
-  border-radius: var(--r-lg);
-  font-size: var(--text-sm);
-  color: var(--warning);
-  margin-bottom: var(--sp-4);
-}
-
-/* AI insight card */
-.sbi-ai-card {
-  background: linear-gradient(135deg, rgba(139,124,255,0.07), rgba(94,231,255,0.07));
-  border: 1px solid rgba(139,124,255,0.18);
-  border-radius: var(--r-2xl);
-  padding: var(--sp-5);
-}
-
-/* Table base */
+/* Tables */
+.sbi-table-wrapper { width: 100%; overflow-x: auto; }
 .sbi-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: var(--text-base);
+  width: 100%; border-collapse: collapse;
+  font-size: 13px; text-align: left; font-family: 'Inter', sans-serif;
 }
-
 .sbi-table th {
-  text-align: left;
-  padding: var(--sp-2) var(--sp-3);
-  color: var(--text-muted);
-  font-size: var(--text-xs);
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  border-bottom: 1px solid var(--border-subtle);
+  color: var(--sbi-text-muted); font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.07em;
+  padding: 10px 14px; border-bottom: 1px solid var(--sbi-border-subtle); white-space: nowrap;
 }
-
 .sbi-table td {
-  padding: var(--sp-3) var(--sp-3);
-  color: var(--text-primary);
-  border-bottom: 1px solid var(--border-subtle);
-  vertical-align: middle;
+  padding: 12px 14px; color: var(--sbi-text-primary);
+  border-bottom: 1px solid var(--sbi-border-subtle); vertical-align: middle;
 }
-
+.sbi-table tbody tr:hover { background: var(--sbi-bg-hover); }
 .sbi-table tr:last-child td { border-bottom: none; }
 
-.sbi-table tbody tr {
-  transition: background var(--t-fast);
-}
-
-.sbi-table tbody tr:hover {
-  background: var(--bg-hover);
-}
-
 /* Empty state */
-.sbi-empty {
-  text-align: center;
-  padding: var(--sp-12) var(--sp-8);
-  color: var(--text-muted);
-}
+.sbi-empty { text-align: center; padding: 56px 24px; color: var(--sbi-text-muted); }
+.sbi-empty-icon { font-size: 28px; margin-bottom: 12px; opacity: 0.6; }
+.sbi-empty-title { font-size: 15px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 6px; }
+.sbi-empty-desc  { font-size: 13px; color: var(--sbi-text-muted); }
 
-.sbi-empty-icon {
-  font-size: 32px;
-  margin-bottom: var(--sp-4);
-  opacity: 0.5;
-}
-
-.sbi-empty-title {
-  font-size: var(--text-lg);
-  font-weight: 600;
-  color: var(--text-secondary);
-  margin-bottom: var(--sp-2);
-}
-
-.sbi-empty-body {
-  font-size: var(--text-base);
-  color: var(--text-muted);
-  max-width: 320px;
-  margin: 0 auto var(--sp-5);
-}
-
-/* Timeline item */
-.sbi-timeline-item {
-  display: flex;
-  gap: var(--sp-3);
-  padding: var(--sp-3) 0;
-  position: relative;
-}
-
-.sbi-timeline-line {
-  width: 1px;
-  background: var(--border-subtle);
-  position: absolute;
-  left: 15px;
-  top: 42px;
-  bottom: 0;
-}
-
-.sbi-timeline-dot {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  border-radius: var(--r-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 13px;
-  border: 1px solid var(--border-subtle);
-  background: var(--bg-surface);
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
-}
-
-.sbi-timeline-body { flex: 1; padding-top: 4px; }
-.sbi-timeline-meta {
-  font-size: var(--text-xs);
-  color: var(--text-muted);
-  margin-bottom: 3px;
-  display: flex;
-  gap: var(--sp-2);
-  align-items: center;
-}
-.sbi-timeline-title {
-  font-size: var(--text-base);
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 3px;
-}
-.sbi-timeline-desc {
-  font-size: var(--text-sm);
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
 @media (max-width: 1024px) {
-  .main .block-container {
-    padding-left: var(--sp-5);
-    padding-right: var(--sp-5);
-  }
+  .main .block-container { padding: var(--sbi-sp-4) var(--sbi-sp-5) var(--sbi-sp-10) !important; }
 }
-
 @media (max-width: 768px) {
-  .main .block-container {
-    padding-left: var(--sp-4);
-    padding-right: var(--sp-4);
-    padding-top: 0;
-  }
-
-  section[data-testid="stSidebar"] {
-    width: 100% !important;
-  }
+  .main .block-container { padding: var(--sbi-sp-3) var(--sbi-sp-4) var(--sbi-sp-8) !important; }
+  h1 { font-size: 22px !important; }
 }
 </style>
 """
 
 
 def inject_design_system():
-    """Call this at the top of every authenticated page."""
+    """Call this at the top of every page."""
     import streamlit as st
     st.markdown(DESIGN_SYSTEM_CSS, unsafe_allow_html=True)
