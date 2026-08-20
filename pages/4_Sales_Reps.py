@@ -124,10 +124,10 @@ for rep in REPS_DATA:
     """
 
 table_html += "</tbody></table></div>"
-st.markdown(table_html, unsafe_allow_html=True)
+st.html(table_html)
 
 # ── Rep detail cards ─────────────────────────────────────────
-st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
+st.html("<div style='height: 32px;'></div>")
 section_header("Representative Profiles", "Behavior patterns, strengths, and recommended coaching actions.")
 
 cols = st.columns(3)
@@ -137,7 +137,7 @@ for i, rep in enumerate(REPS_DATA):
         strengths_html = "".join(f'<div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--sbi-border-subtle); font-size: 12px; color: var(--sbi-text-secondary);"><span style="color: var(--sbi-success);">✓</span> {s}</div>' for s in rep["strengths"])
         ai_html = f"<div style='font-size: 12px; color: var(--sbi-text-secondary);'>{rep['coaching_note']}</div>"
         
-        st.markdown(
+        st.html(
             f"""
             <div class="sbi-card" style="height: 100%;">
                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
@@ -162,19 +162,18 @@ for i, rep in enumerate(REPS_DATA):
                     {strengths_html}
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
         render_ai_panel("Coaching Note", ai_html, style="margin-top: 16px;")
 
 # ── Coaching opportunities ─────────────────────────────────
-st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='height: 32px;'></div>")
 section_header("Active Coaching Opportunities", "AI-detected behavioral patterns requiring manager attention.")
 
 for idx, c in enumerate(COACHING_SUGGESTIONS):
     col_info, col_action = st.columns([5, 1])
     with col_info:
-        st.markdown(
+        st.html(
             f"""
             <div style="display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--sbi-border-subtle); align-items: flex-start;">
                 <div style="width: 36px; height: 36px; border-radius: 8px; background: var(--sbi-violet-dim); border: 1px solid rgba(139,124,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: var(--sbi-violet);">✦</div>
@@ -187,10 +186,9 @@ for idx, c in enumerate(COACHING_SUGGESTIONS):
                     <div style="font-size: 12px; color: var(--sbi-text-muted); border-left: 2px solid rgba(94,231,255,0.25); padding-left: 10px;">{c['suggestion']}</div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
     with col_action:
-        st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 24px;'></div>")
         if st.button("Coach Rep", key=f"coach_{idx}", use_container_width=True, type="secondary"):
             st.switch_page("pages/5_AI_Coaching.py")

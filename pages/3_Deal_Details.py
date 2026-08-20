@@ -57,7 +57,7 @@ render_page_header(
     header_actions=""
 )
 # We recreate the header layout per prompt instructions
-st.markdown(
+st.html(
     f"""
     <div style="margin-top: -24px; margin-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-end;">
         <div>
@@ -67,9 +67,7 @@ st.markdown(
         </div>
         <div style="display: flex; gap: 8px;">{header_actions}</div>
     </div>
-    """, 
-    unsafe_allow_html=True
-)
+    """)
 
 
 # --- Stage Tracker ---
@@ -86,7 +84,7 @@ for s in stages:
     </div>
     """
 stage_html += "</div>"
-st.markdown(stage_html, unsafe_allow_html=True)
+st.html(stage_html)
 
 # --- Top Row: AI Summary & Health ---
 c_summary, c_health = st.columns([1.5, 1])
@@ -112,7 +110,7 @@ with c_summary:
 with c_health:
     health_color = "var(--sbi-danger)" if health['risk_level'] == "High" else ("var(--sbi-warning)" if health['risk_level'] == "Medium" else "var(--sbi-success)")
     
-    st.markdown(
+    st.html(
         f"""
         <div class="sbi-card" style="height: 100%;">
             <div class="sbi-section-subtitle" style="margin-bottom: 16px; font-weight: 600;">Deal Health</div>
@@ -141,20 +139,19 @@ with c_health:
                 </div>
             </div>
         </div>
-        """, unsafe_allow_html=True
-    )
+        """)
 
-st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
+st.html("<div style='height: 32px;'></div>")
 
 # --- Middle Row: Signals, Stakeholders, Next Action ---
 c_signals, c_stakeholders = st.columns([1, 1.2])
 
 with c_signals:
     section_header("Behavioral Signals")
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
+    st.html("<div class='sbi-card'>")
     for idx, sig in enumerate(signals):
         sig_color = "var(--sbi-danger)" if sig['severity'] == "high" else ("var(--sbi-warning)" if sig['severity'] == "medium" else "var(--sbi-info)")
-        st.markdown(
+        st.html(
             f"""
             <div style="padding: 16px 0; border-bottom: {'' if idx==len(signals)-1 else '1px solid var(--sbi-border-subtle)'};">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
@@ -163,14 +160,13 @@ with c_signals:
                 </div>
                 <div class="sbi-text-sm sbi-text-secondary">{sig['insight']}</div>
             </div>
-            """, unsafe_allow_html=True
-        )
-    st.markdown("</div>", unsafe_allow_html=True)
+            """)
+    st.html("</div>")
     
-    st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
+    st.html("<div style='height: 24px;'></div>")
     
     section_header("Next Best Action")
-    st.markdown(
+    st.html(
         f"""
         <div class="sbi-card" style="border-left: 3px solid var(--sbi-cyan);">
             <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
@@ -183,8 +179,7 @@ with c_signals:
                 <button class="sbi-btn-primary">Take Action</button>
             </div>
         </div>
-        """, unsafe_allow_html=True
-    )
+        """)
 
 with c_stakeholders:
     section_header("Stakeholders")
@@ -215,14 +210,14 @@ with c_stakeholders:
                 </tr>
         """
     table_html += "</tbody></table></div>"
-    st.markdown(table_html, unsafe_allow_html=True)
+    st.html(table_html)
     
-    st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
+    st.html("<div style='height: 24px;'></div>")
     
     section_header("Why this deal may slip")
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
+    st.html("<div class='sbi-card'>")
     for idx, r in enumerate(risks[:2]): # Show top 2 risks to save space
-        st.markdown(
+        st.html(
             f"""
             <div style="padding: 12px 0; border-bottom: {'' if idx==1 else '1px solid var(--sbi-border-subtle)'};">
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
@@ -231,20 +226,19 @@ with c_stakeholders:
                 </div>
                 <div class="sbi-text-sm sbi-text-secondary" style="margin-left: 4px;">{r['description']}</div>
             </div>
-            """, unsafe_allow_html=True
-        )
-    st.markdown("</div>", unsafe_allow_html=True)
+            """)
+    st.html("</div>")
 
-st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
+st.html("<div style='height: 32px;'></div>")
 
 # --- Bottom Row: Activity Feed ---
 section_header("Activity Feed")
 tab1, tab2, tab3 = st.tabs(["Timeline", "Emails", "Meetings"])
 
 with tab1:
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
+    st.html("<div class='sbi-card'>")
     for t in timeline[::-1]: # Reverse to show newest first
-        st.markdown(
+        st.html(
             f"""
             <div style="display: flex; gap: 16px; margin-bottom: 24px; position: relative;">
                 <div style="width: 40px; flex-shrink: 0; text-align: right; padding-top: 4px;" class="sbi-text-xs sbi-text-muted">{t['date']}</div>
@@ -255,14 +249,13 @@ with tab1:
                     {f'<div class="sbi-text-xs" style="margin-top: 6px; color: var(--sbi-cyan);">👤 {t["related_person"]}</div>' if t["related_person"] else ''}
                 </div>
             </div>
-            """, unsafe_allow_html=True
-        )
-    st.markdown("</div>", unsafe_allow_html=True)
+            """)
+    st.html("</div>")
 
 with tab2:
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
+    st.html("<div class='sbi-card'>")
     for e in activities['emails']:
-        st.markdown(
+        st.html(
             f"""
             <div style="padding: 16px 0; border-bottom: 1px solid var(--sbi-border-subtle);">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
@@ -274,14 +267,13 @@ with tab2:
                     {badge_html(e['response_status'], "neutral")}
                 </div>
             </div>
-            """, unsafe_allow_html=True
-        )
-    st.markdown("</div>", unsafe_allow_html=True)
+            """)
+    st.html("</div>")
 
 with tab3:
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
+    st.html("<div class='sbi-card'>")
     for m in activities['meetings']:
-        st.markdown(
+        st.html(
             f"""
             <div style="padding: 16px 0; border-bottom: 1px solid var(--sbi-border-subtle);">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
@@ -291,6 +283,5 @@ with tab3:
                 <div class="sbi-text-sm" style="margin-bottom: 8px;">Outcome: <span class="sbi-text-secondary">{m['outcome']}</span></div>
                 <div class="sbi-text-xs sbi-text-muted">Participants: {', '.join(m['participants'])}</div>
             </div>
-            """, unsafe_allow_html=True
-        )
-    st.markdown("</div>", unsafe_allow_html=True)
+            """)
+    st.html("</div>")

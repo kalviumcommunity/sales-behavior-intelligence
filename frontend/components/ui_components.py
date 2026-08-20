@@ -36,7 +36,7 @@ def render_kpi_strip(metrics_list):
         """
         
     html += "</div>"
-    st.markdown(html, unsafe_allow_html=True)
+    st.html(html)
 
 
 def badge_html(text, variant="neutral"):
@@ -52,15 +52,14 @@ def render_empty_state(title, desc, icon="🔍"):
     """
     Renders a consistent empty state.
     """
-    st.markdown(
+    st.html(
         f"""
         <div class="sbi-empty">
             <div class="sbi-empty-icon">{icon}</div>
             <div class="sbi-empty-title">{title}</div>
             <div class="sbi-empty-desc">{desc}</div>
         </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
 
@@ -68,14 +67,13 @@ def render_ai_panel(label, content_html, style=""):
     """
     Renders a consistent AI coaching/insight panel.
     """
-    st.markdown(
+    st.html(
         f"""
         <div class='sbi-ai-panel' style='{style}'>
             <div class='sbi-ai-label'>{label}</div>
             {content_html}
         </div>
-        """,
-        unsafe_allow_html=True
+        """
     )
 
 
@@ -86,4 +84,4 @@ def section_header(title, subtitle=None):
     html = f"<div class='sbi-section-title'>{title}</div>"
     if subtitle:
         html += f"<div class='sbi-section-subtitle'>{subtitle}</div>"
-    st.markdown(html, unsafe_allow_html=True)
+    st.html(html)

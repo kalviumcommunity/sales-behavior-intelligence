@@ -5,7 +5,7 @@ import streamlit as st
 def render_next_best_action(nba_data):
     """Render the Next Best Action panel."""
     
-    st.markdown(
+    st.html(
         f"""
         <div class='nba-card'>
             <div class='nba-card__label'>NEXT BEST ACTION</div>
@@ -34,11 +34,10 @@ def render_next_best_action(nba_data):
                 {nba_data["details"]}
             </div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
     
-    st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height: 1rem;'></div>")
     
     col1, col2, col3 = st.columns([2, 1, 1])
     with col3:

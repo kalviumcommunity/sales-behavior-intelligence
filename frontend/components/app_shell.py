@@ -211,11 +211,11 @@ def get_sidebar_css():
 
 def render_sidebar(active_item="Dashboard"):
     """Render the unified sidebar navigation."""
-    st.markdown(get_sidebar_css(), unsafe_allow_html=True)
+    st.html(get_sidebar_css())
     
     with st.sidebar:
         # Brand
-        st.markdown(
+        st.html(
             """
             <div class='sbi-sidebar-brand'>
                 <div class='sbi-sidebar-brand-icon'>SBI</div>
@@ -223,31 +223,32 @@ def render_sidebar(active_item="Dashboard"):
                     <p class='sbi-sidebar-brand-title'>Sales Behavior<br>Intelligence</p>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
 
         # Overview Section
-        st.markdown("<div class='sbi-nav-section-label'>OVERVIEW</div>", unsafe_allow_html=True)
+        st.html("<div class='sbi-nav-section-label'>OVERVIEW</div>")
         if st.button("📊 Dashboard", key="nav_dashboard", use_container_width=True, type="primary" if active_item == "Dashboard" else "secondary"):
             st.switch_page("pages/dashboard.py")
 
         # Pipeline Section
-        st.markdown("<div class='sbi-nav-section-label'>PIPELINE</div>", unsafe_allow_html=True)
+        st.html("<div class='sbi-nav-section-label'>PIPELINE</div>")
         if st.button("◆ Deals", key="nav_deals", use_container_width=True, type="primary" if active_item == "Deals" else "secondary"):
             st.switch_page("pages/2_Deals.py")
 
         # Insights Section
-        st.markdown("<div class='sbi-nav-section-label'>INSIGHTS</div>", unsafe_allow_html=True)
+        st.html("<div class='sbi-nav-section-label'>INSIGHTS</div>")
         if st.button("👥 Sales Reps", key="nav_reps", use_container_width=True, type="primary" if active_item == "Sales Reps" else "secondary"):
             st.switch_page("pages/4_Sales_Reps.py")
+        if st.button("🏆 Leaderboard", key="nav_leaderboard", use_container_width=True, type="primary" if active_item == "Leaderboard" else "secondary"):
+            st.switch_page("pages/8_Leaderboard.py")
         if st.button("✦ AI Coaching", key="nav_coaching", use_container_width=True, type="primary" if active_item == "AI Coaching" else "secondary"):
             st.switch_page("pages/5_AI_Coaching.py")
         if st.button("▣ Analytics", key="nav_analytics", use_container_width=True, type="primary" if active_item == "Analytics" else "secondary"):
             st.switch_page("pages/6_Analytics.py")
 
         # System Section
-        st.markdown("<div class='sbi-nav-section-label'>SYSTEM</div>", unsafe_allow_html=True)
+        st.html("<div class='sbi-nav-section-label'>SYSTEM</div>")
         if st.button("⚙️ Settings", key="nav_settings", use_container_width=True, type="primary" if active_item == "Settings" else "secondary"):
             st.switch_page("pages/7_Settings.py")
             
@@ -256,7 +257,7 @@ def render_sidebar(active_item="Dashboard"):
             st.switch_page("pages/1_Authentication.py")
 
         # Basic sidebar button styling (without :contains)
-        st.markdown(
+        st.html(
             """
             <style>
             div[data-testid="stSidebar"] button[data-testid="baseButton-secondary"] {
@@ -277,12 +278,11 @@ def render_sidebar(active_item="Dashboard"):
                 font-weight: 600 !important;
             }
             </style>
-            """,
-            unsafe_allow_html=True
+            """
         )
 
         # User Profile at the bottom
-        st.markdown(
+        st.html(
             """
             <div class='sbi-sidebar-user'>
                 <div class='sbi-user-avatar'>SJ</div>
@@ -291,13 +291,12 @@ def render_sidebar(active_item="Dashboard"):
                     <p class='sbi-user-role'>Sales Manager</p>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
 
 def render_topbar(breadcrumb="Dashboard", actions_html=""):
     """Render the top navigation bar."""
-    st.markdown(
+    st.html(
         f"""
         <div class='sbi-topbar'>
             <div class='sbi-topbar-breadcrumb'>
@@ -311,8 +310,7 @@ def render_topbar(breadcrumb="Dashboard", actions_html=""):
                 {actions_html}
             </div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
 
 def render_page_header(title, subtitle="", header_actions=None):
@@ -321,7 +319,7 @@ def render_page_header(title, subtitle="", header_actions=None):
     if header_actions:
         actions_html = f"<div style='display: flex; gap: 8px;'>{header_actions}</div>"
         
-    st.markdown(
+    st.html(
         f"""
         <div class='sbi-page-header'>
             <div>
@@ -330,6 +328,5 @@ def render_page_header(title, subtitle="", header_actions=None):
             </div>
             {actions_html}
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )

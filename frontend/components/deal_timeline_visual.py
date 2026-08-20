@@ -5,7 +5,7 @@ import streamlit as st
 def render_deal_timeline(timeline_events):
     """Render chronological deal timeline."""
     
-    st.markdown("<div class='section-heading'>📅 Deal Timeline</div>", unsafe_allow_html=True)
+    st.html("<div class='section-heading'>📅 Deal Timeline</div>")
     
     for event in timeline_events:
         # Determine icon and color based on event type
@@ -35,6 +35,5 @@ def render_deal_timeline(timeline_events):
                     {f'<div class="timeline-event__person">👤 {event["related_person"]}</div>' if event["related_person"] else ''}
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )

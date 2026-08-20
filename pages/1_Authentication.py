@@ -7,7 +7,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-st.markdown(
+st.html(
     """
     <style>
     :root {
@@ -165,9 +165,7 @@ st.markdown(
             </div>
         </div>
         <div class="auth-panel" id="auth-panel">
-    """,
-    unsafe_allow_html=True
-)
+    """)
 
 tab1, tab2 = st.tabs(["Sign in", "Create account"])
 
@@ -180,9 +178,9 @@ with tab1:
         with c1:
             remember = st.checkbox("Remember me")
         with c2:
-            st.markdown("<div style='text-align: right; margin-top: 8px;'><a href='#' style='font-size: 14px; color: var(--sbi-text-secondary);'>Forgot password?</a></div>", unsafe_allow_html=True)
+            st.html("<div style='text-align: right; margin-top: 8px;'><a href='#' style='font-size: 14px; color: var(--sbi-text-secondary);'>Forgot password?</a></div>")
             
-        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+        st.html("<div style='height: 16px;'></div>")
         submitted = st.form_submit_button("Sign in", type="primary", use_container_width=True)
         
         if submitted:
@@ -192,7 +190,7 @@ with tab1:
             else:
                 st.error("Please enter your email and password.")
                 
-    st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
+    st.html("<div style='height: 24px;'></div>")
     sc1, sc2 = st.columns(2)
     with sc1:
         st.button("Continue with Google", use_container_width=True)
@@ -206,7 +204,7 @@ with tab2:
         pass_create = st.text_input("Password", type="password", placeholder="••••••••")
         pass_confirm = st.text_input("Confirm password", type="password", placeholder="••••••••")
         
-        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+        st.html("<div style='height: 16px;'></div>")
         created = st.form_submit_button("Create account", type="primary", use_container_width=True)
         
         if created:
@@ -216,4 +214,4 @@ with tab2:
             else:
                 st.error("Please fill in all fields.")
 
-st.markdown("</div></div>", unsafe_allow_html=True)
+st.html("</div></div>")

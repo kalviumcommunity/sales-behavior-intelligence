@@ -5,7 +5,7 @@ import streamlit as st
 def render_deal_stage_progress(stages):
     """Render deal stage progression."""
     
-    st.markdown("<div class='section-heading'>📈 Deal Progression</div>", unsafe_allow_html=True)
+    st.html("<div class='section-heading'>📈 Deal Progression</div>")
     
     # Calculate stage HTML
     stage_items = []
@@ -40,6 +40,5 @@ def render_deal_stage_progress(stages):
         <div class='stage-progression'>
             {''.join(stage_items)}
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )

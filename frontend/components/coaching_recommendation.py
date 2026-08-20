@@ -5,7 +5,7 @@ import streamlit as st
 def render_coaching_recommendation(coaching_data):
     """Render coaching recommendation section."""
     
-    st.markdown(
+    st.html(
         f"""
         <div class='coaching-card'>
             <div class='coaching-card__header'>
@@ -32,11 +32,10 @@ def render_coaching_recommendation(coaching_data):
                 <div class='coaching-card__section-value'>{coaching_data["expected_impact"]}</div>
             </div>
         </div>
-        """,
-        unsafe_allow_html=True,
+        """
     )
     
-    st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height: 1rem;'></div>")
     
     col1, col2, col3 = st.columns([2, 1, 1])
     with col3:

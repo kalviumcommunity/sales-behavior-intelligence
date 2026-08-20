@@ -27,8 +27,7 @@ def render_deal_header(deal):
                 <div class='deal-header__company'>{deal['company']}</div>
                 <div class='deal-header__name'>{deal['deal_name']}</div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
     
     with header_cols[2]:
@@ -59,6 +58,5 @@ def render_deal_header(deal):
                     <div class='deal-key-info__label'>{label}</div>
                     <div class='deal-key-info__value'>{value}</div>
                 </div>
-                """,
-                unsafe_allow_html=True,
+                """
             )
