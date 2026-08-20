@@ -440,17 +440,159 @@ def render_landing_page():
         """)
     
     # ─── FINAL CTA ───
-    st.html(
-        """
-        <div class="lp-section" style="text-align: center;">
-            <div class="lp-section-title">Turn sales activity into better decisions.</div>
-            <div style="height: 32px;"></div>
+    st.html("""
+    <style>
+    .lp-cta-section {
+        position: relative;
+        padding: 120px 32px;
+        text-align: center;
+        overflow: hidden;
+        border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .lp-cta-glow {
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse at 50% 60%, rgba(94,231,255,0.07) 0%, transparent 55%),
+            radial-gradient(ellipse at 50% 40%, rgba(139,124,255,0.05) 0%, transparent 45%);
+        pointer-events: none;
+        z-index: 0;
+    }
+    .lp-cta-inner {
+        position: relative;
+        z-index: 1;
+        max-width: 960px;
+        margin: 0 auto;
+    }
+    .lp-cta-eyebrow {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--lp-cyan);
+        margin-bottom: 20px;
+        opacity: 0.85;
+    }
+    .lp-cta-headline {
+        font-size: clamp(36px, 4vw, 52px);
+        font-weight: 800;
+        line-height: 1.07;
+        letter-spacing: -0.035em;
+        color: var(--lp-text);
+        margin-bottom: 20px;
+    }
+    .lp-cta-sub {
+        font-size: 17px;
+        line-height: 1.65;
+        color: var(--lp-muted);
+        max-width: 620px;
+        margin: 0 auto 40px;
+    }
+    .lp-cta-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+    }
+    .lp-cta-btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, var(--lp-cyan), var(--lp-violet));
+        color: #060B14 !important;
+        font-weight: 700;
+        font-size: 15px;
+        padding: 0 28px;
+        height: 50px;
+        border-radius: 8px;
+        text-decoration: none !important;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 20px rgba(94,231,255,0.18);
+    }
+    .lp-cta-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(94,231,255,0.28);
+    }
+    .lp-cta-btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        height: 50px;
+        padding: 0 24px;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.03);
+        color: var(--lp-text) !important;
+        font-weight: 600;
+        font-size: 15px;
+        text-decoration: none !important;
+        cursor: pointer;
+        transition: background 0.2s, border-color 0.2s;
+    }
+    .lp-cta-btn-secondary:hover {
+        background: rgba(255,255,255,0.07);
+        border-color: rgba(255,255,255,0.22);
+    }
+    .lp-cta-trust {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-size: 12px;
+        color: var(--lp-muted);
+        opacity: 0.7;
+        flex-wrap: wrap;
+    }
+    .lp-cta-trust-dot {
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: var(--lp-muted);
+        opacity: 0.5;
+        display: inline-block;
+    }
+    @media (max-width: 640px) {
+        .lp-cta-section { padding: 80px 20px; }
+        .lp-cta-buttons { flex-direction: column; align-items: stretch; }
+        .lp-cta-btn-primary, .lp-cta-btn-secondary {
+            justify-content: center;
+            width: 100%;
+            max-width: 340px;
+            margin: 0 auto;
+        }
+    }
+    </style>
+
+    <div class="lp-cta-section">
+        <div class="lp-cta-glow"></div>
+        <div class="lp-cta-inner">
+            <div class="lp-cta-eyebrow">Ready to see your pipeline differently</div>
+            <div class="lp-cta-headline">
+                Turn sales activity into<br>better decisions.
+            </div>
+            <div class="lp-cta-sub">
+                Turn CRM activity, deal behavior, and seller signals into clear actions your team can take today. Understand what is happening, why it is happening, and what to do next.
+            </div>
+            <div class="lp-cta-buttons">
+                <a href="#" class="lp-cta-btn-primary" onclick="window.parent.document.querySelector('[data-testid=\\"stSidebarNav\\"]')">
+                    Start analyzing your pipeline →
+                </a>
+                <a href="#" class="lp-cta-btn-secondary">
+                    Book a demo
+                </a>
+            </div>
+            <div class="lp-cta-trust">
+                <span>Built for modern revenue teams</span>
+                <span class="lp-cta-trust-dot"></span>
+                <span>Behavioral intelligence</span>
+                <span class="lp-cta-trust-dot"></span>
+                <span>Deal risk detection</span>
+                <span class="lp-cta-trust-dot"></span>
+                <span>AI coaching</span>
+            </div>
         </div>
-        """)
-    
-    col_cta1, col_cta2, col_cta3 = st.columns([3, 2, 3])
-    with col_cta2:
-        if st.button("Start analyzing your pipeline", type="primary", use_container_width=True):
-            st.switch_page("pages/1_Authentication.py")
-        if st.button("Book a demo", type="secondary", use_container_width=True):
-            st.toast("Demo request received.")
+    </div>
+    """)

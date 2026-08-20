@@ -105,7 +105,7 @@ with col_r1:
         .properties(height=220, width="container")
     )
     st.altair_chart(revenue_chart, use_container_width=True)
-    st.markdown("</div>")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 with col_r2:
     st.html("<div class='sbi-card'>")
@@ -126,7 +126,7 @@ with col_r2:
         .properties(height=220, width="container")
     )
     st.altair_chart(pipeline_chart, use_container_width=True)
-    st.markdown("</div>")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ── Win Rate & Behavior Trend ─────────────────────────────────
 st.html("<div style='height: 32px;'></div>")
@@ -153,7 +153,7 @@ with col_p1:
         .properties(height=200, width="container")
     )
     st.altair_chart(win_rate_chart, use_container_width=True)
-    st.markdown("</div>")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 with col_p2:
     st.html("<div class='sbi-card'>")
@@ -174,7 +174,7 @@ with col_p2:
         .properties(height=200, width="container")
     )
     st.altair_chart(coaching_chart, use_container_width=True)
-    st.markdown("</div>")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ── Rep Comparison & Risk Distribution ───────────────────────
 st.html("<div style='height: 32px;'></div>")
@@ -216,7 +216,7 @@ with col_t1:
         .properties(height=200, width="container")
     )
     st.altair_chart(rep_chart, use_container_width=True)
-    st.markdown("</div>")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 with col_t2:
     st.html("<div class='sbi-card'>")
@@ -244,7 +244,7 @@ with col_t2:
         .properties(height=200, width="container")
     )
     st.altair_chart(risk_chart, use_container_width=True)
-    st.markdown("</div>")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ── Key Insights ─────────────────────────────────────────────
 st.html("<div style='height: 32px;'></div>")
@@ -289,5 +289,6 @@ for i, insight in enumerate(insights):
                     <div style="font-size: 12px; color: var(--sbi-text-secondary); line-height: 1.5;">{insight['desc']}</div>
                 </div>
             </div>
-            """
+            """,
+            unsafe_allow_html=True,
         )
