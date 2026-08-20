@@ -17,7 +17,7 @@ def render_landing_page():
         initial_sidebar_state="collapsed",
     )
 
-    st.markdown(
+    st.html(
         """
         <style>
         /* ─── BASE ─── */
@@ -290,16 +290,14 @@ def render_landing_page():
             .lp-metrics { flex-direction: column; gap: 40px; }
         }
         </style>
-        """,
-        unsafe_allow_html=True
-    )
+        """)
 
     # Note: Streamlit buttons trigger a rerun. For external styling we can use Streamlit session state and switch_page.
     # To keep the marketing page fully styled and handle clicks correctly without jumping, 
     # we use st.button styled via CSS for the auth navigation, or simple logic.
 
     # ─── NAVBAR ───
-    st.markdown(
+    st.html(
         """
         <div class="lp-nav">
             <div class="lp-brand">
@@ -312,9 +310,7 @@ def render_landing_page():
                 <a href="#benefits">Insights</a>
             </div>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
+        """)
 
     # Use actual streamlit buttons for the auth actions so they work, floating them via a container
     col_nav1, col_nav2, col_nav3 = st.columns([1, 8, 2.5])
@@ -328,7 +324,7 @@ def render_landing_page():
                 st.switch_page("pages/1_Authentication.py")
 
     # ─── HERO ───
-    st.markdown(
+    st.html(
         """
         <div class="lp-hero">
             <div>
@@ -368,12 +364,10 @@ def render_landing_page():
                 </div>
             </div>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
+        """)
 
     # ─── METRICS STRIP ───
-    st.markdown(
+    st.html(
         """
         <div class="lp-metrics">
             <div class="lp-metric">
@@ -393,9 +387,7 @@ def render_landing_page():
                 <div class="lp-metric-lbl">Manager Time Saved</div>
             </div>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
+        """)
 
     # ─── FEATURES ───
     features_html = ""
@@ -408,7 +400,7 @@ def render_landing_page():
         </div>
         """
 
-    st.markdown(
+    st.html(
         f"""
         <div id="product" class="lp-section">
             <div class="lp-section-header">
@@ -419,9 +411,7 @@ def render_landing_page():
                 {features_html}
             </div>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
+        """)
 
     # ─── HOW IT WORKS ───
     steps_html = ""
@@ -436,7 +426,7 @@ def render_landing_page():
         </div>
         """
 
-    st.markdown(
+    st.html(
         f"""
         <div id="how-it-works" class="lp-section" style="background: rgba(255,255,255,0.01);">
             <div class="lp-section-header">
@@ -447,20 +437,16 @@ def render_landing_page():
                 {steps_html}
             </div>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
+        """)
     
     # ─── FINAL CTA ───
-    st.markdown(
+    st.html(
         """
         <div class="lp-section" style="text-align: center;">
             <div class="lp-section-title">Turn sales activity into better decisions.</div>
             <div style="height: 32px;"></div>
         </div>
-        """,
-        unsafe_allow_html=True
-    )
+        """)
     
     col_cta1, col_cta2, col_cta3 = st.columns([3, 2, 3])
     with col_cta2:

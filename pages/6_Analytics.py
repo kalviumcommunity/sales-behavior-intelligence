@@ -77,10 +77,9 @@ section_header("Revenue & Pipeline", "Monthly revenue trend and current pipeline
 col_r1, col_r2 = st.columns(2)
 
 with col_r1:
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
-    st.markdown(
-        "<div style='font-size: 13px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;'>Revenue Trend</div>",
-        unsafe_allow_html=True,
+    st.html("<div class='sbi-card'>")
+    st.html(
+        "<div style='font-size: 13px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;'>Revenue Trend</div>"
     )
     revenue_chart = (
         alt.Chart(alt.Data(values=REVENUE_TREND))
@@ -106,13 +105,12 @@ with col_r1:
         .properties(height=220, width="container")
     )
     st.altair_chart(revenue_chart, use_container_width=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>")
 
 with col_r2:
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
-    st.markdown(
-        "<div style='font-size: 13px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;'>Pipeline by Stage</div>",
-        unsafe_allow_html=True,
+    st.html("<div class='sbi-card'>")
+    st.html(
+        "<div style='font-size: 13px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;'>Pipeline by Stage</div>"
     )
     pipeline_chart = (
         alt.Chart(alt.Data(values=PIPELINE_BY_STAGE))
@@ -128,19 +126,18 @@ with col_r2:
         .properties(height=220, width="container")
     )
     st.altair_chart(pipeline_chart, use_container_width=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>")
 
 # ── Win Rate & Behavior Trend ─────────────────────────────────
-st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
+st.html("<div style='height: 32px;'></div>")
 section_header("Performance Over Time", "Win rate, pipeline health, and coaching completion trends by month.")
 
 col_p1, col_p2 = st.columns(2)
 
 with col_p1:
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
-    st.markdown(
-        "<div style='font-size: 13px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;'>Win Rate Trend (%)</div>",
-        unsafe_allow_html=True,
+    st.html("<div class='sbi-card'>")
+    st.html(
+        "<div style='font-size: 13px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;'>Win Rate Trend (%)</div>"
     )
     win_rate_chart = (
         alt.Chart(alt.Data(values=MONTHLY_PERFORMANCE))
@@ -156,13 +153,12 @@ with col_p1:
         .properties(height=200, width="container")
     )
     st.altair_chart(win_rate_chart, use_container_width=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>")
 
 with col_p2:
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
-    st.markdown(
-        "<div style='font-size: 13px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;'>Coaching Completion (%)</div>",
-        unsafe_allow_html=True,
+    st.html("<div class='sbi-card'>")
+    st.html(
+        "<div style='font-size: 13px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;'>Coaching Completion (%)</div>"
     )
     coaching_chart = (
         alt.Chart(alt.Data(values=MONTHLY_PERFORMANCE))
@@ -178,10 +174,10 @@ with col_p2:
         .properties(height=200, width="container")
     )
     st.altair_chart(coaching_chart, use_container_width=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>")
 
 # ── Rep Comparison & Risk Distribution ───────────────────────
-st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
+st.html("<div style='height: 32px;'></div>")
 section_header("Team Breakdown", "Rep performance comparison and portfolio risk distribution.")
 
 col_t1, col_t2 = st.columns([1.4, 1])
@@ -195,10 +191,9 @@ with col_t1:
         for r in TOP_REPS
     ]
 
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
-    st.markdown(
-        "<div style='font-size: 13px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;'>Rep Comparison</div>",
-        unsafe_allow_html=True,
+    st.html("<div class='sbi-card'>")
+    st.html(
+        "<div style='font-size: 13px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;'>Rep Comparison</div>"
     )
     rep_chart = (
         alt.Chart(alt.Data(values=rep_data))
@@ -221,13 +216,12 @@ with col_t1:
         .properties(height=200, width="container")
     )
     st.altair_chart(rep_chart, use_container_width=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>")
 
 with col_t2:
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
-    st.markdown(
-        "<div style='font-size: 13px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;'>Risk Distribution</div>",
-        unsafe_allow_html=True,
+    st.html("<div class='sbi-card'>")
+    st.html(
+        "<div style='font-size: 13px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 16px; text-transform: uppercase; letter-spacing: 0.05em;'>Risk Distribution</div>"
     )
     risk_chart = (
         alt.Chart(alt.Data(values=RISK_DISTRIBUTION))
@@ -250,10 +244,10 @@ with col_t2:
         .properties(height=200, width="container")
     )
     st.altair_chart(risk_chart, use_container_width=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.markdown("</div>")
 
 # ── Key Insights ─────────────────────────────────────────────
-st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
+st.html("<div style='height: 32px;'></div>")
 section_header("Key Insights", "Patterns the AI has detected in your pipeline data this period.")
 
 insights = [
@@ -295,6 +289,5 @@ for i, insight in enumerate(insights):
                     <div style="font-size: 12px; color: var(--sbi-text-secondary); line-height: 1.5;">{insight['desc']}</div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )

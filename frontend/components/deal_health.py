@@ -23,8 +23,7 @@ def render_deal_health(health_metrics):
                     <div class='deal-health__progress' style='width: {score_pct}%; background-color: {color};'></div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
     
     # Risk Level
@@ -38,8 +37,7 @@ def render_deal_health(health_metrics):
                 <div class='deal-health__value' style='color: {risk_color};'>{health_metrics["risk_level"]}</div>
                 <div class='deal-health__meta'>Needs attention</div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
     
     # Deal Velocity
@@ -53,8 +51,7 @@ def render_deal_health(health_metrics):
                 <div class='deal-health__value'>{health_metrics["deal_velocity"]}</div>
                 <div class='deal-health__trend' style='color: {velocity_color};'>{health_metrics["velocity_trend"]}</div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
     
     # Engagement
@@ -69,6 +66,5 @@ def render_deal_health(health_metrics):
                 <div class='deal-health__value' style='color: {next_step_color};'>{next_step_status}</div>
                 <div class='deal-health__meta'>Action needed</div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )

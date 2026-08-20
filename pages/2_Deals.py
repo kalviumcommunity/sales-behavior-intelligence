@@ -63,10 +63,10 @@ if risk_filter != "All Risk":
 if rep_filter != "All Reps":
     filtered_deals = [d for d in filtered_deals if d['rep_name'] == rep_filter]
 
-st.markdown(f"<div class='sbi-text-muted sbi-text-xs sbi-font-semibold' style='margin-bottom: 12px;'>Showing {len(filtered_deals)} deals</div>", unsafe_allow_html=True)
+st.html(f"<div class='sbi-text-muted sbi-text-xs sbi-font-semibold' style='margin-bottom: 12px;'>Showing {len(filtered_deals)} deals</div>")
 
 # --- Deal Table Header ---
-st.markdown(
+st.html(
     """
     <div style="display: grid; grid-template-columns: 2.5fr 1fr 1fr 1.5fr 1fr 2fr 0.8fr; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--sbi-border-subtle); color: var(--sbi-text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">
         <div>Deal</div>
@@ -77,9 +77,7 @@ st.markdown(
         <div>AI Signal</div>
         <div style="text-align: right;">Action</div>
     </div>
-    """, 
-    unsafe_allow_html=True
-)
+    """)
 
 # --- Deal Table Rows ---
 for deal in filtered_deals:
@@ -121,15 +119,15 @@ for deal in filtered_deals:
 
     col_content, col_action = st.columns([9, 1])
     with col_content:
-        st.markdown(row_html, unsafe_allow_html=True)
+        st.html(row_html)
     with col_action:
         # Align button vertically
-        st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
+        st.html("<div style='height: 24px;'></div>")
         if st.button("Open →", key=f"open_{deal['id']}", use_container_width=True, type="secondary"):
             st.session_state["deals_selected_deal"] = {"id": deal["id"]}
             st.switch_page("pages/3_Deal_Details.py")
     
-    st.markdown("<div style='height: 1px; background: var(--sbi-border-subtle); margin: 0;'></div>", unsafe_allow_html=True)
+    st.html("<div style='height: 1px; background: var(--sbi-border-subtle); margin: 0;'></div>")
 
 if not filtered_deals:
     render_empty_state("No deals found", "Try adjusting your filters to see more results.")

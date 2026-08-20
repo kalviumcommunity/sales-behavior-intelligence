@@ -12,7 +12,7 @@ def render_deal_metrics(deal):
             return f"${value / 1_000:.0f}K"
         return f"${value:,.0f}"
     
-    st.markdown("<div class='section-heading'>📊 Deal Metrics</div>", unsafe_allow_html=True)
+    st.html("<div class='section-heading'>📊 Deal Metrics</div>")
     
     metric_cols = st.columns(6)
     
@@ -33,6 +33,5 @@ def render_deal_metrics(deal):
                     <div class='deal-metric__label'>{label}</div>
                     <div class='deal-metric__value'>{value}</div>
                 </div>
-                """,
-                unsafe_allow_html=True,
+                """
             )

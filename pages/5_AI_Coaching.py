@@ -43,14 +43,13 @@ render_kpi_strip(kpi_metrics)
 section_header("Who Needs Coaching Today?", "Behavioral signals detected across your pipeline, ranked by impact on deal outcomes.")
 
 # ── High Priority coaching cards ─────────────────────────────
-st.markdown(
+st.html(
     """
     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
         <span class="sbi-badge sbi-badge--danger">● HIGH PRIORITY</span>
         <span style="font-size: 12px; color: var(--sbi-text-muted);">These behaviors are directly correlated with deal slippage. Act within 24–48 hours.</span>
     </div>
-    """,
-    unsafe_allow_html=True,
+    """
 )
 
 # deal_101 coaching cards are High Risk
@@ -90,27 +89,25 @@ for idx, card in enumerate(high_cards):
                     <div style="font-size: 11px; color: var(--sbi-text-muted);">Expected Impact: <span style="color: var(--sbi-warning); font-weight: 600;">{card['impact']}</span></div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
 
     with col_action:
-        st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 20px;'></div>")
         if st.button("Coach Rep", key=f"high_coach_{idx}", use_container_width=True, type="primary"):
             pass
         if st.button("Mark Done", key=f"high_done_{idx}", use_container_width=True, type="secondary"):
             pass
 
 # ── Medium Priority coaching cards ───────────────────────────
-st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
-st.markdown(
+st.html("<div style='height: 20px;'></div>")
+st.html(
     """
     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
         <span class="sbi-badge sbi-badge--warning">● MEDIUM PRIORITY</span>
         <span style="font-size: 12px; color: var(--sbi-text-muted);">Address within the next coaching cycle to maintain deal momentum.</span>
     </div>
-    """,
-    unsafe_allow_html=True,
+    """
 )
 
 medium_cards = [c for v in MOCK_COACHING_CARDS.values() for c in v if c["severity"] == "Medium Risk"]
@@ -143,17 +140,16 @@ for idx, card in enumerate(medium_cards):
                     </div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
 
     with col_action:
-        st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 20px;'></div>")
         if st.button("Review", key=f"med_review_{idx}", use_container_width=True, type="secondary"):
             pass
 
 # ── AI Coaching Tips ─────────────────────────────────────────
-st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
+st.html("<div style='height: 32px;'></div>")
 section_header("Recommended Coaching Approaches", "Evidence-based frameworks for the behaviors detected this week.")
 
 tips = [
@@ -190,6 +186,5 @@ for i, tip in enumerate(tips):
                 <div style="font-weight: 700; font-size: 14px; margin-bottom: 8px; color: var(--sbi-text-primary);">{tip['title']}</div>
                 <div style="font-size: 12px; color: var(--sbi-text-secondary); line-height: 1.6;">{tip['desc']}</div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )

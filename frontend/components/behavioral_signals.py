@@ -5,7 +5,7 @@ import streamlit as st
 def render_behavioral_signals(signals):
     """Render behavioral intelligence signals with scores."""
     
-    st.markdown("<div class='section-heading'>💡 Behavioral Intelligence</div>", unsafe_allow_html=True)
+    st.html("<div class='section-heading'>💡 Behavioral Intelligence</div>")
     
     for signal in signals:
         score_pct = (signal["score"] / signal["max_score"]) * 100
@@ -21,7 +21,7 @@ def render_behavioral_signals(signals):
             color = "#5fd6a0"
             icon = "✓"
         
-        st.markdown(
+        st.html(
             f"""
             <div class='behavioral-signal-card'>
                 <div class='behavioral-signal__header'>
@@ -39,8 +39,7 @@ def render_behavioral_signals(signals):
                     {signal["insight"]}
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
         
-        st.markdown("<div style='height: 0.5rem;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 0.5rem;'></div>")

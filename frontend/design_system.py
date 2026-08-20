@@ -355,6 +355,59 @@ ul[data-testid="stSidebarNavItems"] { display: none !important; visibility: hidd
 .sbi-empty-title { font-size: 15px; font-weight: 600; color: var(--sbi-text-secondary); margin-bottom: 6px; }
 .sbi-empty-desc  { font-size: 13px; color: var(--sbi-text-muted); }
 
+/* ============================================================
+   GAMIFICATION & LEADERBOARD UI
+   ============================================================ */
+.sbi-leaderboard-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; margin-bottom: 12px;
+  background: var(--sbi-bg-surface);
+  border: 1px solid var(--sbi-border-subtle);
+  border-radius: var(--sbi-r-xl);
+  transition: all var(--sbi-t-base);
+}
+.sbi-leaderboard-row:hover {
+  background: var(--sbi-bg-hover);
+  border-color: var(--sbi-border-medium);
+  transform: translateY(-2px);
+  box-shadow: var(--sbi-shadow-md);
+}
+
+.sbi-avatar-container {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px; border-radius: 12px; font-weight: 700; font-size: 16px;
+  background: var(--sbi-bg-elevated); z-index: 1;
+}
+.sbi-avatar-rank {
+  position: absolute; top: -8px; left: -8px; width: 22px; height: 22px;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 800; color: #fff; z-index: 2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+.sbi-rank-1 .sbi-avatar-container { background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,165,0,0.1)); border: 2px solid #FFD700; color: #FFD700; }
+.sbi-rank-1 .sbi-avatar-rank { background: linear-gradient(135deg, #FFD700, #FFA500); }
+
+.sbi-rank-2 .sbi-avatar-container { background: linear-gradient(135deg, rgba(192,192,192,0.2), rgba(169,169,169,0.1)); border: 2px solid #C0C0C0; color: #C0C0C0; }
+.sbi-rank-2 .sbi-avatar-rank { background: linear-gradient(135deg, #E0E0E0, #A9A9A9); color: #333; }
+
+.sbi-rank-3 .sbi-avatar-container { background: linear-gradient(135deg, rgba(205,127,50,0.2), rgba(139,69,19,0.1)); border: 2px solid #CD7F32; color: #CD7F32; }
+.sbi-rank-3 .sbi-avatar-rank { background: linear-gradient(135deg, #CD7F32, #8B4513); }
+
+.sbi-rank-other .sbi-avatar-container { background: var(--sbi-bg-elevated); border: 1px solid var(--sbi-border-medium); color: var(--sbi-text-secondary); }
+.sbi-rank-other .sbi-avatar-rank { background: var(--sbi-bg-elevated); border: 1px solid var(--sbi-border-medium); color: var(--sbi-text-muted); }
+
+.sbi-achievements-container {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;
+}
+.sbi-achievement-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--sbi-bg-elevated);
+  border: 1px solid var(--sbi-border-subtle);
+  padding: 4px 8px; border-radius: 20px;
+  font-size: 11px; font-weight: 600; color: var(--sbi-text-secondary);
+}
+.sbi-achievement-badge span.icon { font-size: 12px; }
+
 @media (max-width: 1024px) {
   .main .block-container { padding: var(--sbi-sp-4) var(--sbi-sp-5) var(--sbi-sp-10) !important; }
 }
@@ -369,4 +422,4 @@ ul[data-testid="stSidebarNavItems"] { display: none !important; visibility: hidd
 def inject_design_system():
     """Call this at the top of every page."""
     import streamlit as st
-    st.markdown(DESIGN_SYSTEM_CSS, unsafe_allow_html=True)
+    st.html(DESIGN_SYSTEM_CSS)

@@ -5,7 +5,7 @@ import streamlit as st
 def render_risk_analysis(risk_factors):
     """Render risk analysis section."""
     
-    st.markdown("<div class='section-heading'>⚠️ Why This Deal Is At Risk</div>", unsafe_allow_html=True)
+    st.html("<div class='section-heading'>⚠️ Why This Deal Is At Risk</div>")
     
     for risk in risk_factors:
         severity_color = (
@@ -43,6 +43,5 @@ def render_risk_analysis(risk_factors):
                     </div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )

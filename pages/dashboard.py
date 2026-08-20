@@ -76,8 +76,8 @@ alt.themes.enable("sbi_theme")
 
 col_c1, col_c2 = st.columns(2)
 with col_c1:
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
-    st.markdown("<div style='font-size: 14px; font-weight: 600; margin-bottom: 16px;'>Revenue Trend</div>", unsafe_allow_html=True)
+    st.html("<div class='sbi-card'>")
+    st.html("<div style='font-size: 14px; font-weight: 600; margin-bottom: 16px;'>Revenue Trend</div>")
     revenue_chart = (
         alt.Chart(alt.Data(values=REVENUE_TREND))
         .mark_area(
@@ -96,11 +96,11 @@ with col_c1:
         ).properties(height=240, width='container')
     )
     st.altair_chart(revenue_chart, use_container_width=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.html("</div>")
 
 with col_c2:
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
-    st.markdown("<div style='font-size: 14px; font-weight: 600; margin-bottom: 16px;'>Pipeline by Stage</div>", unsafe_allow_html=True)
+    st.html("<div class='sbi-card'>")
+    st.html("<div style='font-size: 14px; font-weight: 600; margin-bottom: 16px;'>Pipeline by Stage</div>")
     pipeline_chart = (
         alt.Chart(alt.Data(values=PIPELINE_BY_STAGE))
         .mark_bar(color="#8B7CFF", cornerRadiusTopLeft=4, cornerRadiusTopRight=4)
@@ -111,9 +111,9 @@ with col_c2:
         ).properties(height=240, width='container')
     )
     st.altair_chart(pipeline_chart, use_container_width=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.html("</div>")
 
-st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
+st.html("<div style='height: 32px;'></div>")
 
 # --- Needs Attention & Activity ---
 section_header("Needs Attention", "Priority items requiring manager action today.")
@@ -121,8 +121,8 @@ section_header("Needs Attention", "Priority items requiring manager action today
 col_n1, col_n2 = st.columns([1.5, 1])
 
 with col_n1:
-    st.markdown("<div class='sbi-card' style='height: 100%;'>", unsafe_allow_html=True)
-    st.markdown("<div style='font-size: 14px; font-weight: 600; margin-bottom: 16px;'>High Risk Deals</div>", unsafe_allow_html=True)
+    st.html("<div class='sbi-card' style='height: 100%;'>")
+    st.html("<div style='font-size: 14px; font-weight: 600; margin-bottom: 16px;'>High Risk Deals</div>")
     
     table_html = """
     <div class='sbi-table-wrapper'>
@@ -147,8 +147,8 @@ with col_n1:
                 </tr>
         """
     table_html += "</tbody></table></div>"
-    st.markdown(table_html, unsafe_allow_html=True)
-    st.markdown("</div>", unsafe_allow_html=True)
+    st.html(table_html)
+    st.html("</div>")
 
 with col_n2:
     ai_content = ""
@@ -163,17 +163,17 @@ with col_n2:
         """
     render_ai_panel("AI Coaching Priority", ai_content, style="height: 100%;")
 
-st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
+st.html("<div style='height: 32px;'></div>")
 
 # --- Bottom Section: Reps & Activity ---
 col_b1, col_b2 = st.columns([1, 1.5])
 
 with col_b1:
     section_header("Top Performers", "Ranked by behavior score.")
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
+    st.html("<div class='sbi-card'>")
     
     for idx, rep in enumerate(TOP_REPS[:4]):
-        st.markdown(
+        st.html(
             f"""
             <div style="display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: {'' if idx==3 else '1px solid var(--sbi-border-subtle)'};">
                 <div style="display: flex; align-items: center; gap: 12px;">
@@ -188,17 +188,15 @@ with col_b1:
                     <div class="sbi-text-xs sbi-text-muted">Win Rate</div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
-        )
-    st.markdown("</div>", unsafe_allow_html=True)
+            """)
+    st.html("</div>")
 
 with col_b2:
     section_header("Recent Activity", "Latest pipeline updates from your team.")
-    st.markdown("<div class='sbi-card'>", unsafe_allow_html=True)
+    st.html("<div class='sbi-card'>")
     
     for idx, act in enumerate(RECENT_ACTIVITIES[:4]):
-        st.markdown(
+        st.html(
             f"""
             <div style="display: flex; gap: 16px; padding: 12px 0; border-bottom: {'' if idx==3 else '1px solid var(--sbi-border-subtle)'};">
                 <div style="color: var(--sbi-text-muted); font-size: 12px; width: 60px; flex-shrink: 0; padding-top: 2px;">{act['time']}</div>
@@ -207,7 +205,5 @@ with col_b2:
                     <div class="sbi-text-xs sbi-text-secondary">{act['detail']}</div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True
-        )
-    st.markdown("</div>", unsafe_allow_html=True)
+            """)
+    st.html("</div>")

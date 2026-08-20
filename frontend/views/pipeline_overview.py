@@ -6,7 +6,7 @@ import streamlit as st
 
 def render_pipeline_overview(deals):
     """Renders the pipeline overview table and risk breakdown."""
-    st.markdown("### 📊 Active Pipeline Risk Matrix")
+    st.html("### 📊 Active Pipeline Risk Matrix")
     st.caption("Identify deals requiring immediate behavioral coaching intervention.")
 
     st.markdown("""
@@ -25,7 +25,7 @@ def render_pipeline_overview(deals):
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
         }
         </style>
-    """, unsafe_allow_html=True)
+    """)
 
     # Filter Bar
     col1, col2, col3 = st.columns([3, 3, 3])
@@ -68,6 +68,5 @@ def render_pipeline_overview(deals):
                         🚩 <strong>Top Flag:</strong> {deal['top_flag']} &nbsp;•&nbsp; <em>Last activity: {deal['last_activity']}</em>
                     </div>
                 </div>
-                """,
-                unsafe_allow_html=True,
+                """
             )

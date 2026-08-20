@@ -5,21 +5,20 @@ import streamlit as st
 def render_stakeholders(stakeholders):
     """Render stakeholder information."""
     
-    st.markdown("<div class='section-heading'>👥 Stakeholders</div>", unsafe_allow_html=True)
+    st.html("<div class='section-heading'>👥 Stakeholders</div>")
     
     # Check for single-threaded warning
     engaged_stakeholders = [s for s in stakeholders if s["engagement_level"] != "Low"]
     if len(engaged_stakeholders) <= 1:
-        st.markdown(
+        st.html(
             """
             <div class='warning-banner'>
                 ⚠️ <strong>Single-Threaded Opportunity</strong><br/>
                 This deal depends on one stakeholder. Expand stakeholder coverage to reduce risk.
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
-        st.markdown("<div style='height: 0.5rem;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 0.5rem;'></div>")
     
     for stakeholder in stakeholders:
         engagement_color = (
@@ -73,6 +72,5 @@ def render_stakeholders(stakeholders):
                     </div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
