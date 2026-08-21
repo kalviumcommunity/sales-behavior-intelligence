@@ -40,9 +40,13 @@ def render_landing_page():
 
         #MainMenu, header[data-testid="stHeader"], footer, [data-testid="stToolbar"] { display: none !important; }
         section[data-testid="stSidebar"] { display: none !important; }
-        .main .block-container {
+        [data-testid="stAppViewContainer"] > section.main, section[data-testid="stMain"] { padding-top: 0 !important; }
+        .main .block-container, [data-testid="stMainBlockContainer"], .block-container {
             max-width: 1320px;
-            padding: 0 !important;
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
             margin: 0 auto;
         }
 
@@ -50,12 +54,51 @@ def render_landing_page():
         [data-testid="stVerticalBlock"] > div { gap: 0 !important; }
         [data-testid="stMarkdownContainer"] p { margin: 0 !important; }
 
+        /* ─── ANIMATIONS ─── */
+        @keyframes lpSlideDown {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes lpFadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes lpFadeInRight {
+            0% { opacity: 0; transform: translateX(40px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .anim-slide-down { animation: lpSlideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        .anim-fade-up { opacity: 0; animation: lpFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .anim-fade-right { opacity: 0; animation: lpFadeInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-500 { animation-delay: 500ms; }
+        .delay-600 { animation-delay: 600ms; }
+        .delay-700 { animation-delay: 700ms; }
+
         /* ─── NAVBAR ─── */
+        .lp-nav-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: rgba(6, 11, 20, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            /* animation added in HTML */
+        }
         .lp-nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 24px 32px;
+            padding: 16px 32px;
             max-width: 1320px;
             margin: 0 auto;
         }
@@ -102,7 +145,7 @@ def render_landing_page():
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 64px;
-            padding: 80px 32px;
+            padding: 110px 32px 80px; /* 64px for navbar + 46px actual visible gap */
             align-items: center;
         }
         .lp-eyebrow {
@@ -296,68 +339,59 @@ def render_landing_page():
     # To keep the marketing page fully styled and handle clicks correctly without jumping, 
     # we use st.button styled via CSS for the auth navigation, or simple logic.
 
-    # ─── NAVBAR ───
+    # ─── NAVBAR & HERO ───
     st.html(
         """
-        <div class="lp-nav">
-            <div class="lp-brand">
-                <div class="lp-brand-icon">SBI</div>
-                Sales Behavior Intelligence
-            </div>
-            <div class="lp-nav-links">
-                <a href="#product">Product</a>
-                <a href="#how-it-works">How it Works</a>
-                <a href="#benefits">Insights</a>
+        <div class="lp-nav-wrapper anim-slide-down">
+            <div class="lp-nav">
+                <div class="lp-brand">
+                    <div class="lp-brand-icon">SBI</div>
+                    Sales Behavior Intelligence
+                </div>
+                <div class="lp-nav-actions">
+                    <div class="lp-nav-links" style="margin-right: 16px;">
+                        <a href="#product">Product</a>
+                        <a href="#how-it-works">How it Works</a>
+                        <a href="#benefits">Insights</a>
+                    </div>
+                    <a href="Authentication" target="_self" class="lp-btn-secondary" style="padding: 10px 24px; font-size: 14px;">Sign In</a>
+                    <a href="Authentication" target="_self" class="lp-btn-primary" style="padding: 10px 24px; font-size: 14px;">Get Started</a>
+                </div>
             </div>
         </div>
-        """)
 
-    # Use actual streamlit buttons for the auth actions so they work, floating them via a container
-    col_nav1, col_nav2, col_nav3 = st.columns([1, 8, 2.5])
-    with col_nav3:
-        sub_c1, sub_c2 = st.columns(2)
-        with sub_c1:
-            if st.button("Sign In", type="secondary", use_container_width=True):
-                st.switch_page("pages/1_Authentication.py")
-        with sub_c2:
-            if st.button("Get Started", type="primary", use_container_width=True):
-                st.switch_page("pages/1_Authentication.py")
-
-    # ─── HERO ───
-    st.html(
-        """
         <div class="lp-hero">
             <div>
-                <div class="lp-eyebrow">Behavioral Intelligence for Revenue Teams</div>
-                <div class="lp-h1">Know why deals move.<br>Know what to do next.</div>
-                <div class="lp-subtitle">Sales Behavior Intelligence reveals the seller behaviors behind pipeline movement so managers can identify risk earlier, coach with evidence, and repeat the behaviors that create revenue.</div>
-                <div style="display: flex; gap: 16px;">
+                <div class="lp-eyebrow anim-fade-up">Behavioral Intelligence for Revenue Teams</div>
+                <div class="lp-h1 anim-fade-up delay-100">Know why deals move.<br>Know what to do next.</div>
+                <div class="lp-subtitle anim-fade-up delay-200">Sales Behavior Intelligence reveals the seller behaviors behind pipeline movement so managers can identify risk earlier, coach with evidence, and repeat the behaviors that create revenue.</div>
+                <div style="display: flex; gap: 16px;" class="anim-fade-up delay-300">
                     <a href="#" class="lp-btn-primary">Start analyzing pipeline</a>
                     <a href="#" class="lp-btn-secondary">Watch Demo</a>
                 </div>
-                <div class="lp-hero-features">
+                <div class="lp-hero-features anim-fade-up delay-400">
                     <span>✓ Evidence-driven coaching</span>
                     <span>✓ Early risk detection</span>
                     <span>✓ AI-powered insights</span>
                 </div>
             </div>
-            <div class="lp-preview">
+            <div class="lp-preview anim-fade-right delay-200">
                 <div class="lp-preview-header">
                     <div class="lp-preview-dot"></div>
                     <div class="lp-preview-dot"></div>
                     <div class="lp-preview-dot"></div>
                 </div>
                 <div class="lp-preview-body">
-                    <div class="lp-preview-card" style="border-left: 3px solid var(--lp-cyan);">
+                    <div class="lp-preview-card anim-fade-up delay-400" style="border-left: 3px solid var(--lp-cyan);">
                         <div style="font-size: 11px; color: var(--lp-muted); text-transform: uppercase; margin-bottom: 4px;">Pipeline Health</div>
                         <div style="font-size: 24px; font-weight: 800;">$1.84M</div>
                     </div>
-                    <div class="lp-preview-card" style="border-left: 3px solid var(--lp-violet);">
+                    <div class="lp-preview-card anim-fade-up delay-500" style="border-left: 3px solid var(--lp-violet);">
                         <div style="font-size: 11px; color: var(--lp-muted); text-transform: uppercase; margin-bottom: 8px;">AI Coaching Insight</div>
                         <div style="font-size: 14px; margin-bottom: 4px; font-weight: 600;">Follow-up timing has increased 28%.</div>
                         <div style="font-size: 13px; color: var(--lp-muted);">Deals with slower follow-up are progressing 1.4x slower.</div>
                     </div>
-                    <div class="lp-preview-card" style="border-left: 3px solid #FB7185;">
+                    <div class="lp-preview-card anim-fade-up delay-600" style="border-left: 3px solid #FB7185;">
                         <div style="font-size: 11px; color: var(--lp-muted); text-transform: uppercase; margin-bottom: 8px;">Risk Indicator</div>
                         <div style="font-size: 13px;">Executive stakeholder not engaged in Acme Corp deal.</div>
                     </div>
