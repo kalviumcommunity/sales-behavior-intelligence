@@ -40,9 +40,13 @@ def render_landing_page():
 
         #MainMenu, header[data-testid="stHeader"], footer, [data-testid="stToolbar"] { display: none !important; }
         section[data-testid="stSidebar"] { display: none !important; }
-        .main .block-container {
+        [data-testid="stAppViewContainer"] > section.main, section[data-testid="stMain"] { padding-top: 0 !important; }
+        .main .block-container, [data-testid="stMainBlockContainer"], .block-container {
             max-width: 1320px;
-            padding: 0 !important;
+            padding-top: 0 !important;
+            margin-top: 0 !important;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
             margin: 0 auto;
         }
 
@@ -50,12 +54,51 @@ def render_landing_page():
         [data-testid="stVerticalBlock"] > div { gap: 0 !important; }
         [data-testid="stMarkdownContainer"] p { margin: 0 !important; }
 
+        /* ─── ANIMATIONS ─── */
+        @keyframes lpSlideDown {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(0); }
+        }
+        @keyframes lpFadeInUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes lpFadeInRight {
+            0% { opacity: 0; transform: translateX(40px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .anim-slide-down { animation: lpSlideDown 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        .anim-fade-up { opacity: 0; animation: lpFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .anim-fade-right { opacity: 0; animation: lpFadeInRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+        .delay-400 { animation-delay: 400ms; }
+        .delay-500 { animation-delay: 500ms; }
+        .delay-600 { animation-delay: 600ms; }
+        .delay-700 { animation-delay: 700ms; }
+
         /* ─── NAVBAR ─── */
+        .lp-nav-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 9999;
+            background: rgba(6, 11, 20, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            /* animation added in HTML */
+        }
         .lp-nav {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 24px 32px;
+            padding: 16px 32px;
             max-width: 1320px;
             margin: 0 auto;
         }
@@ -102,7 +145,7 @@ def render_landing_page():
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 64px;
-            padding: 80px 32px;
+            padding: 110px 32px 80px; /* 64px for navbar + 46px actual visible gap */
             align-items: center;
         }
         .lp-eyebrow {
@@ -296,20 +339,28 @@ def render_landing_page():
     # To keep the marketing page fully styled and handle clicks correctly without jumping, 
     # we use st.button styled via CSS for the auth navigation, or simple logic.
 
+    # ─── NAVBAR & HERO ───
     # ─── NAVBAR ───
     st.html(
         """
-        <div class="lp-nav">
-            <div class="lp-brand">
-                <div class="lp-brand-icon">SBI</div>
-                Sales Behavior Intelligence
-            </div>
-            <div class="lp-nav-links">
-                <a href="#product">Product</a>
-                <a href="#how-it-works">How it Works</a>
-                <a href="#benefits">Insights</a>
+        <div class="lp-nav-wrapper anim-slide-down">
+            <div class="lp-nav">
+                <div class="lp-brand">
+                    <div class="lp-brand-icon">SBI</div>
+                    Sales Behavior Intelligence
+                </div>
+                <div class="lp-nav-actions">
+                    <div class="lp-nav-links" style="margin-right: 16px;">
+                        <a href="#product">Product</a>
+                        <a href="#how-it-works">How it Works</a>
+                        <a href="#benefits">Insights</a>
+                    </div>
+                    <a href="Authentication" target="_self" class="lp-btn-secondary" style="padding: 10px 24px; font-size: 14px;">Sign In</a>
+                    <a href="Authentication" target="_self" class="lp-btn-primary" style="padding: 10px 24px; font-size: 14px;">Get Started</a>
+                </div>
             </div>
         </div>
+
         """)
 
     # Use actual streamlit buttons for the auth actions so they work, floating them via a container
@@ -328,36 +379,36 @@ def render_landing_page():
         """
         <div class="lp-hero">
             <div>
-                <div class="lp-eyebrow">Behavioral Intelligence for Revenue Teams</div>
-                <div class="lp-h1">Know why deals move.<br>Know what to do next.</div>
-                <div class="lp-subtitle">Sales Behavior Intelligence reveals the seller behaviors behind pipeline movement so managers can identify risk earlier, coach with evidence, and repeat the behaviors that create revenue.</div>
-                <div style="display: flex; gap: 16px;">
+                <div class="lp-eyebrow anim-fade-up">Behavioral Intelligence for Revenue Teams</div>
+                <div class="lp-h1 anim-fade-up delay-100">Know why deals move.<br>Know what to do next.</div>
+                <div class="lp-subtitle anim-fade-up delay-200">Sales Behavior Intelligence reveals the seller behaviors behind pipeline movement so managers can identify risk earlier, coach with evidence, and repeat the behaviors that create revenue.</div>
+                <div style="display: flex; gap: 16px;" class="anim-fade-up delay-300">
                     <a href="#" class="lp-btn-primary">Start analyzing pipeline</a>
                     <a href="#" class="lp-btn-secondary">Watch Demo</a>
                 </div>
-                <div class="lp-hero-features">
+                <div class="lp-hero-features anim-fade-up delay-400">
                     <span>✓ Evidence-driven coaching</span>
                     <span>✓ Early risk detection</span>
                     <span>✓ AI-powered insights</span>
                 </div>
             </div>
-            <div class="lp-preview">
+            <div class="lp-preview anim-fade-right delay-200">
                 <div class="lp-preview-header">
                     <div class="lp-preview-dot"></div>
                     <div class="lp-preview-dot"></div>
                     <div class="lp-preview-dot"></div>
                 </div>
                 <div class="lp-preview-body">
-                    <div class="lp-preview-card" style="border-left: 3px solid var(--lp-cyan);">
+                    <div class="lp-preview-card anim-fade-up delay-400" style="border-left: 3px solid var(--lp-cyan);">
                         <div style="font-size: 11px; color: var(--lp-muted); text-transform: uppercase; margin-bottom: 4px;">Pipeline Health</div>
                         <div style="font-size: 24px; font-weight: 800;">$1.84M</div>
                     </div>
-                    <div class="lp-preview-card" style="border-left: 3px solid var(--lp-violet);">
+                    <div class="lp-preview-card anim-fade-up delay-500" style="border-left: 3px solid var(--lp-violet);">
                         <div style="font-size: 11px; color: var(--lp-muted); text-transform: uppercase; margin-bottom: 8px;">AI Coaching Insight</div>
                         <div style="font-size: 14px; margin-bottom: 4px; font-weight: 600;">Follow-up timing has increased 28%.</div>
                         <div style="font-size: 13px; color: var(--lp-muted);">Deals with slower follow-up are progressing 1.4x slower.</div>
                     </div>
-                    <div class="lp-preview-card" style="border-left: 3px solid #FB7185;">
+                    <div class="lp-preview-card anim-fade-up delay-600" style="border-left: 3px solid #FB7185;">
                         <div style="font-size: 11px; color: var(--lp-muted); text-transform: uppercase; margin-bottom: 8px;">Risk Indicator</div>
                         <div style="font-size: 13px;">Executive stakeholder not engaged in Acme Corp deal.</div>
                     </div>
@@ -440,6 +491,162 @@ def render_landing_page():
         """)
     
     # ─── FINAL CTA ───
+    st.html("""
+    <style>
+    .lp-cta-section {
+        position: relative;
+        padding: 120px 32px;
+        text-align: center;
+        overflow: hidden;
+        border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .lp-cta-glow {
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(ellipse at 50% 60%, rgba(94,231,255,0.07) 0%, transparent 55%),
+            radial-gradient(ellipse at 50% 40%, rgba(139,124,255,0.05) 0%, transparent 45%);
+        pointer-events: none;
+        z-index: 0;
+    }
+    .lp-cta-inner {
+        position: relative;
+        z-index: 1;
+        max-width: 960px;
+        margin: 0 auto;
+    }
+    .lp-cta-eyebrow {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.14em;
+        color: var(--lp-cyan);
+        margin-bottom: 20px;
+        opacity: 0.85;
+    }
+    .lp-cta-headline {
+        font-size: clamp(36px, 4vw, 52px);
+        font-weight: 800;
+        line-height: 1.07;
+        letter-spacing: -0.035em;
+        color: var(--lp-text);
+        margin-bottom: 20px;
+    }
+    .lp-cta-sub {
+        font-size: 17px;
+        line-height: 1.65;
+        color: var(--lp-muted);
+        max-width: 620px;
+        margin: 0 auto 40px;
+    }
+    .lp-cta-buttons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 40px;
+    }
+    .lp-cta-btn-primary {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(135deg, var(--lp-cyan), var(--lp-violet));
+        color: #060B14 !important;
+        font-weight: 700;
+        font-size: 15px;
+        padding: 0 28px;
+        height: 50px;
+        border-radius: 8px;
+        text-decoration: none !important;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 20px rgba(94,231,255,0.18);
+    }
+    .lp-cta-btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(94,231,255,0.28);
+    }
+    .lp-cta-btn-secondary {
+        display: inline-flex;
+        align-items: center;
+        height: 50px;
+        padding: 0 24px;
+        border-radius: 8px;
+        border: 1px solid rgba(255,255,255,0.12);
+        background: rgba(255,255,255,0.03);
+        color: var(--lp-text) !important;
+        font-weight: 600;
+        font-size: 15px;
+        text-decoration: none !important;
+        cursor: pointer;
+        transition: background 0.2s, border-color 0.2s;
+    }
+    .lp-cta-btn-secondary:hover {
+        background: rgba(255,255,255,0.07);
+        border-color: rgba(255,255,255,0.22);
+    }
+    .lp-cta-trust {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        font-size: 12px;
+        color: var(--lp-muted);
+        opacity: 0.7;
+        flex-wrap: wrap;
+    }
+    .lp-cta-trust-dot {
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: var(--lp-muted);
+        opacity: 0.5;
+        display: inline-block;
+    }
+    @media (max-width: 640px) {
+        .lp-cta-section { padding: 80px 20px; }
+        .lp-cta-buttons { flex-direction: column; align-items: stretch; }
+        .lp-cta-btn-primary, .lp-cta-btn-secondary {
+            justify-content: center;
+            width: 100%;
+            max-width: 340px;
+            margin: 0 auto;
+        }
+    }
+    </style>
+
+    <div class="lp-cta-section">
+        <div class="lp-cta-glow"></div>
+        <div class="lp-cta-inner">
+            <div class="lp-cta-eyebrow">Ready to see your pipeline differently</div>
+            <div class="lp-cta-headline">
+                Turn sales activity into<br>better decisions.
+            </div>
+            <div class="lp-cta-sub">
+                Turn CRM activity, deal behavior, and seller signals into clear actions your team can take today. Understand what is happening, why it is happening, and what to do next.
+            </div>
+            <div class="lp-cta-buttons">
+                <a href="#" class="lp-cta-btn-primary" onclick="window.parent.document.querySelector('[data-testid=\\"stSidebarNav\\"]')">
+                    Start analyzing your pipeline →
+                </a>
+                <a href="#" class="lp-cta-btn-secondary">
+                    Book a demo
+                </a>
+            </div>
+            <div class="lp-cta-trust">
+                <span>Built for modern revenue teams</span>
+                <span class="lp-cta-trust-dot"></span>
+                <span>Behavioral intelligence</span>
+                <span class="lp-cta-trust-dot"></span>
+                <span>Deal risk detection</span>
+                <span class="lp-cta-trust-dot"></span>
+                <span>AI coaching</span>
+            </div>
+        </div>
+    </div>
+    """)
     st.html(
         """
         <div class="lp-section" style="text-align: center;">

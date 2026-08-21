@@ -52,6 +52,14 @@ DESIGN_SYSTEM_CSS = """
   --sbi-shadow-md: 0 4px 16px rgba(0,0,0,0.40);
   --sbi-t-fast: 150ms ease; --sbi-t-base: 200ms ease;
   --sbi-max-width: 1380px;
+
+  /* Glassmorphism Tokens */
+  --sbi-glass-bg: rgba(16, 23, 34, 0.45);
+  --sbi-glass-bg-hover: rgba(16, 23, 34, 0.65);
+  --sbi-glass-border: rgba(255, 255, 255, 0.08);
+  --sbi-glass-border-light: rgba(255, 255, 255, 0.15);
+  --sbi-glass-blur: blur(24px);
+  --sbi-glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
 }
 
 /* ============================================================
@@ -60,8 +68,18 @@ DESIGN_SYSTEM_CSS = """
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
+@keyframes sbiFadeInUp {
+  0% { opacity: 0; transform: translateY(15px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
 .stApp {
   background-color: var(--sbi-bg-primary);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(94, 231, 255, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(139, 124, 255, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 60%);
+  background-attachment: fixed;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   color: var(--sbi-text-primary);
   font-size: 14px;
@@ -139,9 +157,11 @@ ul[data-testid="stSidebarNavItems"] { display: none !important; visibility: hidd
 .stDateInput input,
 .stNumberInput input,
 .stTextArea textarea {
-  background: var(--sbi-bg-surface) !important;
+  background: rgba(255,255,255,0.03) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
   color: var(--sbi-text-primary) !important;
-  border: 1px solid var(--sbi-border-subtle) !important;
+  border: 1px solid var(--sbi-glass-border) !important;
   border-radius: var(--sbi-r-md) !important;
   font-size: 14px !important;
   font-family: 'Inter', sans-serif !important;
@@ -164,9 +184,11 @@ ul[data-testid="stSidebarNavItems"] { display: none !important; visibility: hidd
 }
 
 .stButton button {
-  background: var(--sbi-bg-elevated) !important;
+  background: var(--sbi-glass-bg) !important;
+  backdrop-filter: var(--sbi-glass-blur) !important;
+  -webkit-backdrop-filter: var(--sbi-glass-blur) !important;
   color: var(--sbi-text-primary) !important;
-  border: 1px solid var(--sbi-border-subtle) !important;
+  border: 1px solid var(--sbi-glass-border) !important;
   border-radius: var(--sbi-r-md) !important;
   font-family: 'Inter', sans-serif !important;
   font-size: 13px !important;
@@ -177,8 +199,8 @@ ul[data-testid="stSidebarNavItems"] { display: none !important; visibility: hidd
   min-height: 36px !important;
 }
 .stButton button:hover {
-  background: var(--sbi-bg-hover) !important;
-  border-color: var(--sbi-border-medium) !important;
+  background: var(--sbi-glass-bg-hover) !important;
+  border-color: var(--sbi-glass-border-light) !important;
   color: var(--sbi-text-primary) !important;
 }
 
@@ -272,14 +294,22 @@ ul[data-testid="stSidebarNavItems"] { display: none !important; visibility: hidd
 .sbi-ai-label::before { content: "✦"; font-size: 9px; }
 
 .sbi-ai-panel {
-  background: linear-gradient(135deg, rgba(139,124,255,0.05), rgba(94,231,255,0.05));
-  border: 1px solid rgba(139,124,255,0.12); border-radius: var(--sbi-r-xl); padding: var(--sbi-sp-5);
+  background: linear-gradient(135deg, rgba(139,124,255,0.15), rgba(94,231,255,0.15));
+  backdrop-filter: var(--sbi-glass-blur);
+  -webkit-backdrop-filter: var(--sbi-glass-blur);
+  border: 1px solid var(--sbi-glass-border-light);
+  box-shadow: var(--sbi-glass-shadow);
+  border-radius: var(--sbi-r-xl); padding: var(--sbi-sp-5);
 }
 
 .sbi-card {
-  background: var(--sbi-bg-surface);
-  border: 1px solid var(--sbi-border-subtle);
+  background: var(--sbi-glass-bg);
+  backdrop-filter: var(--sbi-glass-blur);
+  -webkit-backdrop-filter: var(--sbi-glass-blur);
+  border: 1px solid var(--sbi-glass-border);
+  box-shadow: var(--sbi-glass-shadow);
   border-radius: var(--sbi-r-xl); padding: var(--sbi-sp-5);
+  animation: sbiFadeInUp 0.5s ease-out forwards;
 }
 
 .sbi-section-title {
@@ -309,14 +339,18 @@ ul[data-testid="stSidebarNavItems"] { display: none !important; visibility: hidd
 .sbi-kpi-grid {
   display: grid;
   gap: 1px;
-  background: var(--sbi-border-subtle);
-  border: 1px solid var(--sbi-border-subtle);
+  background: var(--sbi-glass-border);
+  border: 1px solid var(--sbi-glass-border);
   border-radius: var(--sbi-r-xl);
   overflow: hidden;
   margin-bottom: 32px;
+  box-shadow: var(--sbi-glass-shadow);
+  animation: sbiFadeInUp 0.5s ease-out forwards;
 }
 .sbi-kpi-cell {
-  background: var(--sbi-bg-surface);
+  background: var(--sbi-glass-bg);
+  backdrop-filter: var(--sbi-glass-blur);
+  -webkit-backdrop-filter: var(--sbi-glass-blur);
   padding: 16px 20px;
 }
 .sbi-kpi-label {
@@ -361,6 +395,14 @@ ul[data-testid="stSidebarNavItems"] { display: none !important; visibility: hidd
 .sbi-leaderboard-row {
   display: flex; align-items: center; justify-content: space-between;
   padding: 16px 20px; margin-bottom: 12px;
+  background: var(--sbi-glass-bg);
+  backdrop-filter: var(--sbi-glass-blur);
+  -webkit-backdrop-filter: var(--sbi-glass-blur);
+  border: 1px solid var(--sbi-glass-border);
+  box-shadow: var(--sbi-glass-shadow);
+  border-radius: var(--sbi-r-xl);
+  transition: all var(--sbi-t-base);
+  animation: sbiFadeInUp 0.5s ease-out forwards;
   background: var(--sbi-bg-surface);
   border: 1px solid var(--sbi-border-subtle);
   border-radius: var(--sbi-r-xl);

@@ -157,6 +157,7 @@ with content_col:
         )
         st.caption(f"Current: **{risk_level}** — AI will flag more deals as at-risk with higher sensitivity.")
 
+        st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
         st.markdown("<div style='height: 20px;'></div>")
         st.html(
             """<div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--sbi-text-muted); margin-bottom: 16px;">Minimum Confidence Threshold</div>"""
@@ -164,6 +165,7 @@ with content_col:
         threshold = st.slider("Confidence threshold", min_value=60, max_value=99, value=88, label_visibility="collapsed")
         st.caption(f"Only show coaching recommendations with ≥{threshold}% AI confidence.")
 
+        st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
         st.markdown("<div style='height: 20px;'></div>")
         st.html(
             """<div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--sbi-text-muted); margin-bottom: 16px;">Coaching Frequency</div>"""
