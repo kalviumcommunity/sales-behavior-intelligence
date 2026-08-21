@@ -83,7 +83,7 @@ with content_col:
             st.text_input("Email", value="sarah.johnson@salesbehaviour.ai")
             st.text_input("Team", value="Enterprise Growth")
 
-        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 16px;'></div>")
         col_btn, _ = st.columns([1, 3])
         with col_btn:
             if st.button("Save Changes", key="save_profile", use_container_width=True, type="primary"):
@@ -108,7 +108,7 @@ with content_col:
         with fy_col2:
             st.selectbox("Quarter Model", ["Standard (Q1–Q4)", "Custom"], label_visibility="collapsed")
 
-        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 16px;'></div>")
         col_btn, _ = st.columns([1, 3])
         with col_btn:
             if st.button("Save Workspace", key="save_workspace", use_container_width=True, type="primary"):
@@ -139,7 +139,7 @@ with content_col:
                     """
                 )
             with row_col2:
-                st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+                st.markdown("<div style='height: 8px;'></div>")
                 st.toggle("", value=default, key=f"notif_{name.replace(' ', '_').lower()}")
 
     # ── AI Preferences ────────────────────────────────────────
@@ -158,6 +158,7 @@ with content_col:
         st.caption(f"Current: **{risk_level}** — AI will flag more deals as at-risk with higher sensitivity.")
 
         st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 20px;'></div>")
         st.html(
             """<div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--sbi-text-muted); margin-bottom: 16px;">Minimum Confidence Threshold</div>"""
         )
@@ -165,6 +166,7 @@ with content_col:
         st.caption(f"Only show coaching recommendations with ≥{threshold}% AI confidence.")
 
         st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 20px;'></div>")
         st.html(
             """<div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--sbi-text-muted); margin-bottom: 16px;">Coaching Frequency</div>"""
         )
@@ -176,7 +178,7 @@ with content_col:
             horizontal=True,
         )
 
-        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 16px;'></div>")
         col_btn, _ = st.columns([1, 3])
         with col_btn:
             if st.button("Save AI Preferences", key="save_ai", use_container_width=True, type="primary"):
@@ -213,8 +215,7 @@ with content_col:
                 <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--sbi-text-muted); margin-bottom: 6px;">Demo Environment</div>
                 <div style="font-size: 12px; color: var(--sbi-text-secondary);">This is a demonstration environment. CRM integrations use simulated data. In production, real sync would be configured here.</div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
 
     # ── Security ──────────────────────────────────────────────
@@ -224,8 +225,7 @@ with content_col:
         st.markdown(
             """
             <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--sbi-text-muted); margin-bottom: 16px;">Change Password</div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
         st.text_input("Current Password", type="password")
         col1, col2 = st.columns(2)
@@ -234,7 +234,7 @@ with content_col:
         with col2:
             st.text_input("Confirm Password", type="password")
 
-        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 16px;'></div>")
         col_btn, _ = st.columns([1, 3])
         with col_btn:
             if st.button("Update Password", key="update_pwd", use_container_width=True, type="primary"):
@@ -251,6 +251,5 @@ with content_col:
                 </div>
                 {badge_html('Active', 'success')}
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )

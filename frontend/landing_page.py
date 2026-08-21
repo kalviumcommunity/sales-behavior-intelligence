@@ -340,6 +340,7 @@ def render_landing_page():
     # we use st.button styled via CSS for the auth navigation, or simple logic.
 
     # ─── NAVBAR & HERO ───
+    # ─── NAVBAR ───
     st.html(
         """
         <div class="lp-nav-wrapper anim-slide-down">
@@ -360,6 +361,22 @@ def render_landing_page():
             </div>
         </div>
 
+        """)
+
+    # Use actual streamlit buttons for the auth actions so they work, floating them via a container
+    col_nav1, col_nav2, col_nav3 = st.columns([1, 8, 2.5])
+    with col_nav3:
+        sub_c1, sub_c2 = st.columns(2)
+        with sub_c1:
+            if st.button("Sign In", type="secondary", use_container_width=True):
+                st.switch_page("pages/1_Authentication.py")
+        with sub_c2:
+            if st.button("Get Started", type="primary", use_container_width=True):
+                st.switch_page("pages/1_Authentication.py")
+
+    # ─── HERO ───
+    st.html(
+        """
         <div class="lp-hero">
             <div>
                 <div class="lp-eyebrow anim-fade-up">Behavioral Intelligence for Revenue Teams</div>
@@ -630,3 +647,17 @@ def render_landing_page():
         </div>
     </div>
     """)
+    st.html(
+        """
+        <div class="lp-section" style="text-align: center;">
+            <div class="lp-section-title">Turn sales activity into better decisions.</div>
+            <div style="height: 32px;"></div>
+        </div>
+        """)
+    
+    col_cta1, col_cta2, col_cta3 = st.columns([3, 2, 3])
+    with col_cta2:
+        if st.button("Start analyzing your pipeline", type="primary", use_container_width=True):
+            st.switch_page("pages/1_Authentication.py")
+        if st.button("Book a demo", type="secondary", use_container_width=True):
+            st.toast("Demo request received.")

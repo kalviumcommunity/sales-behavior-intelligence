@@ -89,12 +89,11 @@ for idx, card in enumerate(high_cards):
                     <div style="font-size: 11px; color: var(--sbi-text-muted);">Expected Impact: <span style="color: var(--sbi-warning); font-weight: 600;">{card['impact']}</span></div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
 
     with col_action:
-        st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 20px;'></div>")
         if st.button("Coach Rep", key=f"high_coach_{idx}", use_container_width=True, type="primary"):
             pass
         if st.button("Mark Done", key=f"high_done_{idx}", use_container_width=True, type="secondary"):
@@ -141,12 +140,11 @@ for idx, card in enumerate(medium_cards):
                     </div>
                 </div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )
 
     with col_action:
-        st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 20px;'></div>")
         if st.button("Review", key=f"med_review_{idx}", use_container_width=True, type="secondary"):
             pass
 
@@ -188,6 +186,5 @@ for i, tip in enumerate(tips):
                 <div style="font-weight: 700; font-size: 14px; margin-bottom: 8px; color: var(--sbi-text-primary);">{tip['title']}</div>
                 <div style="font-size: 12px; color: var(--sbi-text-secondary); line-height: 1.6;">{tip['desc']}</div>
             </div>
-            """,
-            unsafe_allow_html=True,
+            """
         )

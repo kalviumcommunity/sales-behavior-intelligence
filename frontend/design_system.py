@@ -403,6 +403,10 @@ ul[data-testid="stSidebarNavItems"] { display: none !important; visibility: hidd
   border-radius: var(--sbi-r-xl);
   transition: all var(--sbi-t-base);
   animation: sbiFadeInUp 0.5s ease-out forwards;
+  background: var(--sbi-bg-surface);
+  border: 1px solid var(--sbi-border-subtle);
+  border-radius: var(--sbi-r-xl);
+  transition: all var(--sbi-t-base);
 }
 .sbi-leaderboard-row:hover {
   background: var(--sbi-bg-hover);

@@ -167,7 +167,7 @@ for i, rep in enumerate(REPS_DATA):
         render_ai_panel("Coaching Note", ai_html, style="margin-top: 16px;")
 
 # ── Coaching opportunities ─────────────────────────────────
-st.markdown("<div style='height: 32px;'></div>", unsafe_allow_html=True)
+st.markdown("<div style='height: 32px;'></div>")
 section_header("Active Coaching Opportunities", "AI-detected behavioral patterns requiring manager attention.")
 
 for idx, c in enumerate(COACHING_SUGGESTIONS):
@@ -189,6 +189,6 @@ for idx, c in enumerate(COACHING_SUGGESTIONS):
             """
         )
     with col_action:
-        st.markdown("<div style='height: 24px;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height: 24px;'></div>")
         if st.button("Coach Rep", key=f"coach_{idx}", use_container_width=True, type="secondary"):
             st.switch_page("pages/5_AI_Coaching.py")
