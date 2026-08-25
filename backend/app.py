@@ -35,6 +35,7 @@ app.include_router(activities.router, prefix="/api/activities", tags=["activitie
 app.include_router(analytics.router, prefix="/api/analytics", tags=["analytics"])
 
 @app.get("/health")
+def health_check() -> dict:
 def health_check():
     """
     Health check endpoint to verify the API is running.
