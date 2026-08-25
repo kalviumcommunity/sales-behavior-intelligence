@@ -4,9 +4,27 @@ Contains realistic test data matching the problem statement personas (Maya, Davi
 """
 
 MOCK_REPS = [
-    {"id": "rep_1", "name": "Maya Lin", "role": "Enterprise AE", "deals_count": 6, "quota_attainment": 82},
-    {"id": "rep_2", "name": "Alex Rivera", "role": "Senior AE", "deals_count": 8, "quota_attainment": 94},
-    {"id": "rep_3", "name": "Jordan Smith", "role": "Mid-Market AE", "deals_count": 5, "quota_attainment": 68},
+    {
+        "id": "rep_1",
+        "name": "Maya Lin",
+        "role": "Enterprise AE",
+        "deals_count": 6,
+        "quota_attainment": 82,
+    },
+    {
+        "id": "rep_2",
+        "name": "Alex Rivera",
+        "role": "Senior AE",
+        "deals_count": 8,
+        "quota_attainment": 94,
+    },
+    {
+        "id": "rep_3",
+        "name": "Jordan Smith",
+        "role": "Mid-Market AE",
+        "deals_count": 5,
+        "quota_attainment": 68,
+    },
 ]
 
 MOCK_DEALS = [

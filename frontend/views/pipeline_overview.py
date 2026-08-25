@@ -2,7 +2,9 @@
 Pipeline Overview View (Tab 1) — Manager Dashboard.
 Provides high-level pipeline health, risk filters, and deal table.
 """
+
 import streamlit as st
+
 
 def render_pipeline_overview(deals):
     """Renders the pipeline overview table and risk breakdown."""
@@ -30,9 +32,14 @@ def render_pipeline_overview(deals):
     # Filter Bar
     col1, col2, col3 = st.columns([3, 3, 3])
     with col1:
-        rep_filter = st.selectbox("Filter by Sales Rep", ["All Reps", "Maya Lin", "Alex Rivera", "Jordan Smith"])
+        rep_filter = st.selectbox(
+            "Filter by Sales Rep",
+            ["All Reps", "Maya Lin", "Alex Rivera", "Jordan Smith"],
+        )
     with col2:
-        risk_filter = st.selectbox("Filter by Risk Level", ["All Risk Levels", "High", "Medium", "Low"])
+        risk_filter = st.selectbox(
+            "Filter by Risk Level", ["All Risk Levels", "High", "Medium", "Low"]
+        )
     with col3:
         search_query = st.text_input("Search Deal / Company", "")
 
@@ -43,17 +50,25 @@ def render_pipeline_overview(deals):
     if risk_filter != "All Risk Levels":
         filtered_deals = [d for d in filtered_deals if d["risk_level"] == risk_filter]
     if search_query:
-        filtered_deals = [d for d in filtered_deals if search_query.lower() in d["name"].lower() or search_query.lower() in d["company"].lower()]
+        filtered_deals = [
+            d
+            for d in filtered_deals
+            if search_query.lower() in d["name"].lower()
+            or search_query.lower() in d["company"].lower()
+        ]
 
     st.write(f"Showing **{len(filtered_deals)}** of **{len(deals)}** deals")
 
     # Table view styling using markdown table / container loop
     for deal in filtered_deals:
-        risk_badge = "🔴 High Risk" if deal["risk_level"] == "High" else ("🟡 Medium Risk" if deal["risk_level"] == "Medium" else "🟢 Healthy")
-        
+        risk_badge = (
+            "🔴 High Risk"
+            if deal["risk_level"] == "High"
+            else ("🟡 Medium Risk" if deal["risk_level"] == "Medium" else "🟢 Healthy")
+        )
+
         with st.container():
-            st.markdown(
-                f"""
+            st.markdown(f"""
                 <div class="deal-card">
                     <div style="display: flex; justify-content: space-between; align-items: center;">
                         <span style="font-size: 1.1rem; font-weight: 700; color: #111827;">{deal['name']}</span>
@@ -68,5 +83,4 @@ def render_pipeline_overview(deals):
                         🚩 <strong>Top Flag:</strong> {deal['top_flag']} &nbsp;•&nbsp; <em>Last activity: {deal['last_activity']}</em>
                     </div>
                 </div>
-                """
-            )
+                """)

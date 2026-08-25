@@ -2,8 +2,17 @@ import streamlit as st
 from datetime import datetime
 
 from frontend.design_system import inject_design_system
-from frontend.components.app_shell import render_sidebar, render_topbar, render_page_header
-from frontend.components.ui_components import render_kpi_strip, badge_html, section_header, render_ai_panel
+from frontend.components.app_shell import (
+    render_sidebar,
+    render_topbar,
+    render_page_header,
+)
+from frontend.components.ui_components import (
+    render_kpi_strip,
+    badge_html,
+    section_header,
+    render_ai_panel,
+)
 from frontend.deal_details_data import (
     get_activity_sections,
     get_ai_summary,
@@ -51,14 +60,9 @@ header_actions = """
 <button class='sbi-btn-secondary' style='height: 36px; padding: 0 16px; font-size: 13px;'>Share</button>
 <button class='sbi-btn-primary' style='height: 36px; padding: 0 16px; font-size: 13px;'>Coach Rep</button>
 """
-render_page_header(
-    f"← Back to Deals", 
-    "", 
-    header_actions=""
-)
+render_page_header(f"← Back to Deals", "", header_actions="")
 # We recreate the header layout per prompt instructions
-st.html(
-    f"""
+st.html(f"""
     <div style="margin-top: -24px; margin-bottom: 32px; display: flex; justify-content: space-between; align-items: flex-end;">
         <div>
             <div class="sbi-text-sm sbi-text-muted" style="margin-bottom: 4px;">Enterprise Platform Expansion</div>
@@ -73,11 +77,25 @@ st.html(
 # --- Stage Tracker ---
 stage_html = "<div style='display: flex; gap: 8px; margin-bottom: 32px;'>"
 for s in stages:
-    color = "var(--sbi-cyan)" if s.get('completed') or s.get('current') else "var(--sbi-border-subtle)"
-    bg = "var(--sbi-cyan-dim)" if s.get('completed') or s.get('current') else "var(--sbi-bg-hover)"
-    weight = "700" if s.get('current') else "500"
-    text_color = "var(--sbi-cyan)" if s.get('current') else ("var(--sbi-text-primary)" if s.get('completed') else "var(--sbi-text-muted)")
-    
+    color = (
+        "var(--sbi-cyan)"
+        if s.get("completed") or s.get("current")
+        else "var(--sbi-border-subtle)"
+    )
+    bg = (
+        "var(--sbi-cyan-dim)"
+        if s.get("completed") or s.get("current")
+        else "var(--sbi-bg-hover)"
+    )
+    weight = "700" if s.get("current") else "500"
+    text_color = (
+        "var(--sbi-cyan)"
+        if s.get("current")
+        else (
+            "var(--sbi-text-primary)" if s.get("completed") else "var(--sbi-text-muted)"
+        )
+    )
+
     stage_html += f"""
     <div style='flex: 1; padding: 12px; background: {bg}; border-left: 3px solid {color}; border-radius: 0 6px 6px 0; font-size: 13px; font-weight: {weight}; color: {text_color};'>
         {s['name']}
@@ -90,7 +108,7 @@ st.html(stage_html)
 c_summary, c_health = st.columns([1.5, 1])
 
 with c_summary:
-    key_sigs = ''.join([badge_html(s, "neutral") for s in ai_summary['key_signals']])
+    key_sigs = "".join([badge_html(s, "neutral") for s in ai_summary["key_signals"]])
     ai_html = f"""
         <div style="display: flex; justify-content: flex-end; align-items: flex-start; margin-bottom: 16px;">
             {badge_html(f"Confidence: {ai_summary['confidence']}%", "violet")}
@@ -108,10 +126,17 @@ with c_summary:
     render_ai_panel("AI Deal Summary", ai_html, style="height: 100%;")
 
 with c_health:
-    health_color = "var(--sbi-danger)" if health['risk_level'] == "High" else ("var(--sbi-warning)" if health['risk_level'] == "Medium" else "var(--sbi-success)")
-    
-    st.html(
-        f"""
+    health_color = (
+        "var(--sbi-danger)"
+        if health["risk_level"] == "High"
+        else (
+            "var(--sbi-warning)"
+            if health["risk_level"] == "Medium"
+            else "var(--sbi-success)"
+        )
+    )
+
+    st.html(f"""
         <div class="sbi-card" style="height: 100%;">
             <div class="sbi-section-subtitle" style="margin-bottom: 16px; font-weight: 600;">Deal Health</div>
             <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 4px;">
@@ -150,9 +175,16 @@ with c_signals:
     section_header("Behavioral Signals")
     st.html("<div class='sbi-card'>")
     for idx, sig in enumerate(signals):
-        sig_color = "var(--sbi-danger)" if sig['severity'] == "high" else ("var(--sbi-warning)" if sig['severity'] == "medium" else "var(--sbi-info)")
-        st.html(
-            f"""
+        sig_color = (
+            "var(--sbi-danger)"
+            if sig["severity"] == "high"
+            else (
+                "var(--sbi-warning)"
+                if sig["severity"] == "medium"
+                else "var(--sbi-info)"
+            )
+        )
+        st.html(f"""
             <div style="padding: 16px 0; border-bottom: {'' if idx==len(signals)-1 else '1px solid var(--sbi-border-subtle)'};">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <div style="font-weight: 600; font-size: 14px;">{sig['signal_name']}</div>
@@ -162,12 +194,11 @@ with c_signals:
             </div>
             """)
     st.html("</div>")
-    
+
     st.html("<div style='height: 24px;'></div>")
-    
+
     section_header("Next Best Action")
-    st.html(
-        f"""
+    st.html(f"""
         <div class="sbi-card" style="border-left: 3px solid var(--sbi-cyan);">
             <div style="display: flex; justify-content: space-between; margin-bottom: 12px;">
                 <div class="sbi-font-bold" style="font-size: 15px;">{next_action['action']}</div>
@@ -197,7 +228,11 @@ with c_stakeholders:
             <tbody>
     """
     for sh in stakeholders:
-        eng_badge = "success" if sh['engagement_level'] == "High" else ("warning" if sh['engagement_level'] == "Medium" else "danger")
+        eng_badge = (
+            "success"
+            if sh["engagement_level"] == "High"
+            else ("warning" if sh["engagement_level"] == "Medium" else "danger")
+        )
         table_html += f"""
                 <tr>
                     <td>
@@ -211,14 +246,13 @@ with c_stakeholders:
         """
     table_html += "</tbody></table></div>"
     st.html(table_html)
-    
+
     st.html("<div style='height: 24px;'></div>")
-    
+
     section_header("Why this deal may slip")
     st.html("<div class='sbi-card'>")
-    for idx, r in enumerate(risks[:2]): # Show top 2 risks to save space
-        st.html(
-            f"""
+    for idx, r in enumerate(risks[:2]):  # Show top 2 risks to save space
+        st.html(f"""
             <div style="padding: 12px 0; border-bottom: {'' if idx==1 else '1px solid var(--sbi-border-subtle)'};">
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
                     {badge_html(r['severity'], "danger" if r['severity'] == "HIGH" else "warning")}
@@ -237,9 +271,8 @@ tab1, tab2, tab3 = st.tabs(["Timeline", "Emails", "Meetings"])
 
 with tab1:
     st.html("<div class='sbi-card'>")
-    for t in timeline[::-1]: # Reverse to show newest first
-        st.html(
-            f"""
+    for t in timeline[::-1]:  # Reverse to show newest first
+        st.html(f"""
             <div style="display: flex; gap: 16px; margin-bottom: 24px; position: relative;">
                 <div style="width: 40px; flex-shrink: 0; text-align: right; padding-top: 4px;" class="sbi-text-xs sbi-text-muted">{t['date']}</div>
                 <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--sbi-bg-hover); border: 1px solid var(--sbi-border-subtle); display: flex; align-items: center; justify-content: center; flex-shrink: 0; z-index: 1;">{t['icon']}</div>
@@ -254,9 +287,8 @@ with tab1:
 
 with tab2:
     st.html("<div class='sbi-card'>")
-    for e in activities['emails']:
-        st.html(
-            f"""
+    for e in activities["emails"]:
+        st.html(f"""
             <div style="padding: 16px 0; border-bottom: 1px solid var(--sbi-border-subtle);">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 4px;">
                     <div class="sbi-font-semibold" style="font-size: 14px;">{e['subject']}</div>
@@ -272,9 +304,8 @@ with tab2:
 
 with tab3:
     st.html("<div class='sbi-card'>")
-    for m in activities['meetings']:
-        st.html(
-            f"""
+    for m in activities["meetings"]:
+        st.html(f"""
             <div style="padding: 16px 0; border-bottom: 1px solid var(--sbi-border-subtle);">
                 <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
                     <div class="sbi-font-semibold" style="font-size: 14px;">{m['name']}</div>

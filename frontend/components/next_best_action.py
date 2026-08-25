@@ -1,12 +1,12 @@
 """Next Best Action Component"""
+
 import streamlit as st
 
 
 def render_next_best_action(nba_data):
     """Render the Next Best Action panel."""
-    
-    st.html(
-        f"""
+
+    st.html(f"""
         <div class='nba-card'>
             <div class='nba-card__label'>NEXT BEST ACTION</div>
             <div class='nba-card__title'>{nba_data["action"]}</div>
@@ -34,11 +34,10 @@ def render_next_best_action(nba_data):
                 {nba_data["details"]}
             </div>
         </div>
-        """
-    )
-    
+        """)
+
     st.markdown("<div style='height: 1rem;'></div>")
-    
+
     col1, col2, col3 = st.columns([2, 1, 1])
     with col3:
         if st.button("→ Take Action", use_container_width=True, key="nba_take_action"):

@@ -464,4 +464,5 @@ ul[data-testid="stSidebarNavItems"] { display: none !important; visibility: hidd
 def inject_design_system():
     """Call this at the top of every page."""
     import streamlit as st
+
     st.html(DESIGN_SYSTEM_CSS)

@@ -1,6 +1,7 @@
 """
 Analytics routes for manager dashboard summaries.
 """
+
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 

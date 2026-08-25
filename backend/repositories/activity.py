@@ -1,6 +1,7 @@
 """
 Activity repository for data access operations.
 """
+
 from typing import List
 
 from sqlalchemy.orm import Session
@@ -21,4 +22,8 @@ class ActivityRepository(BaseRepository[Activity]):
 
     def get_by_type(self, activity_type: str) -> List[Activity]:
         """Get activities by type."""
-        return self.db.query(Activity).filter(Activity.activity_type == activity_type).all()
+        return (
+            self.db.query(Activity)
+            .filter(Activity.activity_type == activity_type)
+            .all()
+        )

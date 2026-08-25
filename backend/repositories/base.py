@@ -1,6 +1,7 @@
 """
 Base repository with common CRUD operations.
 """
+
 from typing import Generic, List, Optional, Type, TypeVar
 from uuid import uuid4
 
@@ -48,7 +49,9 @@ class BaseRepository(Generic[ModelType]):
 
     def update(self, db_obj_or_id, obj_in: dict) -> Optional[ModelType]:
         """Update an existing record by object or ID."""
-        db_obj = self.get(db_obj_or_id) if isinstance(db_obj_or_id, str) else db_obj_or_id
+        db_obj = (
+            self.get(db_obj_or_id) if isinstance(db_obj_or_id, str) else db_obj_or_id
+        )
         if not db_obj:
             return None
         for field, value in obj_in.items():

@@ -2,16 +2,25 @@ from datetime import date
 
 import os
 import requests
-from frontend.mock_data import MOCK_COACHING_CARDS, MOCK_DEALS as _MOCK_DEALS, MOCK_REPS as _MOCK_REPS, MOCK_TIMELINES
+from frontend.mock_data import (
+    MOCK_COACHING_CARDS,
+    MOCK_DEALS as _MOCK_DEALS,
+    MOCK_REPS as _MOCK_REPS,
+    MOCK_TIMELINES,
+)
 
 API_BASE = os.getenv("API_URL", "http://localhost:8000/api")
+
 
 def _fetch_api(endpoint, default_data):
     try:
         res = requests.get(f"{API_BASE}/{endpoint}", timeout=2)
-        if res.ok: return res.json()
-    except Exception: pass
+        if res.ok:
+            return res.json()
+    except Exception:
+        pass
     return default_data
+
 
 MOCK_DEALS = _fetch_api("deals", _MOCK_DEALS)
 MOCK_REPS = _fetch_api("reps", _MOCK_REPS)
@@ -52,14 +61,54 @@ COACHING_ALERTS = sum(len(cards) for cards in MOCK_COACHING_CARDS.values())
 DEALS_CLOSING_THIS_WEEK = 2
 
 KPI_METRICS = [
-    {"label": "Total Pipeline", "value": money(TOTAL_PIPELINE), "detail": f"{OPEN_DEALS} open deals", "accent": "cyan"},
-    {"label": "Open Deals", "value": str(OPEN_DEALS), "detail": "Active opportunities in play", "accent": "blue"},
-    {"label": "Win Rate", "value": f"{WIN_RATE}%", "detail": "Trailing 90 days", "accent": "green"},
-    {"label": "Revenue", "value": money(REVENUE), "detail": "Closed won this year", "accent": "violet"},
-    {"label": "Average Risk Score", "value": f"{AVG_RISK_SCORE}/100", "detail": "Behavioral health across book", "accent": "orange"},
-    {"label": "Active Reps", "value": str(ACTIVE_REPS), "detail": "Selling with the team", "accent": "teal"},
-    {"label": "Coaching Alerts", "value": str(COACHING_ALERTS), "detail": "Actions waiting on managers", "accent": "rose"},
-    {"label": "Deals Closing This Week", "value": str(DEALS_CLOSING_THIS_WEEK), "detail": "Expected to land soon", "accent": "gold"},
+    {
+        "label": "Total Pipeline",
+        "value": money(TOTAL_PIPELINE),
+        "detail": f"{OPEN_DEALS} open deals",
+        "accent": "cyan",
+    },
+    {
+        "label": "Open Deals",
+        "value": str(OPEN_DEALS),
+        "detail": "Active opportunities in play",
+        "accent": "blue",
+    },
+    {
+        "label": "Win Rate",
+        "value": f"{WIN_RATE}%",
+        "detail": "Trailing 90 days",
+        "accent": "green",
+    },
+    {
+        "label": "Revenue",
+        "value": money(REVENUE),
+        "detail": "Closed won this year",
+        "accent": "violet",
+    },
+    {
+        "label": "Average Risk Score",
+        "value": f"{AVG_RISK_SCORE}/100",
+        "detail": "Behavioral health across book",
+        "accent": "orange",
+    },
+    {
+        "label": "Active Reps",
+        "value": str(ACTIVE_REPS),
+        "detail": "Selling with the team",
+        "accent": "teal",
+    },
+    {
+        "label": "Coaching Alerts",
+        "value": str(COACHING_ALERTS),
+        "detail": "Actions waiting on managers",
+        "accent": "rose",
+    },
+    {
+        "label": "Deals Closing This Week",
+        "value": str(DEALS_CLOSING_THIS_WEEK),
+        "detail": "Expected to land soon",
+        "accent": "gold",
+    },
 ]
 
 REVENUE_TREND = [
@@ -100,10 +149,30 @@ MONTHLY_PERFORMANCE = [
 ]
 
 RECENT_ACTIVITIES = [
-    {"time": "10:30 AM", "title": "John updated ACME Deal", "detail": "Stage changed to Proposal Sent and risk score updated to 78.", "icon": "◌"},
-    {"time": "10:15 AM", "title": "Meeting Completed", "detail": "Sarah Johnson finished a deal review with Maya Lin and sales ops.", "icon": "◌"},
-    {"time": "09:45 AM", "title": "Proposal Sent", "detail": "Apex Logistics received the final proposal with finance attached.", "icon": "◌"},
-    {"time": "09:20 AM", "title": "New Lead Added", "detail": "Inbound enterprise opportunity routed into the manager queue.", "icon": "◌"},
+    {
+        "time": "10:30 AM",
+        "title": "John updated ACME Deal",
+        "detail": "Stage changed to Proposal Sent and risk score updated to 78.",
+        "icon": "◌",
+    },
+    {
+        "time": "10:15 AM",
+        "title": "Meeting Completed",
+        "detail": "Sarah Johnson finished a deal review with Maya Lin and sales ops.",
+        "icon": "◌",
+    },
+    {
+        "time": "09:45 AM",
+        "title": "Proposal Sent",
+        "detail": "Apex Logistics received the final proposal with finance attached.",
+        "icon": "◌",
+    },
+    {
+        "time": "09:20 AM",
+        "title": "New Lead Added",
+        "detail": "Inbound enterprise opportunity routed into the manager queue.",
+        "icon": "◌",
+    },
 ]
 
 HIGH_RISK_DEALS = [
@@ -141,24 +210,85 @@ COACHING_SUGGESTIONS = [
 ]
 
 TOP_REPS = [
-    {"rank": 1, "avatar": "AR", "name": "Alex Rivera", "pipeline": money(595000), "win_rate": "94%", "behavior_score": 96},
-    {"rank": 2, "avatar": "ML", "name": "Maya Lin", "pipeline": money(410000), "win_rate": "82%", "behavior_score": 77},
-    {"rank": 3, "avatar": "JS", "name": "Jordan Smith", "pipeline": money(285000), "win_rate": "68%", "behavior_score": 71},
+    {
+        "rank": 1,
+        "avatar": "AR",
+        "name": "Alex Rivera",
+        "pipeline": money(595000),
+        "win_rate": "94%",
+        "behavior_score": 96,
+    },
+    {
+        "rank": 2,
+        "avatar": "ML",
+        "name": "Maya Lin",
+        "pipeline": money(410000),
+        "win_rate": "82%",
+        "behavior_score": 77,
+    },
+    {
+        "rank": 3,
+        "avatar": "JS",
+        "name": "Jordan Smith",
+        "pipeline": money(285000),
+        "win_rate": "68%",
+        "behavior_score": 71,
+    },
 ]
 
 UPCOMING_MEETINGS = [
-    {"time": "11:00 AM", "company": "Starlight Media", "rep": "Alex Rivera", "stage": "Negotiation / Legal"},
-    {"time": "01:30 PM", "company": "Acme Corp", "rep": "Maya Lin", "stage": "Proposal Sent"},
-    {"time": "03:00 PM", "company": "Vortex Systems", "rep": "Alex Rivera", "stage": "Solution Validation"},
-    {"time": "04:15 PM", "company": "Nexus Technologies", "rep": "Jordan Smith", "stage": "Demo Completed"},
+    {
+        "time": "11:00 AM",
+        "company": "Starlight Media",
+        "rep": "Alex Rivera",
+        "stage": "Negotiation / Legal",
+    },
+    {
+        "time": "01:30 PM",
+        "company": "Acme Corp",
+        "rep": "Maya Lin",
+        "stage": "Proposal Sent",
+    },
+    {
+        "time": "03:00 PM",
+        "company": "Vortex Systems",
+        "rep": "Alex Rivera",
+        "stage": "Solution Validation",
+    },
+    {
+        "time": "04:15 PM",
+        "company": "Nexus Technologies",
+        "rep": "Jordan Smith",
+        "stage": "Demo Completed",
+    },
 ]
 
 QUICK_ACTIONS = [
-    {"label": "Add Deal", "description": "Capture a new opportunity before follow-up slips.", "icon": "＋"},
-    {"label": "Add Rep", "description": "Create a seller profile and attach coaching goals.", "icon": "◉"},
-    {"label": "Schedule Meeting", "description": "Book the next checkpoint for active deals.", "icon": "🗓"},
-    {"label": "View Reports", "description": "Open analytics and forecast views for leadership.", "icon": "▤"},
-    {"label": "AI Analysis", "description": "Run coaching suggestions across the current pipeline.", "icon": "✦"},
+    {
+        "label": "Add Deal",
+        "description": "Capture a new opportunity before follow-up slips.",
+        "icon": "＋",
+    },
+    {
+        "label": "Add Rep",
+        "description": "Create a seller profile and attach coaching goals.",
+        "icon": "◉",
+    },
+    {
+        "label": "Schedule Meeting",
+        "description": "Book the next checkpoint for active deals.",
+        "icon": "🗓",
+    },
+    {
+        "label": "View Reports",
+        "description": "Open analytics and forecast views for leadership.",
+        "icon": "▤",
+    },
+    {
+        "label": "AI Analysis",
+        "description": "Run coaching suggestions across the current pipeline.",
+        "icon": "✦",
+    },
 ]
 
 DEAL_TIMELINE_LOOKUP = MOCK_TIMELINES

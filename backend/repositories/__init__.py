@@ -1,4 +1,5 @@
 """Repositories module for data access."""
+
 from .activity import ActivityRepository
 from .base import BaseRepository
 from .coaching import CoachingRepository

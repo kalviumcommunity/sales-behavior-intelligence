@@ -1,6 +1,7 @@
 """
 Coaching repository for data access operations.
 """
+
 from typing import List
 
 from sqlalchemy import and_
@@ -27,17 +28,25 @@ class CoachingRepository(BaseRepository[CoachingCard]):
 
     def get_by_severity(self, severity: str) -> List[CoachingCard]:
         """Get coaching cards by severity."""
-        return self.db.query(CoachingCard).filter(CoachingCard.severity == severity).all()
+        return (
+            self.db.query(CoachingCard).filter(CoachingCard.severity == severity).all()
+        )
 
     def get_by_status(self, status: str) -> List[CoachingCard]:
         """Get coaching cards by status."""
         return self.db.query(CoachingCard).filter(CoachingCard.status == status).all()
 
-    def get_by_deal_and_severity(self, deal_id: str, severity: str) -> List[CoachingCard]:
+    def get_by_deal_and_severity(
+        self, deal_id: str, severity: str
+    ) -> List[CoachingCard]:
         """Get coaching cards for a deal by severity."""
-        return self.db.query(CoachingCard).filter(
-            and_(CoachingCard.deal_id == deal_id, CoachingCard.severity == severity)
-        ).all()
+        return (
+            self.db.query(CoachingCard)
+            .filter(
+                and_(CoachingCard.deal_id == deal_id, CoachingCard.severity == severity)
+            )
+            .all()
+        )
 
     def get_high_risk_cards(self) -> List[CoachingCard]:
         """Get high risk coaching cards."""

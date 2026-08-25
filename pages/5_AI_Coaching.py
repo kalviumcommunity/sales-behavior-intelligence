@@ -1,8 +1,17 @@
 import streamlit as st
 
 from frontend.design_system import inject_design_system
-from frontend.components.app_shell import render_sidebar, render_topbar, render_page_header
-from frontend.components.ui_components import render_kpi_strip, badge_html, section_header, render_ai_panel
+from frontend.components.app_shell import (
+    render_sidebar,
+    render_topbar,
+    render_page_header,
+)
+from frontend.components.ui_components import (
+    render_kpi_strip,
+    badge_html,
+    section_header,
+    render_ai_panel,
+)
 from frontend.dashboard_data import COACHING_SUGGESTIONS
 from frontend.mock_data import MOCK_COACHING_CARDS
 
@@ -27,33 +36,56 @@ render_page_header(
 
 # ── Summary KPIs ─────────────────────────────────────────────
 total_cards = sum(len(v) for v in MOCK_COACHING_CARDS.values())
-high_priority = sum(1 for v in MOCK_COACHING_CARDS.values() for c in v if c["severity"] == "High Risk")
-medium_priority = sum(1 for v in MOCK_COACHING_CARDS.values() for c in v if c["severity"] == "Medium Risk")
+high_priority = sum(
+    1 for v in MOCK_COACHING_CARDS.values() for c in v if c["severity"] == "High Risk"
+)
+medium_priority = sum(
+    1 for v in MOCK_COACHING_CARDS.values() for c in v if c["severity"] == "Medium Risk"
+)
 
 kpi_metrics = [
-    {"label": "Coaching Opportunities", "value": f"{total_cards}", "detail": "Across all active deals"},
-    {"label": "High Priority", "value": f"{high_priority}", "detail": "Require immediate action"},
-    {"label": "Medium Priority", "value": f"{medium_priority}", "detail": "Monitor and address soon"},
-    {"label": "Avg AI Confidence", "value": "92%", "detail": "Signal detection accuracy"},
+    {
+        "label": "Coaching Opportunities",
+        "value": f"{total_cards}",
+        "detail": "Across all active deals",
+    },
+    {
+        "label": "High Priority",
+        "value": f"{high_priority}",
+        "detail": "Require immediate action",
+    },
+    {
+        "label": "Medium Priority",
+        "value": f"{medium_priority}",
+        "detail": "Monitor and address soon",
+    },
+    {
+        "label": "Avg AI Confidence",
+        "value": "92%",
+        "detail": "Signal detection accuracy",
+    },
 ]
 render_kpi_strip(kpi_metrics)
 
 
 # ── Intro section ────────────────────────────────────────────
-section_header("Who Needs Coaching Today?", "Behavioral signals detected across your pipeline, ranked by impact on deal outcomes.")
+section_header(
+    "Who Needs Coaching Today?",
+    "Behavioral signals detected across your pipeline, ranked by impact on deal outcomes.",
+)
 
 # ── High Priority coaching cards ─────────────────────────────
-st.html(
-    """
+st.html("""
     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
         <span class="sbi-badge sbi-badge--danger">● HIGH PRIORITY</span>
         <span style="font-size: 12px; color: var(--sbi-text-muted);">These behaviors are directly correlated with deal slippage. Act within 24–48 hours.</span>
     </div>
-    """
-)
+    """)
 
 # deal_101 coaching cards are High Risk
-high_cards = [c for v in MOCK_COACHING_CARDS.values() for c in v if c["severity"] == "High Risk"]
+high_cards = [
+    c for v in MOCK_COACHING_CARDS.values() for c in v if c["severity"] == "High Risk"
+]
 
 for idx, card in enumerate(high_cards):
     col_main, col_action = st.columns([6, 1])
@@ -62,8 +94,7 @@ for idx, card in enumerate(high_cards):
     rep_name = rep_lookup.get(card["id"], "Maya Lin")
 
     with col_main:
-        st.markdown(
-            f"""
+        st.markdown(f"""
             <div class="sbi-card" style="border-left: 3px solid var(--sbi-danger); padding: 20px; margin-bottom: 12px;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
                     <div>
@@ -89,35 +120,43 @@ for idx, card in enumerate(high_cards):
                     <div style="font-size: 11px; color: var(--sbi-text-muted);">Expected Impact: <span style="color: var(--sbi-warning); font-weight: 600;">{card['impact']}</span></div>
                 </div>
             </div>
-            """
-        )
+            """)
 
     with col_action:
         st.markdown("<div style='height: 20px;'></div>")
-        if st.button("Coach Rep", key=f"high_coach_{idx}", use_container_width=True, type="primary"):
+        if st.button(
+            "Coach Rep",
+            key=f"high_coach_{idx}",
+            use_container_width=True,
+            type="primary",
+        ):
             pass
-        if st.button("Mark Done", key=f"high_done_{idx}", use_container_width=True, type="secondary"):
+        if st.button(
+            "Mark Done",
+            key=f"high_done_{idx}",
+            use_container_width=True,
+            type="secondary",
+        ):
             pass
 
 # ── Medium Priority coaching cards ───────────────────────────
 st.html("<div style='height: 20px;'></div>")
-st.html(
-    """
+st.html("""
     <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 16px;">
         <span class="sbi-badge sbi-badge--warning">● MEDIUM PRIORITY</span>
         <span style="font-size: 12px; color: var(--sbi-text-muted);">Address within the next coaching cycle to maintain deal momentum.</span>
     </div>
-    """
-)
+    """)
 
-medium_cards = [c for v in MOCK_COACHING_CARDS.values() for c in v if c["severity"] == "Medium Risk"]
+medium_cards = [
+    c for v in MOCK_COACHING_CARDS.values() for c in v if c["severity"] == "Medium Risk"
+]
 
 for idx, card in enumerate(medium_cards):
     col_main, col_action = st.columns([6, 1])
 
     with col_main:
-        st.markdown(
-            f"""
+        st.markdown(f"""
             <div class="sbi-card" style="border-left: 3px solid var(--sbi-warning); padding: 20px; margin-bottom: 12px;">
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
                     <div>
@@ -140,17 +179,24 @@ for idx, card in enumerate(medium_cards):
                     </div>
                 </div>
             </div>
-            """
-        )
+            """)
 
     with col_action:
         st.markdown("<div style='height: 20px;'></div>")
-        if st.button("Review", key=f"med_review_{idx}", use_container_width=True, type="secondary"):
+        if st.button(
+            "Review",
+            key=f"med_review_{idx}",
+            use_container_width=True,
+            type="secondary",
+        ):
             pass
 
 # ── AI Coaching Tips ─────────────────────────────────────────
 st.html("<div style='height: 32px;'></div>")
-section_header("Recommended Coaching Approaches", "Evidence-based frameworks for the behaviors detected this week.")
+section_header(
+    "Recommended Coaching Approaches",
+    "Evidence-based frameworks for the behaviors detected this week.",
+)
 
 tips = [
     {
@@ -176,8 +222,7 @@ tips = [
 tip_cols = st.columns(3)
 for i, tip in enumerate(tips):
     with tip_cols[i]:
-        st.markdown(
-            f"""
+        st.markdown(f"""
             <div class="sbi-card" style="height: 100%;">
                 <div style="font-size: 22px; margin-bottom: 12px;">{tip['icon']}</div>
                 <div style="margin-bottom: 8px;">
@@ -186,5 +231,4 @@ for i, tip in enumerate(tips):
                 <div style="font-weight: 700; font-size: 14px; margin-bottom: 8px; color: var(--sbi-text-primary);">{tip['title']}</div>
                 <div style="font-size: 12px; color: var(--sbi-text-secondary); line-height: 1.6;">{tip['desc']}</div>
             </div>
-            """
-        )
+            """)

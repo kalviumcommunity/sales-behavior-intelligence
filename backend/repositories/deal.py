@@ -1,6 +1,7 @@
 """
 Deal repository for data access operations.
 """
+
 from typing import List, Optional
 
 from sqlalchemy import or_
@@ -31,9 +32,11 @@ class DealRepository(BaseRepository[Deal]):
     def search(self, query: str) -> List[Deal]:
         """Search deals by name or company."""
         like_query = f"%{query}%"
-        return self.db.query(Deal).filter(
-            or_(Deal.name.ilike(like_query), Deal.company.ilike(like_query))
-        ).all()
+        return (
+            self.db.query(Deal)
+            .filter(or_(Deal.name.ilike(like_query), Deal.company.ilike(like_query)))
+            .all()
+        )
 
     def get_with_rep(self, deal_id: str) -> Optional[Deal]:
         """Get deal by ID."""

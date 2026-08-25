@@ -9,6 +9,7 @@ from frontend.landing_data import (
     LANDING_TESTIMONIALS,
 )
 
+
 def render_landing_page():
     st.set_page_config(
         page_title="Sales Behavior Intelligence",
@@ -17,8 +18,7 @@ def render_landing_page():
         initial_sidebar_state="collapsed",
     )
 
-    st.html(
-        """
+    st.html("""
         <style>
         /* ─── BASE ─── */
         :root {
@@ -336,13 +336,12 @@ def render_landing_page():
         """)
 
     # Note: Streamlit buttons trigger a rerun. For external styling we can use Streamlit session state and switch_page.
-    # To keep the marketing page fully styled and handle clicks correctly without jumping, 
+    # To keep the marketing page fully styled and handle clicks correctly without jumping,
     # we use st.button styled via CSS for the auth navigation, or simple logic.
 
     # ─── NAVBAR & HERO ───
     # ─── NAVBAR ───
-    st.html(
-        """
+    st.html("""
         <div class="lp-nav-wrapper anim-slide-down">
             <div class="lp-nav">
                 <div class="lp-brand">
@@ -375,8 +374,7 @@ def render_landing_page():
                 st.switch_page("pages/1_Authentication.py")
 
     # ─── HERO ───
-    st.html(
-        """
+    st.html("""
         <div class="lp-hero">
             <div>
                 <div class="lp-eyebrow anim-fade-up">Behavioral Intelligence for Revenue Teams</div>
@@ -418,8 +416,7 @@ def render_landing_page():
         """)
 
     # ─── METRICS STRIP ───
-    st.html(
-        """
+    st.html("""
         <div class="lp-metrics">
             <div class="lp-metric">
                 <div class="lp-metric-val">$12.4M+</div>
@@ -451,8 +448,7 @@ def render_landing_page():
         </div>
         """
 
-    st.html(
-        f"""
+    st.html(f"""
         <div id="product" class="lp-section">
             <div class="lp-section-header">
                 <div class="lp-section-title">CRM tells you what happened. We tell you why.</div>
@@ -477,8 +473,7 @@ def render_landing_page():
         </div>
         """
 
-    st.html(
-        f"""
+    st.html(f"""
         <div id="how-it-works" class="lp-section" style="background: rgba(255,255,255,0.01);">
             <div class="lp-section-header">
                 <div class="lp-section-title">From scattered activity to clear signals.</div>
@@ -489,7 +484,7 @@ def render_landing_page():
             </div>
         </div>
         """)
-    
+
     # ─── FINAL CTA ───
     st.html("""
     <style>
@@ -647,17 +642,18 @@ def render_landing_page():
         </div>
     </div>
     """)
-    st.html(
-        """
+    st.html("""
         <div class="lp-section" style="text-align: center;">
             <div class="lp-section-title">Turn sales activity into better decisions.</div>
             <div style="height: 32px;"></div>
         </div>
         """)
-    
+
     col_cta1, col_cta2, col_cta3 = st.columns([3, 2, 3])
     with col_cta2:
-        if st.button("Start analyzing your pipeline", type="primary", use_container_width=True):
+        if st.button(
+            "Start analyzing your pipeline", type="primary", use_container_width=True
+        ):
             st.switch_page("pages/1_Authentication.py")
         if st.button("Book a demo", type="secondary", use_container_width=True):
             st.toast("Demo request received.")

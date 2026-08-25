@@ -1,11 +1,27 @@
 """Pydantic schemas module."""
+
 from .user import UserCreate, UserUpdate, UserResponse, UserInDB, Token, TokenData
 from .rep import RepCreate, RepUpdate, RepResponse
 from .deal import DealCreate, DealUpdate, DealResponse, DealListResponse
 from .activity import ActivityCreate, ActivityUpdate, ActivityResponse
-from .timeline import TimelineEventCreate, TimelineEventUpdate, TimelineEventResponse, TimelineListResponse
-from .coaching import CoachingCardCreate, CoachingCardUpdate, CoachingCardResponse, CoachingListResponse
-from .analytics import ManagerSummaryResponse, RepPerformanceItem, RiskBreakdown, StageBreakdownItem
+from .timeline import (
+    TimelineEventCreate,
+    TimelineEventUpdate,
+    TimelineEventResponse,
+    TimelineListResponse,
+)
+from .coaching import (
+    CoachingCardCreate,
+    CoachingCardUpdate,
+    CoachingCardResponse,
+    CoachingListResponse,
+)
+from .analytics import (
+    ManagerSummaryResponse,
+    RepPerformanceItem,
+    RiskBreakdown,
+    StageBreakdownItem,
+)
 
 __all__ = [
     "UserCreate",

@@ -1,12 +1,17 @@
 """
 Authentication service for user registration and login.
 """
+
 from datetime import timedelta
 from typing import Optional
 
 from sqlalchemy.orm import Session
 
-from backend.auth.security import create_access_token, get_password_hash, verify_password
+from backend.auth.security import (
+    create_access_token,
+    get_password_hash,
+    verify_password,
+)
 from backend.config.settings import settings
 from backend.repositories.user import UserRepository
 from backend.schemas.user import Token, UserCreate
@@ -43,7 +48,10 @@ class AuthService:
             raise ValueError("Incorrect username or password")
 
         access_token = create_access_token(
-            data={"sub": user.username, "role": user.role.value if hasattr(user.role, "value") else user.role},
+            data={
+                "sub": user.username,
+                "role": user.role.value if hasattr(user.role, "value") else user.role,
+            },
             expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES),
         )
         return Token(access_token=access_token, token_type="bearer")

@@ -1,27 +1,27 @@
 """Risk Analysis Component"""
+
 import streamlit as st
 
 
 def render_risk_analysis(risk_factors):
     """Render risk analysis section."""
-    
+
     st.html("<div class='section-heading'>⚠️ Why This Deal Is At Risk</div>")
-    
+
     for risk in risk_factors:
         severity_color = (
-            "#ff8ea7" if risk["severity"] == "HIGH"
-            else "#ffb76a" if risk["severity"] == "MEDIUM"
-            else "#57d8ff"
+            "#ff8ea7"
+            if risk["severity"] == "HIGH"
+            else "#ffb76a" if risk["severity"] == "MEDIUM" else "#57d8ff"
         )
-        
+
         severity_icon = (
-            "🔴" if risk["severity"] == "HIGH"
-            else "🟡" if risk["severity"] == "MEDIUM"
-            else "🔵"
+            "🔴"
+            if risk["severity"] == "HIGH"
+            else "🟡" if risk["severity"] == "MEDIUM" else "🔵"
         )
-        
-        st.markdown(
-            f"""
+
+        st.markdown(f"""
             <div class='risk-card'>
                 <div class='risk-card__header'>
                     <div class='risk-card__severity' style='color: {severity_color};'>
@@ -43,5 +43,4 @@ def render_risk_analysis(risk_factors):
                     </div>
                 </div>
             </div>
-            """
-        )
+            """)

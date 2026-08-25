@@ -1,8 +1,17 @@
 import streamlit as st
 
 from frontend.design_system import inject_design_system
-from frontend.components.app_shell import render_sidebar, render_topbar, render_page_header
-from frontend.components.ui_components import render_kpi_strip, badge_html, section_header, render_ai_panel
+from frontend.components.app_shell import (
+    render_sidebar,
+    render_topbar,
+    render_page_header,
+)
+from frontend.components.ui_components import (
+    render_kpi_strip,
+    badge_html,
+    section_header,
+    render_ai_panel,
+)
 from frontend.dashboard_data import TOP_REPS, COACHING_SUGGESTIONS
 
 st.set_page_config(
@@ -25,15 +34,40 @@ render_page_header(
 )
 
 # ── Team metrics ────────────────────────────────────────────
-avg_score = round(sum(r["behavior_score"] for r in TOP_REPS) / len(TOP_REPS)) if TOP_REPS else 0
-team_pipeline = sum(int(r["pipeline"].replace("$", "").replace(",", "")) for r in TOP_REPS if r.get("pipeline"))
+avg_score = (
+    round(sum(r["behavior_score"] for r in TOP_REPS) / len(TOP_REPS)) if TOP_REPS else 0
+)
+team_pipeline = sum(
+    int(r["pipeline"].replace("$", "").replace(",", ""))
+    for r in TOP_REPS
+    if r.get("pipeline")
+)
 coaching_count = len(COACHING_SUGGESTIONS)
 
 kpi_metrics = [
-    {"label": "Team Win Rate", "value": "68%", "detail": "↑ 4% vs last quarter", "trend": "up"},
-    {"label": "Team Pipeline", "value": f"${team_pipeline/1000000:.2f}M", "detail": "Across active reps"},
-    {"label": "Avg Behavior Score", "value": f"{avg_score}", "detail": "↑ 6pts this month", "trend": "up"},
-    {"label": "Coaching Opportunities", "value": f"{coaching_count}", "detail": "Requiring manager review", "trend": "down"},
+    {
+        "label": "Team Win Rate",
+        "value": "68%",
+        "detail": "↑ 4% vs last quarter",
+        "trend": "up",
+    },
+    {
+        "label": "Team Pipeline",
+        "value": f"${team_pipeline/1000000:.2f}M",
+        "detail": "Across active reps",
+    },
+    {
+        "label": "Avg Behavior Score",
+        "value": f"{avg_score}",
+        "detail": "↑ 6pts this month",
+        "trend": "up",
+    },
+    {
+        "label": "Coaching Opportunities",
+        "value": f"{coaching_count}",
+        "detail": "Requiring manager review",
+        "trend": "down",
+    },
 ]
 render_kpi_strip(kpi_metrics)
 
@@ -44,29 +78,60 @@ section_header("Active Representatives", "Ranked by behavior score.")
 # Build extended rep data
 REPS_DATA = [
     {
-        "rank": 1, "avatar": "AR", "name": "Alex Rivera", "role": "Senior AE",
-        "behavior_score": 96, "win_rate": "94%", "pipeline": "$595,000",
-        "deals": 8, "momentum": "↑ Strong", "momentum_dir": "up",
-        "coaching_need": "Low", "coaching_cls": "success",
-        "status": "On Track", "status_cls": "success",
-        "strengths": ["Multi-threaded engagement", "Fast follow-up", "Executive alignment"],
+        "rank": 1,
+        "avatar": "AR",
+        "name": "Alex Rivera",
+        "role": "Senior AE",
+        "behavior_score": 96,
+        "win_rate": "94%",
+        "pipeline": "$595,000",
+        "deals": 8,
+        "momentum": "↑ Strong",
+        "momentum_dir": "up",
+        "coaching_need": "Low",
+        "coaching_cls": "success",
+        "status": "On Track",
+        "status_cls": "success",
+        "strengths": [
+            "Multi-threaded engagement",
+            "Fast follow-up",
+            "Executive alignment",
+        ],
         "coaching_note": "Leading performer — consider peer mentoring.",
     },
     {
-        "rank": 2, "avatar": "ML", "name": "Maya Lin", "role": "Enterprise AE",
-        "behavior_score": 77, "win_rate": "82%", "pipeline": "$410,000",
-        "deals": 6, "momentum": "→ Stable", "momentum_dir": "flat",
-        "coaching_need": "Medium", "coaching_cls": "warning",
-        "status": "Watch", "status_cls": "warning",
+        "rank": 2,
+        "avatar": "ML",
+        "name": "Maya Lin",
+        "role": "Enterprise AE",
+        "behavior_score": 77,
+        "win_rate": "82%",
+        "pipeline": "$410,000",
+        "deals": 6,
+        "momentum": "→ Stable",
+        "momentum_dir": "flat",
+        "coaching_need": "Medium",
+        "coaching_cls": "warning",
+        "status": "Watch",
+        "status_cls": "warning",
         "strengths": ["Strong discovery", "Product expertise"],
         "coaching_note": "Post-demo follow-up cadence needs improvement.",
     },
     {
-        "rank": 3, "avatar": "JS", "name": "Jordan Smith", "role": "Mid-Market AE",
-        "behavior_score": 71, "win_rate": "68%", "pipeline": "$285,000",
-        "deals": 5, "momentum": "↓ Declining", "momentum_dir": "down",
-        "coaching_need": "High", "coaching_cls": "danger",
-        "status": "At Risk", "status_cls": "danger",
+        "rank": 3,
+        "avatar": "JS",
+        "name": "Jordan Smith",
+        "role": "Mid-Market AE",
+        "behavior_score": 71,
+        "win_rate": "68%",
+        "pipeline": "$285,000",
+        "deals": 5,
+        "momentum": "↓ Declining",
+        "momentum_dir": "down",
+        "coaching_need": "High",
+        "coaching_cls": "danger",
+        "status": "At Risk",
+        "status_cls": "danger",
         "strengths": ["Relationship building"],
         "coaching_note": "Discovery depth and stakeholder mapping need focus.",
     },
@@ -92,8 +157,20 @@ table_html = """
 
 for rep in REPS_DATA:
     score_pct = rep["behavior_score"]
-    score_color = "var(--sbi-success)" if score_pct >= 85 else ("var(--sbi-warning)" if score_pct >= 70 else "var(--sbi-danger)")
-    momentum_color = "var(--sbi-success)" if rep["momentum_dir"] == "up" else ("var(--sbi-text-muted)" if rep["momentum_dir"] == "flat" else "var(--sbi-danger)")
+    score_color = (
+        "var(--sbi-success)"
+        if score_pct >= 85
+        else ("var(--sbi-warning)" if score_pct >= 70 else "var(--sbi-danger)")
+    )
+    momentum_color = (
+        "var(--sbi-success)"
+        if rep["momentum_dir"] == "up"
+        else (
+            "var(--sbi-text-muted)"
+            if rep["momentum_dir"] == "flat"
+            else "var(--sbi-danger)"
+        )
+    )
 
     table_html += f"""
             <tr>
@@ -128,17 +205,28 @@ st.html(table_html)
 
 # ── Rep detail cards ─────────────────────────────────────────
 st.html("<div style='height: 32px;'></div>")
-section_header("Representative Profiles", "Behavior patterns, strengths, and recommended coaching actions.")
+section_header(
+    "Representative Profiles",
+    "Behavior patterns, strengths, and recommended coaching actions.",
+)
 
 cols = st.columns(3)
 for i, rep in enumerate(REPS_DATA):
-    score_color = "var(--sbi-success)" if rep["behavior_score"] >= 85 else ("var(--sbi-warning)" if rep["behavior_score"] >= 70 else "var(--sbi-danger)")
+    score_color = (
+        "var(--sbi-success)"
+        if rep["behavior_score"] >= 85
+        else (
+            "var(--sbi-warning)" if rep["behavior_score"] >= 70 else "var(--sbi-danger)"
+        )
+    )
     with cols[i]:
-        strengths_html = "".join(f'<div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--sbi-border-subtle); font-size: 12px; color: var(--sbi-text-secondary);"><span style="color: var(--sbi-success);">✓</span> {s}</div>' for s in rep["strengths"])
+        strengths_html = "".join(
+            f'<div style="display: flex; align-items: center; gap: 8px; padding: 6px 0; border-bottom: 1px solid var(--sbi-border-subtle); font-size: 12px; color: var(--sbi-text-secondary);"><span style="color: var(--sbi-success);">✓</span> {s}</div>'
+            for s in rep["strengths"]
+        )
         ai_html = f"<div style='font-size: 12px; color: var(--sbi-text-secondary);'>{rep['coaching_note']}</div>"
-        
-        st.html(
-            f"""
+
+        st.html(f"""
             <div class="sbi-card" style="height: 100%;">
                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
                     <div style="width: 44px; height: 44px; border-radius: 10px; background: linear-gradient(135deg, rgba(139,124,255,0.2), rgba(94,231,255,0.2)); border: 1px solid var(--sbi-border-medium); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--sbi-text-primary);">{rep['avatar']}</div>
@@ -162,19 +250,20 @@ for i, rep in enumerate(REPS_DATA):
                     {strengths_html}
                 </div>
             </div>
-            """
-        )
+            """)
         render_ai_panel("Coaching Note", ai_html, style="margin-top: 16px;")
 
 # ── Coaching opportunities ─────────────────────────────────
 st.markdown("<div style='height: 32px;'></div>")
-section_header("Active Coaching Opportunities", "AI-detected behavioral patterns requiring manager attention.")
+section_header(
+    "Active Coaching Opportunities",
+    "AI-detected behavioral patterns requiring manager attention.",
+)
 
 for idx, c in enumerate(COACHING_SUGGESTIONS):
     col_info, col_action = st.columns([5, 1])
     with col_info:
-        st.html(
-            f"""
+        st.html(f"""
             <div style="display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--sbi-border-subtle); align-items: flex-start;">
                 <div style="width: 36px; height: 36px; border-radius: 8px; background: var(--sbi-violet-dim); border: 1px solid rgba(139,124,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; color: var(--sbi-violet);">✦</div>
                 <div style="flex: 1;">
@@ -186,9 +275,10 @@ for idx, c in enumerate(COACHING_SUGGESTIONS):
                     <div style="font-size: 12px; color: var(--sbi-text-muted); border-left: 2px solid rgba(94,231,255,0.25); padding-left: 10px;">{c['suggestion']}</div>
                 </div>
             </div>
-            """
-        )
+            """)
     with col_action:
         st.markdown("<div style='height: 24px;'></div>")
-        if st.button("Coach Rep", key=f"coach_{idx}", use_container_width=True, type="secondary"):
+        if st.button(
+            "Coach Rep", key=f"coach_{idx}", use_container_width=True, type="secondary"
+        ):
             st.switch_page("pages/5_AI_Coaching.py")

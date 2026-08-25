@@ -1,12 +1,13 @@
 """Deal Timeline Visual Component"""
+
 import streamlit as st
 
 
 def render_deal_timeline(timeline_events):
     """Render chronological deal timeline."""
-    
+
     st.html("<div class='section-heading'>📅 Deal Timeline</div>")
-    
+
     for event in timeline_events:
         # Determine icon and color based on event type
         type_config = {
@@ -16,11 +17,10 @@ def render_deal_timeline(timeline_events):
             "call": {"icon": "☎️", "color": "#59d19b"},
             "signal": {"icon": "🚩", "color": "#ff8ea7"},
         }
-        
+
         config = type_config.get(event["event_type"], {"icon": "◌", "color": "#93a4bd"})
-        
-        st.markdown(
-            f"""
+
+        st.markdown(f"""
             <div class='timeline-event'>
                 <div class='timeline-event__icon' style='background-color: {config["color"]}20; border-color: {config["color"]};'>
                     {config["icon"]}
@@ -35,5 +35,4 @@ def render_deal_timeline(timeline_events):
                     {f'<div class="timeline-event__person">👤 {event["related_person"]}</div>' if event["related_person"] else ''}
                 </div>
             </div>
-            """
-        )
+            """)

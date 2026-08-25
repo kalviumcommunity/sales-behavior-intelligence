@@ -1,6 +1,7 @@
 """
 Analytics service for manager dashboard metrics.
 """
+
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
@@ -24,8 +25,15 @@ class AnalyticsService:
     def get_manager_summary(self) -> ManagerSummaryResponse:
         """Build top-level manager dashboard metrics."""
         total_deals = self.db.query(func.count(Deal.id)).scalar() or 0
-        pipeline_value = self.db.query(func.coalesce(func.sum(Deal.amount), 0)).scalar() or 0
-        high_risk_deals = self.db.query(func.count(Deal.id)).filter(Deal.risk_level == "High").scalar() or 0
+        pipeline_value = (
+            self.db.query(func.coalesce(func.sum(Deal.amount), 0)).scalar() or 0
+        )
+        high_risk_deals = (
+            self.db.query(func.count(Deal.id))
+            .filter(Deal.risk_level == "High")
+            .scalar()
+            or 0
+        )
         open_coaching_cards = (
             self.db.query(func.count(CoachingCard.id))
             .filter(CoachingCard.status != "Coached")
@@ -35,13 +43,19 @@ class AnalyticsService:
 
         risk_counts = {
             risk_level.lower(): count
-            for risk_level, count in self.db.query(Deal.risk_level, func.count(Deal.id)).group_by(Deal.risk_level).all()
+            for risk_level, count in self.db.query(Deal.risk_level, func.count(Deal.id))
+            .group_by(Deal.risk_level)
+            .all()
         }
 
         stage_breakdown = [
             StageBreakdownItem(stage=stage, count=count, value=float(value or 0))
             for stage, count, value in (
-                self.db.query(Deal.stage, func.count(Deal.id), func.coalesce(func.sum(Deal.amount), 0))
+                self.db.query(
+                    Deal.stage,
+                    func.count(Deal.id),
+                    func.coalesce(func.sum(Deal.amount), 0),
+                )
                 .group_by(Deal.stage)
                 .order_by(Deal.stage)
                 .all()
@@ -67,7 +81,9 @@ class AnalyticsService:
                     func.coalesce(func.sum(Deal.amount), 0),
                 )
                 .outerjoin(Deal, Deal.rep_id == Rep.id)
-                .group_by(Rep.id, Rep.name, Rep.role, Rep.deals_count, Rep.quota_attainment)
+                .group_by(
+                    Rep.id, Rep.name, Rep.role, Rep.deals_count, Rep.quota_attainment
+                )
                 .order_by(Rep.quota_attainment.desc())
                 .all()
             )

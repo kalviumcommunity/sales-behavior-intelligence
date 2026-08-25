@@ -2,6 +2,7 @@
 Mock data for Deal Details page.
 Contains all data for a single deal including behavioral signals, stakeholders, timeline, and coaching recommendations.
 """
+
 from datetime import date, datetime, timedelta
 
 

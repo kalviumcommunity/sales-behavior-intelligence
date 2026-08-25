@@ -8,6 +8,7 @@ Unified shell for all authenticated pages including:
 
 import streamlit as st
 
+
 def get_sidebar_css():
     """CSS specifically for the sidebar and topbar layout in authenticated pages."""
     return """
@@ -209,56 +210,91 @@ def get_sidebar_css():
     </style>
     """
 
+
 def render_sidebar(active_item="Dashboard"):
     """Render the unified sidebar navigation."""
     st.html(get_sidebar_css())
-    
+
     with st.sidebar:
         # Brand
-        st.html(
-            """
+        st.html("""
             <div class='sbi-sidebar-brand'>
                 <div class='sbi-sidebar-brand-icon'>SBI</div>
                 <div class='sbi-sidebar-brand-text'>
                     <p class='sbi-sidebar-brand-title'>Sales Behavior<br>Intelligence</p>
                 </div>
             </div>
-            """
-        )
+            """)
 
         # Overview Section
         st.html("<div class='sbi-nav-section-label'>OVERVIEW</div>")
-        if st.button("📊 Dashboard", key="nav_dashboard", use_container_width=True, type="primary" if active_item == "Dashboard" else "secondary"):
+        if st.button(
+            "📊 Dashboard",
+            key="nav_dashboard",
+            use_container_width=True,
+            type="primary" if active_item == "Dashboard" else "secondary",
+        ):
             st.switch_page("pages/dashboard.py")
 
         # Pipeline Section
         st.html("<div class='sbi-nav-section-label'>PIPELINE</div>")
-        if st.button("◆ Deals", key="nav_deals", use_container_width=True, type="primary" if active_item == "Deals" else "secondary"):
+        if st.button(
+            "◆ Deals",
+            key="nav_deals",
+            use_container_width=True,
+            type="primary" if active_item == "Deals" else "secondary",
+        ):
             st.switch_page("pages/2_Deals.py")
 
         # Insights Section
         st.html("<div class='sbi-nav-section-label'>INSIGHTS</div>")
-        if st.button("👥 Sales Reps", key="nav_reps", use_container_width=True, type="primary" if active_item == "Sales Reps" else "secondary"):
+        if st.button(
+            "👥 Sales Reps",
+            key="nav_reps",
+            use_container_width=True,
+            type="primary" if active_item == "Sales Reps" else "secondary",
+        ):
             st.switch_page("pages/4_Sales_Reps.py")
-        if st.button("🏆 Leaderboard", key="nav_leaderboard", use_container_width=True, type="primary" if active_item == "Leaderboard" else "secondary"):
+        if st.button(
+            "🏆 Leaderboard",
+            key="nav_leaderboard",
+            use_container_width=True,
+            type="primary" if active_item == "Leaderboard" else "secondary",
+        ):
             st.switch_page("pages/8_Leaderboard.py")
-        if st.button("✦ AI Coaching", key="nav_coaching", use_container_width=True, type="primary" if active_item == "AI Coaching" else "secondary"):
+        if st.button(
+            "✦ AI Coaching",
+            key="nav_coaching",
+            use_container_width=True,
+            type="primary" if active_item == "AI Coaching" else "secondary",
+        ):
             st.switch_page("pages/5_AI_Coaching.py")
-        if st.button("▣ Analytics", key="nav_analytics", use_container_width=True, type="primary" if active_item == "Analytics" else "secondary"):
+        if st.button(
+            "▣ Analytics",
+            key="nav_analytics",
+            use_container_width=True,
+            type="primary" if active_item == "Analytics" else "secondary",
+        ):
             st.switch_page("pages/6_Analytics.py")
 
         # System Section
         st.html("<div class='sbi-nav-section-label'>SYSTEM</div>")
-        if st.button("⚙️ Settings", key="nav_settings", use_container_width=True, type="primary" if active_item == "Settings" else "secondary"):
+        if st.button(
+            "⚙️ Settings",
+            key="nav_settings",
+            use_container_width=True,
+            type="primary" if active_item == "Settings" else "secondary",
+        ):
             st.switch_page("pages/7_Settings.py")
-            
-        if st.button("↪️  Logout", key="nav_logout", use_container_width=True, type="secondary"):
+
+        if st.button(
+            "↪️  Logout", key="nav_logout", use_container_width=True, type="secondary"
+        ):
             st.session_state.authenticated = False
             st.switch_page("pages/1_Authentication.py")
 
         # Basic sidebar button styling (without :contains)
-        st.html(
-            """
+        st.html("""
             <style>
             div[data-testid="stSidebar"] button[data-testid="baseButton-secondary"] {
                 justify-content: flex-start !important;
@@ -278,12 +314,10 @@ def render_sidebar(active_item="Dashboard"):
                 font-weight: 600 !important;
             }
             </style>
-            """
-        )
+            """)
 
         # User Profile at the bottom
-        st.html(
-            """
+        st.html("""
             <div class='sbi-sidebar-user'>
                 <div class='sbi-user-avatar'>SJ</div>
                 <div class='sbi-user-info'>
@@ -291,13 +325,12 @@ def render_sidebar(active_item="Dashboard"):
                     <p class='sbi-user-role'>Sales Manager</p>
                 </div>
             </div>
-            """
-        )
+            """)
+
 
 def render_topbar(breadcrumb="Dashboard", actions_html=""):
     """Render the top navigation bar."""
-    st.html(
-        f"""
+    st.html(f"""
         <div class='sbi-topbar'>
             <div class='sbi-topbar-breadcrumb'>
                 <span>Sales Behavior Intelligence</span>
@@ -310,17 +343,16 @@ def render_topbar(breadcrumb="Dashboard", actions_html=""):
                 {actions_html}
             </div>
         </div>
-        """
-    )
+        """)
+
 
 def render_page_header(title, subtitle="", header_actions=None):
     """Render a page header with optional subtitle and actions."""
     actions_html = ""
     if header_actions:
         actions_html = f"<div style='display: flex; gap: 8px;'>{header_actions}</div>"
-        
-    st.html(
-        f"""
+
+    st.html(f"""
         <div class='sbi-page-header'>
             <div>
                 <h1 class='sbi-page-title'>{title}</h1>
@@ -328,5 +360,4 @@ def render_page_header(title, subtitle="", header_actions=None):
             </div>
             {actions_html}
         </div>
-        """
-    )
+        """)

@@ -1,4 +1,5 @@
 """Database models module."""
+
 from .user import User, UserRole
 from .rep import Rep
 from .deal import Deal

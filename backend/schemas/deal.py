@@ -1,6 +1,7 @@
 """
 Pydantic schemas for Deal model.
 """
+
 from pydantic import BaseModel, Field
 from typing import Optional
 from datetime import datetime
@@ -8,6 +9,7 @@ from datetime import datetime
 
 class DealBase(BaseModel):
     """Base deal schema."""
+
     name: str = Field(..., min_length=1, max_length=200)
     company: str = Field(..., min_length=1, max_length=100)
     amount: float = Field(..., gt=0)
@@ -23,11 +25,13 @@ class DealBase(BaseModel):
 
 class DealCreate(DealBase):
     """Schema for deal creation."""
+
     pass
 
 
 class DealUpdate(BaseModel):
     """Schema for deal update."""
+
     name: Optional[str] = None
     company: Optional[str] = None
     amount: Optional[float] = Field(None, gt=0)
@@ -42,16 +46,18 @@ class DealUpdate(BaseModel):
 
 class DealResponse(DealBase):
     """Schema for deal response."""
+
     id: str
     created_at: datetime
     updated_at: Optional[datetime] = None
-    
+
     class Config:
         from_attributes = True
 
 
 class DealListResponse(BaseModel):
     """Schema for deal list response."""
+
     deals: list[DealResponse]
     total: int
     page: int

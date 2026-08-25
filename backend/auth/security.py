@@ -1,6 +1,7 @@
 """
 Security utilities for password hashing and JWT token management.
 """
+
 from datetime import datetime, timedelta, timezone
 import hashlib
 from typing import Optional
@@ -15,7 +16,9 @@ pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     """Verify a password against its hash."""
-    if len(hashed_password) == 64 and all(c in "0123456789abcdef" for c in hashed_password.lower()):
+    if len(hashed_password) == 64 and all(
+        c in "0123456789abcdef" for c in hashed_password.lower()
+    ):
         return hashlib.sha256(plain_password.encode()).hexdigest() == hashed_password
     return pwd_context.verify(plain_password, hashed_password)
 

@@ -1,6 +1,7 @@
 """
 User repository for data access operations.
 """
+
 from typing import Optional
 
 from sqlalchemy.orm import Session

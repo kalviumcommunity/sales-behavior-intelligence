@@ -1,6 +1,7 @@
 """
 Timeline repository for data access operations.
 """
+
 from typing import List
 
 from sqlalchemy import and_
@@ -27,13 +28,19 @@ class TimelineRepository(BaseRepository[TimelineEvent]):
 
     def get_by_type(self, event_type: str) -> List[TimelineEvent]:
         """Get events by type."""
-        return self.db.query(TimelineEvent).filter(TimelineEvent.event_type == event_type).all()
+        return (
+            self.db.query(TimelineEvent)
+            .filter(TimelineEvent.event_type == event_type)
+            .all()
+        )
 
     def get_with_flag(self, deal_id: str) -> List[TimelineEvent]:
         """Get flagged events for a deal."""
         return (
             self.db.query(TimelineEvent)
-            .filter(and_(TimelineEvent.deal_id == deal_id, TimelineEvent.flag.isnot(None)))
+            .filter(
+                and_(TimelineEvent.deal_id == deal_id, TimelineEvent.flag.isnot(None))
+            )
             .order_by(TimelineEvent.date)
             .all()
         )

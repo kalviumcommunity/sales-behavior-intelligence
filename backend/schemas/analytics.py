@@ -1,11 +1,13 @@
 """
 Pydantic schemas for manager analytics responses.
 """
+
 from pydantic import BaseModel
 
 
 class RiskBreakdown(BaseModel):
     """Deal count by risk level."""
+
     low: int = 0
     medium: int = 0
     high: int = 0
@@ -13,6 +15,7 @@ class RiskBreakdown(BaseModel):
 
 class StageBreakdownItem(BaseModel):
     """Deal count and value for a pipeline stage."""
+
     stage: str
     count: int
     value: float
@@ -20,6 +23,7 @@ class StageBreakdownItem(BaseModel):
 
 class RepPerformanceItem(BaseModel):
     """Rep summary for dashboard ranking."""
+
     id: str
     name: str
     role: str
@@ -30,6 +34,7 @@ class RepPerformanceItem(BaseModel):
 
 class ManagerSummaryResponse(BaseModel):
     """Manager dashboard summary."""
+
     total_deals: int
     pipeline_value: float
     high_risk_deals: int

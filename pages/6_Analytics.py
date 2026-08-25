@@ -2,7 +2,11 @@ import altair as alt
 import streamlit as st
 
 from frontend.design_system import inject_design_system
-from frontend.components.app_shell import render_sidebar, render_topbar, render_page_header
+from frontend.components.app_shell import (
+    render_sidebar,
+    render_topbar,
+    render_page_header,
+)
 from frontend.components.ui_components import section_header
 from frontend.dashboard_data import (
     REVENUE_TREND,
@@ -31,6 +35,7 @@ render_page_header(
     "Analytics",
     "Understand the patterns shaping revenue performance.",
 )
+
 
 # ── Altair SBI theme ─────────────────────────────────────────
 def apply_sbi_theme():
@@ -68,11 +73,15 @@ def apply_sbi_theme():
         }
     }
 
+
 alt.themes.register("sbi_theme", apply_sbi_theme)
 alt.themes.enable("sbi_theme")
 
 # ── Revenue Trend & Pipeline by Stage ────────────────────────
-section_header("Revenue & Pipeline", "Monthly revenue trend and current pipeline distribution by stage.")
+section_header(
+    "Revenue & Pipeline",
+    "Monthly revenue trend and current pipeline distribution by stage.",
+)
 
 col_r1, col_r2 = st.columns(2)
 
@@ -91,7 +100,10 @@ with col_r1:
                     alt.GradientStop(color="rgba(94,231,255,0.18)", offset=0),
                     alt.GradientStop(color="rgba(94,231,255,0)", offset=1),
                 ],
-                x1=1, x2=1, y1=1, y2=0,
+                x1=1,
+                x2=1,
+                y1=1,
+                y2=0,
             ),
         )
         .encode(
@@ -130,7 +142,10 @@ with col_r2:
 
 # ── Win Rate & Behavior Trend ─────────────────────────────────
 st.html("<div style='height: 32px;'></div>")
-section_header("Performance Over Time", "Win rate, pipeline health, and coaching completion trends by month.")
+section_header(
+    "Performance Over Time",
+    "Win rate, pipeline health, and coaching completion trends by month.",
+)
 
 col_p1, col_p2 = st.columns(2)
 
@@ -141,7 +156,11 @@ with col_p1:
     )
     win_rate_chart = (
         alt.Chart(alt.Data(values=MONTHLY_PERFORMANCE))
-        .mark_line(color="#4ADE80", strokeWidth=2, point=alt.OverlayMarkDef(color="#4ADE80", size=40))
+        .mark_line(
+            color="#4ADE80",
+            strokeWidth=2,
+            point=alt.OverlayMarkDef(color="#4ADE80", size=40),
+        )
         .encode(
             x=alt.X("month:N", title=None, axis=alt.Axis(labelAngle=0)),
             y=alt.Y("win_rate:Q", title=None, scale=alt.Scale(domain=[55, 75])),
@@ -162,10 +181,14 @@ with col_p2:
     )
     coaching_chart = (
         alt.Chart(alt.Data(values=MONTHLY_PERFORMANCE))
-        .mark_bar(color="#5EE7FF", cornerRadiusTopLeft=4, cornerRadiusTopRight=4, opacity=0.8)
+        .mark_bar(
+            color="#5EE7FF", cornerRadiusTopLeft=4, cornerRadiusTopRight=4, opacity=0.8
+        )
         .encode(
             x=alt.X("month:N", title=None, axis=alt.Axis(labelAngle=0)),
-            y=alt.Y("coaching_completion:Q", title=None, scale=alt.Scale(domain=[0, 100])),
+            y=alt.Y(
+                "coaching_completion:Q", title=None, scale=alt.Scale(domain=[0, 100])
+            ),
             tooltip=[
                 alt.Tooltip("month:N", title="Month"),
                 alt.Tooltip("coaching_completion:Q", title="Coaching %", format=".0f"),
@@ -178,13 +201,19 @@ with col_p2:
 
 # ── Rep Comparison & Risk Distribution ───────────────────────
 st.html("<div style='height: 32px;'></div>")
-section_header("Team Breakdown", "Rep performance comparison and portfolio risk distribution.")
+section_header(
+    "Team Breakdown", "Rep performance comparison and portfolio risk distribution."
+)
 
 col_t1, col_t2 = st.columns([1.4, 1])
 
 with col_t1:
     rep_data = [
-        {"name": r["name"], "metric": "Win Rate", "value": int(r["win_rate"].replace("%", ""))}
+        {
+            "name": r["name"],
+            "metric": "Win Rate",
+            "value": int(r["win_rate"].replace("%", "")),
+        }
         for r in TOP_REPS
     ] + [
         {"name": r["name"], "metric": "Behavior Score", "value": r["behavior_score"]}
@@ -203,7 +232,9 @@ with col_t1:
             y=alt.Y("name:N", title=None, sort="-x"),
             color=alt.Color(
                 "metric:N",
-                scale=alt.Scale(domain=["Win Rate", "Behavior Score"], range=["#5EE7FF", "#8B7CFF"]),
+                scale=alt.Scale(
+                    domain=["Win Rate", "Behavior Score"], range=["#5EE7FF", "#8B7CFF"]
+                ),
                 legend=alt.Legend(title=None, orient="top", labelFontSize=11),
             ),
             xOffset="metric:N",
@@ -248,7 +279,9 @@ with col_t2:
 
 # ── Key Insights ─────────────────────────────────────────────
 st.html("<div style='height: 32px;'></div>")
-section_header("Key Insights", "Patterns the AI has detected in your pipeline data this period.")
+section_header(
+    "Key Insights", "Patterns the AI has detected in your pipeline data this period."
+)
 
 insights = [
     {
@@ -280,8 +313,7 @@ insights = [
 insight_cols = st.columns(2)
 for i, insight in enumerate(insights):
     with insight_cols[i % 2]:
-        st.markdown(
-            f"""
+        st.markdown(f"""
             <div style="display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--sbi-border-subtle);">
                 <div style="width: 36px; height: 36px; border-radius: 8px; background: var(--sbi-bg-elevated); display: flex; align-items: center; justify-content: center; font-size: 16px; color: {insight['color']}; flex-shrink: 0;">{insight['icon']}</div>
                 <div>
@@ -289,5 +321,4 @@ for i, insight in enumerate(insights):
                     <div style="font-size: 12px; color: var(--sbi-text-secondary); line-height: 1.5;">{insight['desc']}</div>
                 </div>
             </div>
-            """
-        )
+            """)
