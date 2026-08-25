@@ -9,9 +9,11 @@ from frontend.landing_data import (
     LANDING_TESTIMONIALS,
 )
 
+BRAND_NAME = "Sales Behavior Intelligence"
+
 def render_landing_page():
     st.set_page_config(
-        page_title="Sales Behavior Intelligence",
+        page_title=BRAND_NAME,
         page_icon="◆",
         layout="wide",
         initial_sidebar_state="collapsed",
