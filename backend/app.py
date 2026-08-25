@@ -1,3 +1,8 @@
+"""
+Sales Behavior Intelligence - Main FastAPI Application
+This module initializes the FastAPI application, configures CORS,
+and includes all the necessary API routers.
+"""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -31,4 +36,7 @@ app.include_router(analytics.router, prefix="/api/analytics", tags=["analytics"]
 
 @app.get("/health")
 def health_check():
+    """
+    Health check endpoint to verify the API is running.
+    """
     return {"status": "ok", "app": settings.APP_NAME}
