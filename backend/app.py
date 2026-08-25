@@ -30,5 +30,5 @@ app.include_router(activities.router, prefix="/api/activities", tags=["activitie
 app.include_router(analytics.router, prefix="/api/analytics", tags=["analytics"])
 
 @app.get("/health")
-def health_check():
+def health_check() -> dict:
     return {"status": "ok", "app": settings.APP_NAME}
