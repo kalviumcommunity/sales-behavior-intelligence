@@ -6,7 +6,8 @@ from sqlalchemy.orm import Session
 
 from backend.auth.dependencies import get_current_user
 from backend.database import get_db
-from backend.schemas.activity import ActivityCreate, ActivityResponse, ActivityUpdate
+from backend.schemas.activity import (ActivityCreate, ActivityResponse,
+                                      ActivityUpdate)
 from backend.services.activity import ActivityService
 
 router = APIRouter()

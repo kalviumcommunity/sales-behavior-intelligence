@@ -1,22 +1,21 @@
-import streamlit as st
 from datetime import datetime
 
+import streamlit as st
+
+from frontend.components.app_shell import (render_page_header, render_sidebar,
+                                           render_topbar)
+from frontend.components.ui_components import (badge_html, render_ai_panel,
+                                               render_kpi_strip,
+                                               section_header)
+from frontend.deal_details_data import (get_activity_sections, get_ai_summary,
+                                        get_behavioral_signals,
+                                        get_coaching_recommendation,
+                                        get_deal_details,
+                                        get_deal_health_metrics,
+                                        get_deal_stages, get_deal_timeline,
+                                        get_next_best_action, get_risk_factors,
+                                        get_stakeholders)
 from frontend.design_system import inject_design_system
-from frontend.components.app_shell import render_sidebar, render_topbar, render_page_header
-from frontend.components.ui_components import render_kpi_strip, badge_html, section_header, render_ai_panel
-from frontend.deal_details_data import (
-    get_activity_sections,
-    get_ai_summary,
-    get_behavioral_signals,
-    get_coaching_recommendation,
-    get_deal_details,
-    get_deal_health_metrics,
-    get_deal_stages,
-    get_deal_timeline,
-    get_next_best_action,
-    get_risk_factors,
-    get_stakeholders,
-)
 
 st.set_page_config(
     page_title="Deal Details | Sales Behavior Intelligence",

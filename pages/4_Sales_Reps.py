@@ -1,9 +1,12 @@
 import streamlit as st
 
+from frontend.components.app_shell import (render_page_header, render_sidebar,
+                                           render_topbar)
+from frontend.components.ui_components import (badge_html, render_ai_panel,
+                                               render_kpi_strip,
+                                               section_header)
+from frontend.dashboard_data import COACHING_SUGGESTIONS, TOP_REPS
 from frontend.design_system import inject_design_system
-from frontend.components.app_shell import render_sidebar, render_topbar, render_page_header
-from frontend.components.ui_components import render_kpi_strip, badge_html, section_header, render_ai_panel
-from frontend.dashboard_data import TOP_REPS, COACHING_SUGGESTIONS
 
 st.set_page_config(
     page_title="Sales Reps | Sales Behavior Intelligence",

@@ -4,6 +4,7 @@ A limited-access view for users with the 'consumer' role.
 """
 import streamlit as st
 
+
 def render_consumer_dashboard():
     st.markdown("### 🛒 Consumer Dashboard")
     st.caption(f"Welcome back, **{st.session_state.get('username', 'User')}**!")

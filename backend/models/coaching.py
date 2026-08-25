@@ -1,9 +1,10 @@
 """
 Coaching card model for behavioral recommendations.
 """
-from sqlalchemy import Column, String, ForeignKey, DateTime, Text, Index
+from sqlalchemy import Column, DateTime, ForeignKey, Index, String, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
 from backend.database import Base
 
 

@@ -4,6 +4,7 @@ Aggregates seller behavior patterns for 1:1 coaching sessions.
 """
 import streamlit as st
 
+
 def render_rep_coaching(reps, deals):
     """Renders representative level behavior analytics and coaching summary."""
     st.markdown("### 👤 Sales Rep Behavior Benchmarking & 1:1 Coaching")

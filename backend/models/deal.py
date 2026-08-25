@@ -1,9 +1,11 @@
 """
 Deal model for opportunities.
 """
-from sqlalchemy import Column, String, Integer, Float, ForeignKey, DateTime, Index
+from sqlalchemy import (Column, DateTime, Float, ForeignKey, Index, Integer,
+                        String)
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
 from backend.database import Base
 
 

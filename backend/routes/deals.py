@@ -8,7 +8,8 @@ from sqlalchemy.orm import Session
 
 from backend.auth.dependencies import get_current_user
 from backend.database import get_db
-from backend.schemas.deal import DealCreate, DealListResponse, DealResponse, DealUpdate
+from backend.schemas.deal import (DealCreate, DealListResponse, DealResponse,
+                                  DealUpdate)
 from backend.services.deal import DealService
 
 router = APIRouter()

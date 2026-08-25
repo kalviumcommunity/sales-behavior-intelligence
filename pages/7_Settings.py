@@ -1,8 +1,9 @@
 import streamlit as st
 
+from frontend.components.app_shell import (render_page_header, render_sidebar,
+                                           render_topbar)
+from frontend.components.ui_components import badge_html, section_header
 from frontend.design_system import inject_design_system
-from frontend.components.app_shell import render_sidebar, render_topbar, render_page_header
-from frontend.components.ui_components import section_header, badge_html
 
 st.set_page_config(
     page_title="Settings | Sales Behavior Intelligence",

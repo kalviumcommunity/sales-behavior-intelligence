@@ -3,8 +3,10 @@ Deal Deep Dive View (Tab 2).
 Provides deal selector, risk score header, activity timeline, and evidence-backed coaching cards.
 """
 import streamlit as st
-from frontend.components.timeline import render_deal_timeline
+
 from frontend.components.coaching_cards import render_coaching_cards
+from frontend.components.timeline import render_deal_timeline
+
 
 def render_deal_deep_dive(deals, timelines, coaching_cards_data):
     """Renders detailed view for inspecting a specific deal."""

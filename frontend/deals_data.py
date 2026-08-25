@@ -1,6 +1,5 @@
 from datetime import date
 
-
 CURRENT_DATE = date(2026, 8, 10)
 
 

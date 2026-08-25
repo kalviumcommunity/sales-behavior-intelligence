@@ -1,12 +1,15 @@
 """
 Deal service for business logic.
 """
-from typing import Optional, List
+from typing import List, Optional
+
 from sqlalchemy.orm import Session
-from backend.schemas.deal import DealCreate, DealUpdate, DealListResponse, DealResponse
+
+from backend.models.deal import Deal
 from backend.repositories.deal import DealRepository
 from backend.repositories.rep import RepRepository
-from backend.models.deal import Deal
+from backend.schemas.deal import (DealCreate, DealListResponse, DealResponse,
+                                  DealUpdate)
 
 
 class DealService:

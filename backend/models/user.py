@@ -1,11 +1,13 @@
 """
 User model for authentication and authorization.
 """
-from sqlalchemy import Column, String, Boolean, DateTime, Enum
+import enum
+
+from sqlalchemy import Boolean, Column, DateTime, Enum, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
 from backend.database import Base
-import enum
 
 
 class UserRole(str, enum.Enum):

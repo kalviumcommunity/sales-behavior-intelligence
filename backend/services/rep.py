@@ -1,11 +1,13 @@
 """
 Rep service for business logic.
 """
-from typing import Optional, List
+from typing import List, Optional
+
 from sqlalchemy.orm import Session
-from backend.schemas.rep import RepCreate, RepUpdate
-from backend.repositories.rep import RepRepository
+
 from backend.models.rep import Rep
+from backend.repositories.rep import RepRepository
+from backend.schemas.rep import RepCreate, RepUpdate
 
 
 class RepService:
