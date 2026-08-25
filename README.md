@@ -101,6 +101,5 @@ The recommended architecture is a hybrid system that combines rule-based event p
 
 ## Repository Status
 
-This repository currently contains the product README only. Add application code, data pipelines, and supporting services as the platform design is finalized.
+This repository contains the application codebase, including a FastAPI backend for data processing, a Next.js web application for revenue intelligence, and a Streamlit dashboard for manager views.
 
-.....
