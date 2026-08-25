@@ -1,6 +1,20 @@
 from datetime import date
 
-from frontend.mock_data import MOCK_COACHING_CARDS, MOCK_DEALS, MOCK_REPS, MOCK_TIMELINES
+import os
+import requests
+from frontend.mock_data import MOCK_COACHING_CARDS, MOCK_DEALS as _MOCK_DEALS, MOCK_REPS as _MOCK_REPS, MOCK_TIMELINES
+
+API_BASE = os.getenv("API_URL", "http://localhost:8000/api")
+
+def _fetch_api(endpoint, default_data):
+    try:
+        res = requests.get(f"{API_BASE}/{endpoint}", timeout=2)
+        if res.ok: return res.json()
+    except Exception: pass
+    return default_data
+
+MOCK_DEALS = _fetch_api("deals", _MOCK_DEALS)
+MOCK_REPS = _fetch_api("reps", _MOCK_REPS)
 
 
 def money(value):
