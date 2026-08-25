@@ -34,9 +34,18 @@ app.include_router(reps.router, prefix="/api/reps", tags=["reps"])
 app.include_router(activities.router, prefix="/api/activities", tags=["activities"])
 app.include_router(analytics.router, prefix="/api/analytics", tags=["analytics"])
 
+from sqlalchemy import text
+
 @app.get("/health")
 def health_check() -> dict:
 def health_check():
+    db_status = "ok"
+    try:
+        with engine.connect() as conn:
+            conn.execute(text("SELECT 1"))
+    except Exception:
+        db_status = "error"
+    return {"status": "ok", "app": settings.APP_NAME, "database": db_status}
     """
     Health check endpoint to verify the API is running.
     """
