@@ -4,6 +4,7 @@ Provides high-level pipeline health, risk filters, and deal table.
 """
 import streamlit as st
 
+
 def render_pipeline_overview(deals):
     """Renders the pipeline overview table and risk breakdown."""
     st.html("### 📊 Active Pipeline Risk Matrix")

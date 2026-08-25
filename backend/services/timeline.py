@@ -1,12 +1,17 @@
 """
 Timeline service for business logic.
 """
-from typing import Optional, List
+from typing import List, Optional
+
 from sqlalchemy.orm import Session
-from backend.schemas.timeline import TimelineEventCreate, TimelineEventUpdate, TimelineListResponse, TimelineEventResponse
-from backend.repositories.timeline import TimelineRepository
-from backend.repositories.deal import DealRepository
+
 from backend.models.timeline import TimelineEvent
+from backend.repositories.deal import DealRepository
+from backend.repositories.timeline import TimelineRepository
+from backend.schemas.timeline import (TimelineEventCreate,
+                                      TimelineEventResponse,
+                                      TimelineEventUpdate,
+                                      TimelineListResponse)
 
 
 class TimelineService:

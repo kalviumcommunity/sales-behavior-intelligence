@@ -2,11 +2,13 @@
 User service for business logic.
 """
 from typing import Optional
+
 from sqlalchemy.orm import Session
-from backend.schemas.user import UserCreate, UserUpdate
-from backend.repositories.user import UserRepository
-from backend.models.user import User
+
 from backend.auth.security import get_password_hash
+from backend.models.user import User
+from backend.repositories.user import UserRepository
+from backend.schemas.user import UserCreate, UserUpdate
 
 
 class UserService:

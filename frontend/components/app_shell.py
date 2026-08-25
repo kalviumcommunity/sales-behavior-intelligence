@@ -8,6 +8,7 @@ Unified shell for all authenticated pages including:
 
 import streamlit as st
 
+
 def get_sidebar_css():
     """CSS specifically for the sidebar and topbar layout in authenticated pages."""
     return """

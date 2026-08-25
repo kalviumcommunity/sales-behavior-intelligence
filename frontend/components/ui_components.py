@@ -6,6 +6,7 @@ and eliminate 'card soup' and repeated HTML strings across pages.
 
 import streamlit as st
 
+
 def render_kpi_strip(metrics_list):
     """
     Renders a compact strip of KPI metrics.

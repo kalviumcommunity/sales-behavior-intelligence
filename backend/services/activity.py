@@ -1,12 +1,14 @@
 """
 Activity service for business logic.
 """
-from typing import Optional, List
+from typing import List, Optional
+
 from sqlalchemy.orm import Session
-from backend.schemas.activity import ActivityCreate, ActivityUpdate
+
+from backend.models.activity import Activity
 from backend.repositories.activity import ActivityRepository
 from backend.repositories.deal import DealRepository
-from backend.models.activity import Activity
+from backend.schemas.activity import ActivityCreate, ActivityUpdate
 
 
 class ActivityService:

@@ -1,9 +1,11 @@
 import streamlit as st
 
-from frontend.design_system import inject_design_system
-from frontend.components.app_shell import render_sidebar, render_topbar, render_page_header
-from frontend.components.ui_components import render_kpi_strip, badge_html, render_empty_state
+from frontend.components.app_shell import (render_page_header, render_sidebar,
+                                           render_topbar)
+from frontend.components.ui_components import (badge_html, render_empty_state,
+                                               render_kpi_strip)
 from frontend.deals_data import DEALS
+from frontend.design_system import inject_design_system
 
 st.set_page_config(
     page_title="Deals | Sales Behavior Intelligence",

@@ -1,13 +1,9 @@
 import streamlit as st
 
-from frontend.landing_data import (
-    LANDING_BENEFITS,
-    LANDING_FAQS,
-    LANDING_FEATURES,
-    LANDING_LOGOS,
-    LANDING_STEPS,
-    LANDING_TESTIMONIALS,
-)
+from frontend.landing_data import (LANDING_BENEFITS, LANDING_FAQS,
+                                   LANDING_FEATURES, LANDING_LOGOS,
+                                   LANDING_STEPS, LANDING_TESTIMONIALS)
+
 
 def render_landing_page():
     st.set_page_config(

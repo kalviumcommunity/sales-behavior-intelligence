@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.config.settings import settings
 from backend.database.session import Base, engine
-from backend.routes import auth, deals, reps, activities, analytics
+from backend.routes import activities, analytics, auth, deals, reps
 
 # Create database tables
 Base.metadata.create_all(bind=engine)

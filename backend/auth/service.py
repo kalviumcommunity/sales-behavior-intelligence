@@ -6,7 +6,8 @@ from typing import Optional
 
 from sqlalchemy.orm import Session
 
-from backend.auth.security import create_access_token, get_password_hash, verify_password
+from backend.auth.security import (create_access_token, get_password_hash,
+                                   verify_password)
 from backend.config.settings import settings
 from backend.repositories.user import UserRepository
 from backend.schemas.user import Token, UserCreate

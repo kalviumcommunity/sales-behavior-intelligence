@@ -1,9 +1,10 @@
 """
 Sales representative model.
 """
-from sqlalchemy import Column, String, Integer, ForeignKey, DateTime
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
 from backend.database import Base
 
 

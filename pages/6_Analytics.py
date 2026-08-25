@@ -1,17 +1,13 @@
 import altair as alt
 import streamlit as st
 
-from frontend.design_system import inject_design_system
-from frontend.components.app_shell import render_sidebar, render_topbar, render_page_header
+from frontend.components.app_shell import (render_page_header, render_sidebar,
+                                           render_topbar)
 from frontend.components.ui_components import section_header
-from frontend.dashboard_data import (
-    REVENUE_TREND,
-    PIPELINE_BY_STAGE,
-    MONTHLY_PERFORMANCE,
-    RISK_DISTRIBUTION,
-    WIN_LOSS_RATIO,
-    TOP_REPS,
-)
+from frontend.dashboard_data import (MONTHLY_PERFORMANCE, PIPELINE_BY_STAGE,
+                                     REVENUE_TREND, RISK_DISTRIBUTION,
+                                     TOP_REPS, WIN_LOSS_RATIO)
+from frontend.design_system import inject_design_system
 
 st.set_page_config(
     page_title="Analytics | Sales Behavior Intelligence",

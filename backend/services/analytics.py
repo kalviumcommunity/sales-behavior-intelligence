@@ -7,12 +7,9 @@ from sqlalchemy.orm import Session
 from backend.models.coaching import CoachingCard
 from backend.models.deal import Deal
 from backend.models.rep import Rep
-from backend.schemas.analytics import (
-    ManagerSummaryResponse,
-    RepPerformanceItem,
-    RiskBreakdown,
-    StageBreakdownItem,
-)
+from backend.schemas.analytics import (ManagerSummaryResponse,
+                                       RepPerformanceItem, RiskBreakdown,
+                                       StageBreakdownItem)
 
 
 class AnalyticsService:

@@ -1,9 +1,10 @@
 """
 Activity model for tracking sales activities.
 """
-from sqlalchemy import Column, String, ForeignKey, DateTime, Text
+from sqlalchemy import Column, DateTime, ForeignKey, String, Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+
 from backend.database import Base
 
 

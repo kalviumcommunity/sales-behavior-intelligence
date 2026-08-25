@@ -1,8 +1,12 @@
+import os
 from datetime import date
 
-import os
 import requests
-from frontend.mock_data import MOCK_COACHING_CARDS, MOCK_DEALS as _MOCK_DEALS, MOCK_REPS as _MOCK_REPS, MOCK_TIMELINES
+
+from frontend.mock_data import MOCK_COACHING_CARDS
+from frontend.mock_data import MOCK_DEALS as _MOCK_DEALS
+from frontend.mock_data import MOCK_REPS as _MOCK_REPS
+from frontend.mock_data import MOCK_TIMELINES
 
 API_BASE = os.getenv("API_URL", "http://localhost:8000/api")
 

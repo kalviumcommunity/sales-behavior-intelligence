@@ -4,6 +4,7 @@ Handles user login and role assignment based on credentials.
 """
 import streamlit as st
 
+
 def render_auth_page():
     st.html("<h2 style='text-align: center;'>Welcome to Sales Behavior Intelligence</h2>")
     st.html("<p style='text-align: center; color: #6b7280;'>Please log in or sign up to access your dashboard.</p>")
